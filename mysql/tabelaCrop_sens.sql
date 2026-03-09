@@ -13,20 +13,23 @@ USE CropSense;
 
 CREATE TABLE cliente(
 id_cliente INT PRIMARY KEY AUTO_INCREMENT,
+id_empresa INT,
 nome VARCHAR(60) NOT NULL,
 CPF CHAR(12) NOT NULL UNIQUE,
 CEP CHAR(9),
 email VARCHAR(60),
 senha VARCHAR(25),
-telefone CHAR(13)
+telefone CHAR(13),
+data_cadastro_cliente TIMESTAMP DEFAULT CURRENT_TIMESTAMP 
 );
 
 CREATE TABLE empresas(
 id_empresa INT PRIMARY KEY AUTO_INCREMENT,
+id_cliente INT NOT NULL,
 nome_fantasia VARCHAR(50),
 cnpj CHAR(14) UNIQUE NOT NULL,
 razao_social VARCHAR(80), 
-data_cadastro TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+data_cadastro TIMESTAMP DEFAULT CURRENT_TIMESTAMP 
 );
 
 
@@ -62,19 +65,19 @@ CONSTRAINT chk_resposta
 CHECK (resposta_sensor IN(1,0))
 );
 
--- CLIENTES (mantidos)
-INSERT INTO cliente (nome, CPF, CEP, email, senha, telefone) VALUES
-('João Batista', '11823456701', '13010-120', 'joao.batista@email.com', 'senha123', '11998765432'),
-('Mariana Lopes', '22734567802', '13020-210', 'mariana.lopes@email.com', 'tenhosaud', '11987654321'),
-('Fernando Almeida', '33645678903', '13030-320', 'fernando.almeida@email.com', 'moias', '11976543210'),
-('Patricia Andrade', '44556789004', '13040-430', 'patricia.andrade@email.com', 'corinthians', '11965432109'),
-('Rafael Costa', '55467890105', '13050-540', 'rafael.costa@email.com', 'midastouch', '11954321098');
+-- CLIENTES
+INSERT INTO cliente (id_empresa, nome, CPF, CEP, email, senha, telefone) VALUES
+(1,'João Batista', '11823456701', '13010-120', 'joao.batista@email.com', 'senha123', '11998765432'),
+(2,'Mariana Lopes', '22734567802', '13020-210', 'mariana.lopes@email.com', 'tenhosaud', '11987654321'),
+(3,'Fernando Almeida', '33645678903', '13030-320', 'fernando.almeida@email.com', 'moias', '11976543210'),
+(NULL,'Patricia Andrade', '44556789004', '13040-430', 'patricia.andrade@email.com', 'corinthians', '11965432109'),
+(NULL,'Rafael Costa', '55467890105', '13050-540', 'rafael.costa@email.com', 'midastouch', '11954321098');
 
 
-INSERT INTO empresas (nome_fantasia, cnpj, razao_social) VALUES
-('AgroTech Soluções', '12345678000101', 'AgroTech Soluções Agrícolas LTDA'),
-('Campo Inteligente', '23456789000102', 'Campo Inteligente Tecnologia Rural SA'),
-('Verde Sensorial', '34567890000103', 'Verde Sensorial Monitoramento Agrícola LTDA');
+INSERT INTO empresas (id_cliente, nome_fantasia, cnpj, razao_social) VALUES
+(1, 'AgroTech Soluções', '12345678000101', 'AgroTech Soluções Agrícolas LTDA'),
+(2, 'Campo Inteligente', '23456789000102', 'Campo Inteligente Tecnologia Rural SA'),
+(3, 'Verde Sensorial', '34567890000103', 'Verde Sensorial Monitoramento Agrícola LTDA');
 
 
 INSERT INTO sensores (estado, local_instalacao) VALUES
@@ -107,3 +110,26 @@ SELECT nome_lote,data_plantio FROM plantacao WHERE data_colheita IS NULL;
 -- MOSTRAR USUÁRIO E SENHA
 
 SELECT nome, senha FROM cliente;
+
+-- CONCAT DO ESTADO DO SENSOR 
+
+SELECT
+    CONCAT('Sensor ', id_sensor) AS 'Sensor',
+    local_instalacao AS 'Local',
+    estado AS 'Estado Atual',
+    CASE
+        WHEN estado = 'bom' THEN 'Funcionamento normal'
+        WHEN estado = 'critico' THEN 'Atenção imediata recomendada'
+        WHEN estado = 'inoperante' THEN 'Necessita substituição ou reparo'
+    END AS 'Diagnóstico' FROM sensores;
+    
+    -- CONCAT DA ALTURA E DA HORA DE LEITURA 
+
+SELECT
+    CONCAT('No lote ', nome_lote , ', a altura registrada foi de ', altura_cm, ' cm em ',
+        DATE_FORMAT(timestamp_leitura, '%d/%m/%Y às %H:%i')
+    ) AS 'Resumo da Leitura'
+FROM leitura_sensor;
+
+SELECT * FROM cliente WHERE id_empresa is null;
+
