@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+     <h1>Calculadora de Perda por Hora de Plantio</h1>
+  <p>Área plantada (hectares):</p><br>
+  <input type="number" id="area"><br><br>
+  <p>Produtividade esperada (ton/ha):</p><br>
+  <input type="number" id="produtividade"><br><br>
+  <p>Preço por tonelada (R$):</p><br>
+  <input type="number" id="preco"><br><br>
+  <p>Horas fora do momento ideal de plantio:</p><br>
+  <input type="number" id="horas"><br><br>
+  <button onclick="calcular()">Calcular</button>
+  <br><br>
+  <div id="resultado"></div>
+  <script>
+    var PERDA_POR_HORA = 0.003;
+
+    function calcular() {
+      let valorArea          = Number(area.value);
+      let valorProdutividade = Number(produtividade.value);
+      let valorPreco         = Number(preco.value);
+      let valorHoras         = Number(horas.value);
+
+      let producaoTotal   = valorArea * valorProdutividade;
+      let receitaMaxima   = producaoTotal * valorPreco;
+      let prejuizo        = receitaMaxima * PERDA_POR_HORA * valorHoras;
+      let receitaFinal    = receitaMaxima - prejuizo;
+      let prejuizoPorHora = prejuizo / valorHoras;
+      let percentual      = (prejuizo / receitaMaxima) * 100;
+
+      let nivelAlerta;
+      if (percentual > 20) {
+        nivelAlerta = "CRÍTICO — Perda severa. Ação imediata necessária.";
+      } else if (percentual > 10) {
+        nivelAlerta = "ALTO — Perda significativa. Revisar cronograma de plantio.";
+      } else if (percentual > 5) {
+        nivelAlerta = "MODERADO — Perda dentro de limite de atenção.";
+      } else {
+        nivelAlerta = "BAIXO — Perda controlada.";
+      }
+
+      resultado.innerHTML = `
+        <h2>Resultado</h2>
+        <p>Produção total: ${producaoTotal.toFixed(2)} toneladas</p>
+        <p>Receita máxima: R$ ${receitaMaxima.toFixed(2)}</p>
+        <p>Horas fora do ideal: ${valorHoras}h</p>
+        <p>Perda por hora: R$ ${prejuizoPorHora.toFixed(2)}</p>
+        <p>Prejuízo total: R$ ${prejuizo.toFixed(2)} (${percentual.toFixed(1)}%)</p>
+        <p>Receita final estimada: R$ ${receitaFinal.toFixed(2)}</p>
+        <hr>
+        <p>Nível de alerta: ${nivelAlerta}</p>
+      `;
+    }
+  </script>
+</body>
+</html>
