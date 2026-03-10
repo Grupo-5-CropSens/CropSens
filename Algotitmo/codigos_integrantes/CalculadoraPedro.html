@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<body>
+  <h3>Calculadora de Perda (Plantio)</h3>
+  
+ insira a área de plantação: <input type="number" id= "area" > <br><br>
+
+  insira a produtividade (em toneladas): <input type= "number" id="prod" > <br><br>
+
+ insira o preço por tonelada: <input type="number" id= "preco" > <br> <br>
+
+  insira os dias de atraso: <input type="number" id= "dias_atraso" > <br><br>
+  
+  <button onclick="calcular()">Calcular Prejuízo</button>
+
+  <p id="div"></p>
+
+  <script>
+    function calcular() {
+      // Cálculo direto: Área * Produtividade * Preço * (7.2% por dia)
+      let perda = area.value * prod.value * preco.value * 0.072 * dias_atraso.value;
+      
+      div.innerHTML = `O prejuízo estimado é de: <b>R$ ${perda.toFixed(2)}</b>`;
+    }
+  </script>
+</body>
+</html>
