@@ -92,8 +92,8 @@
 
 
 
-        let CropSens = 150;
-        let Roi = (financeiro / CropSens) * 100;
+        let CropSens = 1500;
+        let Roi = ((financeiro - CropSens) / CropSens) * 100;
         
 
         if (dias <= 6){
@@ -101,6 +101,8 @@
             divCalcular.innerHTML = `Você ainda não teve perdas!<br><br>`
 
         }
+
+        
 
         else{ 
 
