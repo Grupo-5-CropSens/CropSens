@@ -1,0 +1,73 @@
+body{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding: 0px;
+    margin: 0px;
+    width: 100%;
+}
+
+.header { 
+    background-color: #082a20;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 25px 60px;
+} 
+
+
+.banner {
+     height: 520px;
+     background-image: url(/sptech/view/img/home.png);
+     background-size: cover;
+     background-position: center;
+     color: white;
+     padding: 50px; 
+     position: relative;
+     
+
+}
+.logo {
+    height: 40px;
+    background-size: cover;
+    background-position: center;
+
+}
+.conteudo {
+    color: white;
+    width: 600px;
+
+    position: absolute;
+    top: 50%;
+    left: 50px;
+    transform: translateY(-50%);
+}  
+
+.menu a {
+    color: white;
+    text-decoration: none;
+    margin: 0 15px;
+    font-weight: 500;
+}
+
+ .title {
+font-size: 67px;
+text-align: left;
+} 
+
+.btn-cliente {
+    background-color: #f4b400;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.btn-contato {
+    background-color: #f4b400;
+    border: none;
+    padding: 10px 30px;
+    border-radius: 20px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
