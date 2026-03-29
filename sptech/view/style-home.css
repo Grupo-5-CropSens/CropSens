@@ -3,6 +3,8 @@ body{
     padding: 0px;
     margin: 0px;
     width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
 }
 
 .header { 
@@ -15,14 +17,14 @@ body{
 
 
 .banner {
-     height: 520px;
+     min-height: 80vh;
      background-image: url(/sptech/view/img/home.png);
      background-size: cover;
      background-position: center;
      color: white;
      padding: 50px; 
-     position: relative;
      
+
 
 }
 .logo {
@@ -44,8 +46,15 @@ body{
 .menu a {
     color: white;
     text-decoration: none;
-    margin: 0 15px;
+    align-items: end;
+    margin: 40px 15px;
+    margin-right: 20px;
     font-weight: 500;
+}
+
+.menu a:hover {
+    color: #a3e7d3
+
 }
 
  .title {
@@ -56,10 +65,13 @@ text-align: left;
 .btn-cliente {
     background-color: #f4b400;
     border: none;
-    padding: 10px 20px;
+    padding: 10px 30px;
     border-radius: 20px;
     font-weight: bold;
     cursor: pointer;
+    text-decoration: none;
+    color: black;
+    display: inline-block;
 }
 
 .btn-contato {
@@ -69,5 +81,9 @@ text-align: left;
     border-radius: 20px;
     font-weight: bold;
     cursor: pointer;
+}
+
+.btn-cliente:hover, .btn-contato:hover {
+    background-color: #d89e00;
 }
 
