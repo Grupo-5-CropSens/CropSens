@@ -1,0 +1,44 @@
+CREATE DATABASE CropSens;
+USE CropSens;
+
+CREATE TABLE cliente (
+id INT PRIMARY KEY AUTO_INCREMENT,
+nome VARCHAR(45) NOT NULL,
+cpf CHAR(12) NOT NULL UNIQUE,
+cep CHAR(9),
+email VARCHAR(60) NOT NULL,
+senha VARCHAR(25),
+telefone CHAR(13),
+dataCadastro TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE empresa(
+    idEmpresa INT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(50),
+    cnpj CHAR(14) UNIQUE NOT NULL, 
+    dataCadastro TIMESTAMP DEFAULT CURRENT_TIMESTAMP 
+);
+
+CREATE TABLE QualidadeSensor(
+    idSensor INT PRIMARY KEY AUTO_INCREMENT,
+    estado VARCHAR(15) NOT NULL, 
+    CONSTRAINT CHK_estado_sensor CHECK (estado IN('CRITICO', 'INOPERANTE', 'BOM')),
+    localInstalacao VARCHAR(20),
+    dataCadastro TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE plantacao(
+    idPlantacao INT PRIMARY KEY AUTO_INCREMENT, 
+    nomeLote VARCHAR(30),
+    areaM2 DECIMAL(10,2),
+    dataPlantio DATE NOT NULL,
+    dataColheita DATE
+);
+
+CREATE TABLE leitura(
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    nomeLote VARCHAR(30), 
+    altura DECIMAL (6,2) NOT NULL, 
+    dataLeitura DATETIME NOT NULL, 
+    resposta TINYINT
+);
