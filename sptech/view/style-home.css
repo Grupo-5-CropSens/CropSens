@@ -8,7 +8,7 @@ body{
 }
 
 .header { 
-    background-color: #082a20;
+    background-color: #01241b;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -63,7 +63,7 @@ text-align: left;
 } 
 
 .btn-cliente {
-    background-color: #f4b400;
+    background-color: #F7BA03;
     border: none;
     padding: 10px 30px;
     border-radius: 20px;
@@ -75,7 +75,7 @@ text-align: left;
 }
 
 .btn-contato {
-    background-color: #f4b400;
+    background-color: #F7BA03;
     border: none;
     padding: 10px 30px;
     border-radius: 20px;
@@ -84,6 +84,6 @@ text-align: left;
 }
 
 .btn-cliente:hover, .btn-contato:hover {
-    background-color: #d89e00;
+    background-color: #dda406;
 }
 
