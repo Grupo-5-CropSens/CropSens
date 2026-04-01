@@ -1,0 +1,48 @@
+.container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 80px 40px;
+}
+
+.oi {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 60px;
+}
+
+
+.textos {
+    display: flex;
+    flex-direction: column;
+    width: 550px;
+    color: darkgreen;
+}
+
+.conteudo h2 {
+    font-size: 36px;
+    font-weight: 800;
+    line-height: 1.2;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    color: black;
+}
+
+.text_msg {
+    color: #404040;
+}
+
+.subtext {
+    color: #404040;
+}
+
+.foto {
+    width: 600px;
+    height: 380px;
+}
+
+.foto img {
+    width: 100%;
+    height: auto;
+    margin-top: 40px;
+    border-radius: 20px;
+}
