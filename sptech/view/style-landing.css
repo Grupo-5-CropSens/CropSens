@@ -70,21 +70,18 @@ body {
   background-size: cover;
   background-position: center;
   color: white;
-  padding: 50px;
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 0 60px;
+  justify-content: flex-start;
 }
 
 .conteudo {
-  color: white;
-  width: 600px;
-
-  position: absolute;
-  top: 50%;
-  left: 50px;
-  transform: translateY(-50%);
-}
+    color: white;
+    width: 600px;
+    margin-top: -100px;
+}  
 
 .title {
   font-size: 67px;
@@ -115,10 +112,68 @@ body {
   background-color: #dda406;
 }
 
+/* SEÇÃO QUEM SOMOS */
+.container {
+    margin: 30px;
+    padding: 80px 40px;
+}
+
+.oi {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 60px;
+}
+
+
+.textos {
+    display: flex;
+    flex-direction: column;
+    width: 900px;
+    color: darkgreen;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    justify-content: center;
+}
+
+.conteudo-quem-somos{
+  color: black;
+  font-size: 23px;
+}
+
+.conteudo h2 {
+    font-size: 50px;
+    font-weight: 900;
+    width: 800px;
+    line-height: 1.2;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    color: black;
+}
+
+.text_msg {
+    color: #404040;
+}
+
+.subtext {
+    color: #404040;
+}
+
+.foto {
+    width: 600px;
+    height: 380px;
+}
+
+.foto img {
+    width: 100%;
+    height: auto;
+    margin-top: 60px;
+    border-radius: 20px;
+}
+
 /* SEÇÃO CALCULADORA */
 .container-calculadora {
   background-color: white;
   padding: 60px 0;
+  width: 100%;
 }
 
 .main-container {
@@ -128,7 +183,7 @@ body {
   flex-direction: column;
   gap: 40px;
   padding: 40px;
-  margin: 0 auto;
+  margin-left: 2%;
 }
 
 .secao-superior {
@@ -186,6 +241,7 @@ body {
   display: flex;
   color: white;
   gap: 40px;
+  margin: 0 auto;
 }
 
 .texto-calculadora {
@@ -297,6 +353,33 @@ body {
   font-weight: bold;
   border: 1px solid #cc0000;
 }
+
+/* RODAPE */
+.rodape {
+    background: #0f3d2e;
+    color: white;
+    padding: 40px 20px 20px;
+}
+
+.container-rodape {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    max-width: 1100px;
+    margin: auto;
+}
+
+.col {
+    width: 250px;
+    margin-bottom: 20px;
+}
+
+.col h3 {
+    margin-bottom: 10px;
+    color: #7CFFB2;
+}
+
+
 
 /* RESPONSIVIDADE */
 @media (max-width: 768px) {
