@@ -114,15 +114,14 @@ body {
 
 /* SEÇÃO QUEM SOMOS */
 .container {
-    margin: 30px;
+    margin: 2%;
     padding: 80px 40px;
 }
 
 .oi {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: 60px;
+    gap: 50px;
 }
 
 
@@ -137,7 +136,7 @@ body {
 
 .conteudo-quem-somos{
   color: black;
-  font-size: 23px;
+  font-size: 26px;
 }
 
 .conteudo h2 {
@@ -158,14 +157,15 @@ body {
 }
 
 .foto {
-    width: 600px;
+    width: 650px;
     height: 380px;
 }
 
 .foto img {
     width: 100%;
     height: auto;
-    margin-top: 60px;
+    margin-top: 67px;
+    margin-right: 100px;
     border-radius: 20px;
 }
 
@@ -177,8 +177,8 @@ body {
 }
 
 .main-container {
-  width: 90%;
-  max-width: 1400px;
+  width: 100%;
+  max-width: 1700px;
   display: flex;
   flex-direction: column;
   gap: 40px;
@@ -190,13 +190,15 @@ body {
   display: flex;
   align-items: center;
   gap: 40px;
+  font-size: 19px;
 }
 
 .container-imagem {
   flex: 1;
   border-radius: 50px;
   overflow: hidden;
-  height: 300px;
+  height: 320px;
+  
 }
 
 .container-imagem img {
@@ -237,7 +239,7 @@ body {
 .painel-verde {
   background-color: #003814;
   border-radius: 50px;
-  padding: 50px;
+  padding: 100px;
   display: flex;
   color: white;
   gap: 40px;
