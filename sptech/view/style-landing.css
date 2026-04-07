@@ -173,12 +173,12 @@ body {
 /* SEÇÃO CALCULADORA */
 .main-container {
     width: 100%;
-    max-width: 1400px;
+    max-width: 1700px;
     display: flex;
     flex-direction: column;
     gap: 40px;
     padding: 40px;
-    margin: 0 auto;
+    margin: 2%;
 }
 
 
@@ -278,12 +278,10 @@ body {
     font-weight: bold;
     cursor: pointer;
     margin-top: 10px;
-    transition: 0.3s;
 }
 
 .area-calculadora button:hover {
     background-color: #e0e0e0;
-    transform: scale(1.02);
 }
 
 
