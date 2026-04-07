@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style-cadastro.css">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300..700&display=swap">
+</head>
+
+<body>
+    <div class="container">
+        <a href="index.html"><img src="img/CropSens.png" class="logo" alt=""></a>
+        <p class="paragrafo">Cultive o futuro <br> com <span class="dados_precisos">dados precisos</span></p>
+        <div class="card">
+            <div class="form">
+                <h1>Criar conta</h1>
+                <p>Preencha os dados abaixo.</p>
+                <span class="texto">Nome completo:</span>
+                <input id="ipt_nome" class="nome" placeholder="Digite seu nome completo">
+
+                <span class="texto">E-mail:</span>
+                <input id="ipt_email" class="email" placeholder="email@exemplo.com">
+
+                <span class="texto">Telefone:</span>
+                <input id="ipt_telefone" class="telefone" placeholder="(xx) xxxxx-xxxx">
+
+                <span class="texto">Senha:</span>
+                <input id="ipt_senha" class="senha" placeholder="Digite sua senha">
+
+                <span class="texto">Confirmar a senha:</span>
+                <input id="ipt_senha2" class="senha" placeholder="Digite sua senha novamente">
+
+                <button class="botao" onclick="validar()">CADASTRAR</button>
+                <div class="login texto">Já possui conta? <a href="login.html"><span>Login</span></a></div>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    function validar() {
+        /* declarações */
+        let iptnome = ipt_nome.value.trim()
+        let iptemail = ipt_email.value.trim()
+        let ipttelefone = ipt_telefone.value.trim()
+        let iptsenha = ipt_senha.value.trim()
+        let iptsenha2 = ipt_senha.value.trim()
+
+        let erros = []
+
+        /* validações */
+        /* nome */
+        if (iptnome.length == 0) {
+            erros.push('Nome inválido')
+        }
+        /* email */
+        if (iptemail.length == 0 || iptemail.indexOf('@') == -1) {
+            erros.push('E-mail inválido')
+        }
+        /* telefone */
+        if (ipttelefone.length == 0) {
+            erros.push('Telefone inválido')
+        }
+        /* senha */
+        if (iptsenha.length == 0) {
+            erros.push('Senha inválida')
+        }
+        if (iptsenha.length < 6) {
+            erros.push('Insira no mínimo 6 caracteres para a senha.')
+        }
+        if (ipt_senha.value != ipt_senha2.value) {
+            erros.push('Confirmação de senha errada.')
+        }
+
+        if (erros.length == 0) {
+            registrar()
+        } else alert(erros)
+
+        function registrar() {
+            alert('Registrado')
+        }
+
+    }
+</script>
+
+</html>
