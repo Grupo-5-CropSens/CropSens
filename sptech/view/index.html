@@ -68,63 +68,46 @@
   <!-- SEÇÃO CALCULADORA -->
   <section id="calculadora" class="container-calculadora">
     <div class="main-container">
-      <div class="secao-superior">
-        <div class="container-imagem">
-          <img
-            src="https://images.unsplash.com/photo-1551754655-cd27e38d2076?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxMTkyMXwwfDF8c2VhcmNofDV8fGNvcm58ZW58MHx8fHwxNjYwNTA4MDI1&ixlib=rb-1.2.1&q=80&w=600"
-            alt="Milho" />
-        </div>
-        <div class="texto-solucao">
-          <div class="titulo-solucao">Nossa solução</div>
-          <h1>
-            Monitoramento do milho utilizando tecnologia e análise de dados
-            para maximizar resultados
-          </h1>
-          <p>
-            Nossa solução utiliza sensores ultrassônicos instalados na lavoura
-            para medir o crescimento das plantas em tempo real. Os dados são
-            enviados para um banco de dados e transformados em dashboards com
-            análises e comparações históricas que indicam o momento ideal de
-            colheita.
-          </p>
-        </div>
-      </div>
-
-      <div class="painel-verde">
-        <div class="texto-calculadora">
-          <div class="titulo-calculadora" style="color: white">
-            Nossa calculadora
-          </div>
-          <h2>Simulador financeiro da lavoura</h2>
-          <p class="texto-impacto" style="margin-top: -20px">
-            Descubra o impacto financeiro das suas decisões de colheita. Nosso
-            simulador utiliza dados da lavoura para estimar lucro, prejuízo e
-            retorno sobre investimento (ROI), mostrando quanto você pode
-            ganhar ao colher no momento ideal e evitar perdas no campo.
-          </p>
-        </div>
-
-        <div class="area-calculadora">
-          <div class="linha-inputs-topo">
-            <div class="input-group">
-              <label>Quantidade de hectare:</label>
-              <input type="text" id="iptHectare" />
+        <div class="secao-superior">
+            <div class="container-imagem">
+                <img src="https://images.unsplash.com/photo-1551754655-cd27e38d2076?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxMTkyMXwwfDF8c2VhcmNofDV8fGNvcm58ZW58MHx8fHwxNjYwNTA4MDI1&ixlib=rb-1.2.1&q=80&w=600" alt="Milho">
             </div>
-            <div class="input-group">
-              <label>Quantidade de planta por hectare:</label>
-              <input type="text" id="iptPlanta" />
+            <div class="texto-solucao">
+                <div class="header-calculadora">O Problema Invisível</div>
+                <h1>O milho perde peso mesmo parado no campo</h1>
+                <p>Após a maturidade fisiológica, o grão continua "respirando" e sofre com o clima. Isso causa uma perda de massa invisível. Você pode estar colhendo menos quilos sem perceber nenhum sinal visual de problema.</p>
             </div>
-          </div>
-
-          <div class="input-group">
-            <label>A colheita está quantos dias atrasada após a maturação?</label>
-            <input type="text" id="iptDias" />
-          </div>
-
-          <button onclick="btCalcular()">CALCULAR</button>
-          <div id="caixaSaida"></div>
         </div>
-      </div>
+
+        <div class="painel-verde">
+            <div class="texto-calculadora">
+                <div class="header-calculadora2">Simulador de Lucratividade</div>
+                <h2>Quanto você deixa de ganhar por dia?</h2>
+                <p>Insira seus dados básicos e veja o impacto financeiro real que o atraso na colheita causa na sua propriedade.</p>
+            </div>
+
+            <div class="area-calculadora">
+                <div class="linha-inputs-topo">
+                    <div class="input-group">
+                        <label>Área Total (Hectares):</label>
+                        <input type="number" id="iptHectare" placeholder="Ex: 100">
+                    </div>
+                    <div class="input-group">
+                        <label>Produtividade Esperada (Kg/ha):</label>
+                        <input type="number" id="iptProdutividade" placeholder="Ex: 8000">
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label>Preço do Milho (R$ por Kg):</label>
+                    <input type="number" id="iptPreco" placeholder="Ex: 1.20">
+                </div>
+
+                <button onclick="btCalcular()">ANALISAR IMPACTO FINANCEIRO</button>
+
+                <div id="caixaSaida"></div>
+            </div>
+        </div>
     </div>
   </section>
   <section id="contato" class="contato">
@@ -144,90 +127,50 @@
     </div>
     </div>
   </section>
+<script>
+  function btCalcular() {
+    let hectare = Number(iptHectare.value);
+    let prodBase = Number(iptProdutividade.value);
+    let preco = Number(iptPreco.value);
 
-  <script>
-    function btCalcular() {
-      let hectareStr = iptHectare.value;
-      let plantaStr = iptPlanta.value;
-      let diasStr = iptDias.value;
+    if (hectare > 0 && prodBase > 0 && preco > 0) {
+        let perdaDia = hectare * 39.6;
 
-      // Validação com os teus operadores exigidos (!=, &&)
-      if (hectareStr != "" && plantaStr != "" && diasStr != "") {
-        let hectare = Number(hectareStr);
-        let planta = Number(plantaStr);
-        let dias = Number(diasStr);
-
-        let investimento = hectare * 7620;
-        let porcentagemPerda = 0;
-
-        // Uso exclusivo de if, else if e else
-        if (dias <= 10) {
-          porcentagemPerda = 0.02;
-        } else if (dias <= 20) {
-          porcentagemPerda = 0.03;
-        } else if (dias <= 25) {
-          porcentagemPerda = 0.05;
-        } else if (dias <= 30) {
-          porcentagemPerda = 0.07;
-        } else if (dias <= 35) {
-          porcentagemPerda = 0.09;
-        } else if (dias <= 40) {
-          porcentagemPerda = 0.12;
-        } else if (dias <= 50) {
-          porcentagemPerda = 0.14;
-        } else {
-          porcentagemPerda = 0.2;
-        }
-
-        let kg = planta * 1.3 * 0.17;
-        let FazendaTotal = kg * hectare;
-        let saca = FazendaTotal / 60;
-        let sacaHectare = kg / 60;
-
-        let perdaKg = FazendaTotal * porcentagemPerda;
-        let financeiro = saca * porcentagemPerda * 70.24;
-        let perdaSaca = saca * porcentagemPerda;
-
-        let sacasRest = saca - perdaSaca;
-        let Receita = sacasRest * 70.24;
-        let lucro = Receita - investimento;
-
-        let CropSens = 1500;
-        let Roi = ((financeiro - CropSens) / CropSens) * 100;
-
-        // Controle exclusivo via innerHTML
-        if (dias <= 6) {
-          caixaSaida.innerHTML = `
-                        <div class="mensagem-sucesso">
-                            Você ainda não teve perdas significativas!
-                        </div>
-                    `;
-        } else {
-          caixaSaida.innerHTML = `
-                        <div class="grid-resultados">
-                            <div class="col-resultados">
-                                <p>Investimento para ${hectare} ha: R$ ${investimento.toFixed(2)}</p>
-                                <p>Kg do milho por Hectare: ${kg.toFixed(0)} Kg</p>
-                                <p>Perda de milho: ${perdaKg.toFixed(0)} kg</p>
-                                <p>Saca por hectare: ${sacaHectare.toFixed(0)} sacas</p>
-                            </div>
-                            <div class="col-resultados">
-                                <p>Perda em sacas: ${perdaSaca.toFixed(0)} sacas</p>
-                                <p>Prejuízo financeiro R$ ${financeiro.toFixed(2)}</p>
-                                <p><b>Lucro: R$ ${lucro.toFixed(2)}</b></p>
-                                <p>Roi do Projeto: ${Roi.toFixed(2)}%</p>
-                            </div>
-                        </div>
-                    `;
-        }
-      } else {
         caixaSaida.innerHTML = `
-                    <div class="mensagem-erro">
-                        Por favor, preencha todos os campos antes de calcular.
-                    </div>
-                `;
-      }
+            <div class="grid-resultados">
+                <div class="faixa-info">
+                    <h3>🕒 1 a 3 Dias</h3>
+                    <small>Cálculo: ${hectare}ha * 39.6kg * 3</small>
+                    Perda: ${(perdaDia * 3).toFixed(0)} kg<br>
+                    <span class="prejuizo-valor">R$ ${(perdaDia * 3 * preco).toFixed(2)}</span>
+                </div>
+
+                <div class="faixa-info">
+                    <h3>🕒 4 a 7 Dias</h3>
+                    <small>Cálculo: ${hectare}ha * 39.6kg * 7</small>
+                    Perda: ${(perdaDia * 7).toFixed(0)} kg<br>
+                    <span class="prejuizo-valor">R$ ${(perdaDia * 7 * preco).toFixed(2)}</span>
+                </div>
+
+                <div class="faixa-info">
+                    <h3>🕒 8 a 15 Dias</h3>
+                    <small>Cálculo: ${hectare}ha * 39.6kg * 15</small>
+                    Perda: ${(perdaDia * 15).toFixed(0)} kg<br>
+                    <span class="prejuizo-valor">R$ ${(perdaDia * 15 * preco).toFixed(2)}</span>
+                </div>
+
+                <div class="faixa-info alerta-grave">
+                    <h3>🚨 Acima de 15 Dias</h3>
+                    <small>Cálculo: ${hectare}ha * 39.6kg * 30</small>
+                    Perda: ${(perdaDia * 30).toFixed(0)} kg<br>
+                    <span class="prejuizo-valor">R$ ${(perdaDia * 30 * preco).toFixed(2)}</span>
+                </div>
+            </div>
+        `;
+    } else {
+        caixaSaida.innerHTML = `<b style="color: #ff6b6b;">Preencha os campos corretamente.</b>`;
     }
+}
   </script>
 </body>
 
