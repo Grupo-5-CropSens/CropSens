@@ -1,0 +1,11 @@
+.body {
+background-color: #111827;
+}
+
+.chart-container {
+    display: flex;
+    position: relative;
+    height: 120vh;
+    width: 120vh;
+
+}
