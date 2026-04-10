@@ -1,11 +1,22 @@
-.body {
-background-color: #111827;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  background: linear-gradient(135deg, #ecfdf5, #f0fdf4);
+  display: flex;
+  justify-content: baseline;
+  align-items: baseline;
+  height: 100vh;
 }
 
 .chart-container {
     display: flex;
     position: relative;
-    height: 120vh;
-    width: 120vh;
-
+    height: 90vh;
+    width: 90vh;
+    background-color: #ffffff;
 }
