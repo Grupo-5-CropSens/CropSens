@@ -164,17 +164,134 @@ body {
 }
 
 .foto img {
-    width: 100%;
+    width: 110%;
     height: auto;
     margin-top: 67px;
-    margin-right: 100px;
+    margin-right: 0px;
     border-radius: 20px;
+}
+
+h1{
+    font-size: 45px;
+    font-weight: bold;
+}
+
+.h1-title {
+    text-align: center;
+    
+}
+
+section{
+    padding: 100px 20px;
+}
+
+section h1{
+    text-align: center;
+    font-size: 40px;
+    margin-bottom: 40px;
+}
+
+.fluxo{
+    background-image: url(/sptech/view/img/Rectangle\ 21.png);
+    background-size: cover;
+    background-position: center;
+    padding: 80px 20px;
+    color: white;
+}
+
+.fluxo h1 {
+    text-align: center;
+    font-size: 40px;
+    margin-bottom: 40px;
+    color: aliceblue;
+}
+
+/* caixas */
+
+.caixas-fluxo{
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.caixa{
+    background-color:#f5f5f5;
+    padding: 25px;
+    min-width: 260px;
+    border-radius: 30px;
+    text-align: center;
+    color: black;
+
+    box-shadow: 0px 10px 25px rgba(0,0,0,0.3);
+    transition: 0.3s;
+
+    /*border: 5px solid #7ed957;*/
+}
+
+.caixa:hover{
+    transform: translateY(-8px);
+    box-shadow: 0px 12px 30px rgba(0,0,0,0.25);
+}
+
+.beneficios h1 {
+    text-align: center;
+    font-size: 25px;
+    color: white;
+}
+
+.beneficio h3{
+    color: black;
+}
+
+.beneficio:hover{
+    transform: translateY(-8px);
+}
+
+.caixas-beneficios{
+    display: flex;
+    justify-content:center;
+    gap: 30px;
+}
+
+.beneficio{
+    background-color: #F7BA03;
+    width: 300px;
+    padding: 30px;
+    border-radius: 15px;
+    text-align:start;
+    color: black;
+    box-shadow: 0px 10px 25px rgba(0,0,0,0.25);
+    transition: 0.3s;
+}
+
+.carousel{
+    margin: 60px auto;
+    width: 95%;
+    /*border: 5px solid white;*/
+    display: flex;
+    overflow: hidden;
+}
+
+.group{
+    display: flex;
+    gap: 30px;
+    width: max-content;
+    animation: spin 30s infinite linear;
+    padding-right: 2em;
+}
+
+
+@keyframes spin {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
 }
 
 /* SEÇÃO CALCULADORA */
 .main-container {
     width: 100%;
-    max-width: 1700px;
+    max-width: 1800px;
     display: flex;
     flex-direction: column;
     gap: 40px;
@@ -213,6 +330,7 @@ body {
     line-height: 1.2;
     margin-bottom: 20px;
     color: #333;
+    text-align: start;
 }
 
 
@@ -339,7 +457,7 @@ body {
 /* RODAPE */
 .rodape {
     background: #0f3d2e;
-    color: white;
+    color: #0f3d2e;
     padding: 40px 20px 20px;
 }
 
