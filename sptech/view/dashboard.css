@@ -13,7 +13,15 @@ body {
   height: 100vh;
 }
 
-.chart-container {
+.chart-container1 {
+    display: flex;
+    position: relative;
+    height: 90vh;
+    width: 90vh;
+    background-color: #ffffff;
+}
+
+.chart-container2 {
     display: flex;
     position: relative;
     height: 90vh;
