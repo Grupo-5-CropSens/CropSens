@@ -36,14 +36,14 @@
     .form {
         display: flex;
         flex-direction: column;
-        gap: 10px;
+        gap: 5px;
         width: 80%;
     }
 
     .form input {
         padding: 20px;
         padding-left: 55px;
-        margin-bottom: 20px;
+        margin-bottom: 5px;
         border-radius: 10px;
         border: 1px solid;
         border-color: #ffffff;
@@ -75,7 +75,7 @@
         background-color: #f4b400;
         color: rgb(0, 0, 0);
         padding: 20px;
-        margin-top: 10px;
+        margin-top: 20px;
         border-radius: 10px;
         border: 0px;
         cursor: pointer;
@@ -89,11 +89,13 @@
     }
 
     .login {
-        margin-top: 25px;
         align-self: center;
         font-weight: normal;
         text-decoration: none;
-        color: black;
+        color: #ffffff;
+        font-weight: normal;
+        margin-top: 30px;
+        margin-bottom: 1px;
     }
 
     .login span {
@@ -113,6 +115,8 @@
     .texto {
         color: #ffffff;
         font-weight: normal;
+        margin-bottom: 5px;
+        margin-top: 10px;
     }
 
     .nome {
@@ -155,4 +159,9 @@
         font-family: 'Instrument Serif', Gerogia, serif;
         font-weight: bold;
         font-style: italic;
+    }
+
+    .erro {
+        color: red;
+        font-size: 14px;
     }
