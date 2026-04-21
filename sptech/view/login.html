@@ -19,13 +19,13 @@
                 <h1>Bom te ver de novo</h1>
                 <p>Use seus dados para continuar</p>
 
-                <label>E-mail:</label>
+                <label>E-mail:<span style="color: red;"> *</span></label>
                 <input id="ipt_email" type="email" class="email" placeholder="Digite seu e-mail">
+                <div class="erro" id="erro1"></div>
 
-                <label>Senha:</label>
+                <label>Senha:<span style="color: red;"> *</span></label>
                 <input id="ipt_senha" type="password" class="senha" placeholder="Digite sua senha">
-
-                <div class="esqueci"><a href=""><span>Esqueci minha senha</span></a></div>
+                <div class="erro" id="erro2"></div>
 
                 <button onclick="validar()" class="botao">ACESSAR</button>
                 <div class="cadastro texto">Não possui conta? <a href="cadastro.html"><span>Cadastrar</span></a></div>
@@ -40,13 +40,37 @@
     function validar() {
         let email = ipt_email.value.trim()
         let senha = ipt_senha.value.trim()
+        let erros = 0
+        let emails = ['admin@crop.com', 'user@crop.com']
+        let senhas = ['admin123', 'user123']
 
-        if (email.length == 0 || senha.length == 0) {
-            alert('Insira os dados')
-        } else if (email == 'cliente@exemplo.com' && senha == 'senha123') {
-            login()
-        } else {
-            alert('Conta inexistente')
+        erro1.innerHTML = ''
+        erro2.innerHTML = ''
+        ipt_email.style.border = 'none'
+        ipt_senha.style.border = 'none'
+
+        if (email.length == 0) {
+            erro1.innerHTML = `Insira o e-mail`
+            ipt_email.style.border = '2px solid red'
+            erros++
+        }
+        if (email.indexOf('@') == -1 && email.length > 0) {
+            erro1.innerHTML = `E-mail inválido`
+            ipt_email.style.border = '2px solid red'
+            erros++
+        }
+        if (senha.length == 0) {
+            erro2.innerHTML = `Insira a senha`
+            ipt_senha.style.border = '2px solid red'
+            erros++
+        }
+        if (erros == 0) {
+            for (let i = 0; i < emails.length; i++) {
+                if (email == emails[i] && senha == senhas[i]) {
+                    login()
+                }
+            }
+            erro2.innerHTML = `Conta inexistente`
         }
     }
     function login() {
