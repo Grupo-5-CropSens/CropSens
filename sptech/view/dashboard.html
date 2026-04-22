@@ -10,13 +10,37 @@
 </head>
 
 <body>
-  <div class="chart-container1" style="background-color: #F9FAFB;">
-    <canvas id="myChart"></canvas>
-  </div>
-      <div class="chart-container2">
-          <canvas id="graficoBarras"></canvas>
-      </div>
+  <div class="kpi-container">
+    <div class="kpi-card">
+      <h3>Eficiência Atual</h3>
+      <p id="kpi-eficiencia">35.5%</p>
+    </div>
 
+    <div class="kpi-card">
+      <h3>Altura Final</h3>
+      <p id="kpi-altura">224.6 cm</p>
+    </div>
+
+    <div class="kpi-card">
+      <h3>Perda Total</h3>
+      <p id="kpi-perda">1188 kg</p>
+    </div>
+  </div>
+  <div class="charts-container">
+
+    <div class="chart-container1">
+      <canvas id="myChart"></canvas>
+    </div>
+
+    <div class="chart-container2">
+      <canvas id="graficoBarras"></canvas>
+    </div>
+
+    <div class="chart-container3">
+      <canvas id="graficoCrescimento"></canvas>
+    </div>
+
+  </div>
 
   <script>
     const ctx = document.getElementById('myChart');
@@ -47,6 +71,8 @@
 
     }
 
+
+
     new Chart(ctx, {
       data: {
         labels: ['Semana 1', 'Semana 2', 'Semana 3', 'Semana 4', 'Semana 5', 'Semana 6'],
@@ -55,7 +81,7 @@
             type: 'bar',
             label: 'Altura',
             data: altura,
-            borderColor: '#059669', 
+            borderColor: '#059669',
             backgroundColor: '#059669',
             borderWidth: 1,
             borderRadius: 8
@@ -73,7 +99,7 @@
           {
             type: 'line',
             label: 'Eficiencia (%)',
-            borderColor: '#064E3B', 
+            borderColor: '#064E3B',
             backgroundColor: '#064E3B',
             data: eficiencia,
             borderWidth: 2,
@@ -103,24 +129,24 @@
       }
     });
 
-    
+
     /*GRAFICO DE PERDA*/
     const kgs = document.getElementById('graficoBarras');
 
-    let hectares = 1; 
-    let perdaPorDiaPorHectare = 39.6; 
-    
+    let hectares = 1;
+    let perdaPorDiaPorHectare = 39.6;
+
 
     let dias = [1, 5, 10, 15, 30];
-    
+
 
     let perdaKg = dias.map(dia => dia * perdaPorDiaPorHectare * hectares);
 
 
     new Chart(kgs, {
-      type: 'bar', 
+      type: 'bar',
       data: {
-        labels: dias.map(d => `Dia ${d}`), 
+        labels: dias.map(d => `Dia ${d}`),
         datasets: [
           {
             label: 'Perda Acumulada (Kg)',
@@ -147,19 +173,101 @@
           y: {
             beginAtZero: true,
             title: {
-                display: true,
-                text: 'Quilos (Kg)'
+              display: true,
+              text: 'Quilos (Kg)'
             }
           },
           x: {
             title: {
-                display: true,
-                text: 'Dias Decorridos'
+              display: true,
+              text: 'Dias Decorridos'
             }
           }
         }
       }
     });
+    // GRÁFICO CRESCIMENTO IDEAL X REAL
+    let crescimentoTotal = 120;
+    let semanas = 12;
+
+    let crescimentoIdealPorSemana = crescimentoTotal / semanas;
+
+    let labelsCrescimento = [];
+    for (let i = 1; i <= semanas; i++) {
+      labelsCrescimento.push("Semana " + i);
+    }
+
+    let crescimentoIdeal = [];
+    for (let i = 1; i <= semanas; i++) {
+      crescimentoIdeal.push(i * crescimentoIdealPorSemana);
+    }
+
+    let crescimentoReal = [8, 18, 25, 40, 52, 60, 75, 82, 95, 105, 110, 118];
+
+    let ctx3 = document.getElementById('graficoCrescimento');
+
+    new Chart(ctx3, {
+      type: 'line',
+      data: {
+        labels: labelsCrescimento,
+        datasets: [
+          {
+            label: 'Crescimento Ideal (cm)',
+            data: crescimentoIdeal,
+            borderColor: '#10B981',
+            backgroundColor: '#10B981',
+            borderWidth: 2,
+            tension: 0.3
+          },
+          {
+            label: 'Crescimento Real (cm)',
+            data: crescimentoReal,
+            borderColor: '#064E3B',
+            backgroundColor: '#064E3B',
+            borderWidth: 2,
+            tension: 0.3
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          title: {
+            display: true,
+            text: 'Comparação do Crescimento do Milho (12 semanas)',
+            font: { size: 18 },
+            color: '#064E3B'
+          },
+          legend: {
+            position: 'bottom'
+          }
+        },
+        scales: {
+          x: {
+            title: {
+              display: true,
+              text: 'Semanas'
+            }
+          },
+          y: {
+            title: {
+              display: true,
+              text: 'Crescimento (cm)'
+            },
+            beginAtZero: true
+          }
+        }
+      }
+    });
+
+    let ultimaAltura = altura[altura.length - 1];
+    let ultimaEficiencia = eficiencia[eficiencia.length - 1];
+    let perdaTotal = perdaKg[perdaKg.length - 1];
+
+    document.getElementById('kpi-altura').innerText = `${ultimaAltura} cm`;
+    document.getElementById('kpi-eficiencia').innerText = `${ultimaEficiencia}%`;
+    document.getElementById('kpi-perda').innerText = `${perdaTotal.toFixed(0)} kg`;
+
   </script>
 
 </body>
