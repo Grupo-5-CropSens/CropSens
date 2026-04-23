@@ -10,34 +10,42 @@
 </head>
 
 <body>
-  <div class="kpi-container">
-    <div class="kpi-card">
-      <h3>Eficiência Atual</h3>
-      <p id="kpi-eficiencia">35.5%</p>
-    </div>
+  <div class="menu">
 
-    <div class="kpi-card">
-      <h3>Altura Final</h3>
-      <p id="kpi-altura">224.6 cm</p>
-    </div>
-
-    <div class="kpi-card">
-      <h3>Perda Total</h3>
-      <p id="kpi-perda">1188 kg</p>
-    </div>
   </div>
-  <div class="charts-container">
 
-    <div class="chart-container1">
-      <canvas id="myChart"></canvas>
+  <div class="container">
+
+    <div class="kpi-container">
+      <div class="kpi-card">
+        <h3>Eficiência Atual</h3>
+        <p id="kpi-eficiencia">35.5%</p>
+      </div>
+
+      <div class="kpi-card">
+        <h3>Altura Final</h3>
+        <p id="kpi-altura">224.6 cm</p>
+      </div>
+
+      <div class="kpi-card">
+        <h3>Perda Total</h3>
+        <p id="kpi-perda">1188 kg</p>
+      </div>
     </div>
+    <div class="charts-container">
 
-    <div class="chart-container2">
-      <canvas id="graficoBarras"></canvas>
-    </div>
+      <div class="left-column">
+        <div class="chart-container1">
+          <canvas id="myChart"></canvas>
+        </div>
 
-    <div class="chart-container3">
-      <canvas id="graficoCrescimento"></canvas>
+        <div class="chart-container3">
+          <canvas id="graficoCrescimento"></canvas>
+        </div>
+      </div>
+      <div class="chart-container2">
+        <canvas id="graficoBarras"></canvas>
+      </div>
     </div>
 
   </div>
@@ -118,7 +126,7 @@
             color: '#064E3B'
           },
           legend: {
-            position: 'bottom'
+            position: 'right'
           }
         },
         scales: {
@@ -167,7 +175,7 @@
             font: { size: 18 },
             color: '#064E3B'
           },
-          legend: { position: 'bottom' }
+          legend: { position: 'right' }
         },
         scales: {
           y: {
@@ -187,8 +195,8 @@
       }
     });
     // GRÁFICO CRESCIMENTO IDEAL X REAL
-    let crescimentoTotal = 120;
-    let semanas = 12;
+    let crescimentoTotal = 224.6;
+    let semanas = 6;
 
     let crescimentoIdealPorSemana = crescimentoTotal / semanas;
 
@@ -202,7 +210,7 @@
       crescimentoIdeal.push(i * crescimentoIdealPorSemana);
     }
 
-    let crescimentoReal = [8, 18, 25, 40, 52, 60, 75, 82, 95, 105, 110, 118];
+    let crescimentoReal = [38, 64, 92, 150, 200, 224.6];
 
     let ctx3 = document.getElementById('graficoCrescimento');
 
@@ -234,12 +242,12 @@
         plugins: {
           title: {
             display: true,
-            text: 'Comparação do Crescimento do Milho (12 semanas)',
+            text: 'Comparação do Crescimento do Milho (6 semanas)',
             font: { size: 18 },
             color: '#064E3B'
           },
           legend: {
-            position: 'bottom'
+            position: 'right'
           }
         },
         scales: {
