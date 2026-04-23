@@ -337,29 +337,25 @@
     document.getElementById('kpi-menor-eficiencia').innerText = `${menorEficiencia}%`;
     document.getElementById('kpi-perda').innerText = `${perdaTotal.toFixed(0)} kg`;
 
-    // Atualizar KPIs na seção de relatórios
     document.getElementById('kpi-altura-rel').innerText = `${ultimaAltura} cm`;
     document.getElementById('kpi-eficiencia-rel').innerText = `${ultimaEficiencia}%`;
     document.getElementById('kpi-menor-eficiencia-rel').innerText = `${menorEficiencia}%`;
     document.getElementById('kpi-perda-rel').innerText = `${perdaTotal.toFixed(0)} kg`;
 
-    // Menu Navigation
-    const menuItems = document.querySelectorAll('.menu-item');
-    const sections = document.querySelectorAll('.section');
+    let menuItems = document.querySelectorAll('.menu-item');
+    let sections = document.querySelectorAll('.section');
 
     menuItems.forEach(item => {
       item.addEventListener('click', function() {
-        const sectionId = this.getAttribute('data-section');
+        let sectionId = this.getAttribute('data-section');
         
-        // Remove active class from all sections
+
         sections.forEach(section => {
           section.classList.remove('active');
         });
-        
-        // Add active class to selected section
+      
         document.getElementById(sectionId).classList.add('active');
         
-        // Update menu item styling
         menuItems.forEach(menuItem => {
           menuItem.classList.remove('active');
         });
