@@ -18,29 +18,27 @@ INSERT INTO usuario VALUES
 
 CREATE TABLE fazenda (
 id INT PRIMARY KEY AUTO_INCREMENT,
-rua VARCHAR(70),
-numero VARCHAR(10),
-cidade VARCHAR(50),
-estado VARCHAR(50),
-cep VARCHAR(10),
+nome VARCHAR(50),
+municipio VARCHAR(50),
+cep VARCHAR(13),
 fkUsuario INT,
   CONSTRAINT fkFazenda_usuario FOREIGN KEY(fkUsuario) 
     REFERENCES usuario(id)
 );
 
-INSERT INTO fazenda (rua, numero,  cidade, estado, cep, fkUsuario) VALUES
-('Rua das Flores', 135,'Cuiabá','Mato Grosso', 54950-753, 1), 
-('Rua Tantas Palavras', 547, 'Goiânia','Goiás', 37284-837, 2),
-('Rua Brasileira', 9567, 'Londrina','Paraná', 18352-267, 3),
-('Rua América', 45, 'Aporé', 'Goiás', 48367-243, 4),
-('Rua São Francisco', 923, 'Maringá', 'Paraná', 02563-173, 5);
+INSERT INTO fazenda (nome, municipio, cep, fkUsuario) VALUES
+('Fazenda Flores', 'Mato Grosso', '54950-753', 1), 
+('Fazenda dos sonhos', 'Goiás', '37284-837', 2),
+('Fazenda Carrossel', 'Paraná', '18352-267', 3),
+('Fazenda da luz', 'Goiás', '48367-243', 4),
+('Fazenda milharal', 'Paraná', '02563-173', 5);
 
 CREATE TABLE plantacao (
 id INT PRIMARY KEY AUTO_INCREMENT,
 data_plantio DATE,
 fkFazenda INT,
-	CONSTRAINT fkPlantacao_fazenda FOREIGN KEY(fkFazenda)
-      REFERENCES fazenda(id)
+CONSTRAINT fkPlantacao_fazenda FOREIGN KEY(fkFazenda)
+REFERENCES fazenda(id)
 );
 
 INSERT INTO plantacao VALUES 
@@ -57,8 +55,8 @@ statusSensor VARCHAR(12),
     CHECK(statusSensor IN('ativo', 'inativo', 'manutencao')),
 altura_instalacao DECIMAL(5,2) NOT NULL,
 fkPlantacao INT,
-	CONSTRAINT fkSensor_plantacao FOREIGN KEY(fkPlantacao)
-	  REFERENCES plantacao(id)
+CONSTRAINT fkSensor_plantacao FOREIGN KEY(fkPlantacao)
+REFERENCES plantacao(id)
 );
 
 INSERT INTO sensor (id, statusSensor, altura_instalacao, fkPlantacao) VALUES
@@ -77,7 +75,33 @@ CREATE TABLE leitura_sensor (
     FOREIGN KEY (fkSensor) REFERENCES sensor(id)
 );
 
-DROP DATABASE CropSens;
+SELECT * FROM usuario;
+SELECT * FROM fazenda;
+SELECT * FROM plantacao;
+SELECT * FROM sensor;
+SELECT * FROM leitura_sensor;
 
-DROP TABLE alerta;
-DROP TABLE leitura_sensor;
+SELECT u.nome AS Usuario, u.email AS Email, f.nome AS 'Nome Fazenda', f.cep AS CEP FROM usuario AS u JOIN fazenda AS f ON u.id = f.id;
+
+SELECT u.nome AS Usuario, f.nome AS 'Nome Fazenda', f.cep AS CEP, p.id AS 'ID_Plantação'
+ FROM usuario AS u JOIN fazenda AS f ON u.id = f.id JOIN plantacao as p ON p.id = f.id;
+ 
+SELECT u.nome AS 'Usuário', f.nome AS 'Nome Fazenda', p.id AS 'ID_Plantação', s.statusSensor AS 'Status do Sensor' 
+	FROM usuario AS u JOIN fazenda AS f ON u.id = f.id 
+		JOIN plantacao AS p ON f.id = p.id
+			JOIN sensor AS s ON p.id = s.id WHERE statusSensor = 'ativo';
+            
+SELECT u.nome AS 'Usuário', f.nome AS 'Nome Fazenda', p.id AS 'ID_Plantação', s.statusSensor AS 'Status do Sensor'
+	FROM usuario AS u JOIN fazenda AS f ON u.id = f.id 
+		JOIN plantacao AS p ON f.id = p.id
+			JOIN sensor AS s ON p.id = s.id WHERE statusSensor = 'inativo';
+            
+SELECT u.nome AS 'Usuário', f.nome AS 'Nome Fazenda', p.id AS 'ID_Plantação', s.statusSensor AS 'Status do Sensor' 
+	FROM usuario AS u JOIN fazenda AS f ON u.id = f.id 
+		JOIN plantacao AS p ON f.id = p.id
+			JOIN sensor AS s ON p.id = s.id WHERE statusSensor = 'manutencao';
+ 
+SELECT u.nome AS 'Usuário', f.nome AS 'Nome Fazenda', p.id AS 'ID_Plantação', s.statusSensor AS 'Status do Sensor' 
+	FROM usuario AS u JOIN fazenda AS f ON u.id = f.id 
+		JOIN plantacao AS p ON f.id = p.id
+			JOIN sensor AS s ON p.id = s.id;
