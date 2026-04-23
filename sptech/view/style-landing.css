@@ -67,7 +67,7 @@ body {
 /* BANNER HOME */
 .banner {
   min-height: 86vh;
-  background-image: url(/sptech/view/img/home.png);
+  background-image: url(img/home.png);
   background-size: cover;
   background-position: center 30%;
   color: white;
@@ -194,7 +194,7 @@ section h1{
 }
 
 .fluxo{
-    background-image: url(/sptech/view/img/Rectangle\ 21.png);
+    background-image: url(img/Rectangle\ 21.png);
     background-size: cover;
     background-position: center;
     padding: 80px 20px;
