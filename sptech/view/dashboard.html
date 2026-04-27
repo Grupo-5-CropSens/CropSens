@@ -330,7 +330,13 @@
     let ultimaAltura = altura[altura.length - 1];
     let ultimaEficiencia = eficiencia[eficiencia.length - 1];
     let perdaTotal = perdaKg[perdaKg.length - 1];
-    let menorEficiencia = eficiencia[eficiencia.length -2];
+    let menorEficiencia = 99
+
+    for (let i = 0; i < eficiencia.length - 1; i++) {
+      if (eficiencia[i] != null && eficiencia[i] < menorEficiencia) {
+        menorEficiencia = eficiencia[i]
+      }
+    }
 
     document.getElementById('kpi-altura').innerText = `${ultimaAltura} cm`;
     document.getElementById('kpi-eficiencia').innerText = `${ultimaEficiencia}%`;
@@ -345,23 +351,25 @@
     let menuItems = document.querySelectorAll('.menu-item');
     let sections = document.querySelectorAll('.section');
 
-    menuItems.forEach(item => {
-      item.addEventListener('click', function() {
-        let sectionId = this.getAttribute('data-section');
-        
+function removeActiveFromList(list) {
+  list.forEach(function(item) {
+    item.classList.remove('active');
+  });
+}
 
-        sections.forEach(section => {
-          section.classList.remove('active');
-        });
-      
-        document.getElementById(sectionId).classList.add('active');
-        
-        menuItems.forEach(menuItem => {
-          menuItem.classList.remove('active');
-        });
-        this.classList.add('active');
-      });
-    });
+function handleMenuClick(event) {
+  let sectionId = this.getAttribute('data-section');
+
+  removeActiveFromList(sections);
+  removeActiveFromList(menuItems);
+
+  document.getElementById(sectionId).classList.add('active');
+  this.classList.add('active');
+}
+
+menuItems.forEach(function(item) {
+  item.addEventListener('click', handleMenuClick);
+});
 
   </script>
 
