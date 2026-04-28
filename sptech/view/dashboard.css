@@ -15,7 +15,7 @@ body {
     width: 300px;
     height: 100vh;
     background-color: #01241b;
-    left: 0;
+    top: 0;
     position: sticky;
     flex-direction: column;
     padding: 30px 20px;
@@ -146,7 +146,7 @@ body {
 
 .container {
     display: flex;
-    height: 100vh; 
+    min-height: 100vh;
     flex-direction: column;
     align-items: center;
     padding-left: 80px;
@@ -169,7 +169,7 @@ body {
     align-items: stretch;
 }
 
-.left-column {
+.esq {
     display: flex;
     flex-direction: column;
     gap: 30px;
@@ -177,20 +177,15 @@ body {
     flex: 1;
 }
 
-.chart-container3 {
-    flex: 1;
-    display: flex;
-}
-
 .chart-container1,
 .chart-container2,
-.chart-container3 {
+.chart-container3,
+.chart-container4 {
     background: #F9FAFB;
     border-radius: 15px;
     padding: 20px;
     padding-bottom: 10px;
     height: 250px;
-
 }
 
 canvas {
@@ -199,11 +194,10 @@ canvas {
 }
 
 .kpi-card {
-    background: #F9FAFB;
+    background-color: white;
     padding: 25px 35px;
     border-radius: 15px;
     width: 180px;
-    text-align: center;
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
     transition: 0.3s;
 }
@@ -213,13 +207,52 @@ canvas {
 }
 
 .kpi-card h3 {
+    display: flex;
+    justify-content: center;
     font-size: 12px;
     color: #6B7280;
     margin-bottom: 10px;
 }
 
 .kpi-card p {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     font-size: 24px;
     font-weight: bold;
     color: #064E3B;
+}
+
+.relatorio {
+    width: 100%;
+    min-height: 400px;
+    background-color: white;
+    margin-top: 50px;
+    border-radius: 10px;
+    padding: 32px;
+}
+
+.cabecalho {
+    background-color: #064E3B;
+    color: white;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+.registro {
+    display: grid;
+    grid-template-columns: 45% 40% 15%;
+    gap: 0;
+    align-items: center;
+    border-bottom: 1px solid #e5e7eb;
+    padding: 12px;
+    font-size: 12px;
+}
+
+.relatorio span {
+    font-weight: 500;
+}
+
+.preto {
+    color: rgb(68, 68, 68);
 }

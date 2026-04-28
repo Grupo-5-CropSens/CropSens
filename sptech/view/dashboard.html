@@ -46,7 +46,7 @@
         </div>
 
         <div class="kpi-card">
-          <h3>Ultima altura registrada</h3>
+          <h3>Altura atual</h3>
           <p id="kpi-altura">224.6 cm</p>
         </div>
 
@@ -62,7 +62,7 @@
       </div>
       <div class="charts-container">
 
-        <div class="left-column">
+        <div class="esq">
           <div class="chart-container1">
             <canvas id="myChart"></canvas>
           </div>
@@ -71,9 +71,15 @@
             <canvas id="graficoCrescimento"></canvas>
           </div>
         </div>
-        <div class="chart-container2">
-          <canvas id="graficoBarras"></canvas>
+        <div class="esq">
+          <div class="chart-container2">
+            <canvas id="graficoBarras"></canvas>
+          </div>
+          <div class="chart-container4">
+            <canvas id="graficoPizza"></canvas>
+          </div>
         </div>
+
       </div>
     </div>
 
@@ -81,297 +87,407 @@
       <div class="relatorios-content">
         <h2>Relatórios</h2>
         <div class="kpi-container">
-          <div class="kpi-card">
-            <h3>Eficiência Atual</h3>
-            <p id="kpi-eficiencia-rel">35.5%</p>
+          <div id="kpi1" class="kpi-card">
+            <h3 style="color: white;">Eficiência Atual</h3>
+            <p style="color: white;" id="kpi-eficiencia-rel">35.5%</p>
           </div>
 
-          <div class="kpi-card">
-            <h3>Ultima altura registrada</h3>
-            <p id="kpi-altura-rel">224.6 cm</p>
+          <div id="kpi2" class="kpi-card">
+            <h3 style="color: white;">Altura atual</h3>
+            <p style="color: white;" id="kpi-altura-rel">224.6 cm</p>
           </div>
 
-          <div class="kpi-card">
-            <h3>Menor Eficiência</h3>
-            <p id="kpi-menor-eficiencia-rel">0%</p>
+          <div id="kpi3" class="kpi-card">
+            <h3 style="color: white;">Menor Eficiência</h3>
+            <p style="color: white;" id="kpi-menor-eficiencia-rel">0%</p>
           </div>
 
-          <div class="kpi-card">
-            <h3>Perda Total</h3>
-            <p id="kpi-perda-rel">1188 kg</p>
+          <div id="kpi4" class="kpi-card">
+            <h3 style="color: white;">Perda Total</h3>
+            <p style="color: white;" id="kpi-perda-rel">1188 kg</p>
+          </div>
+        </div>
+        <div class="relatorio">
+          <span>Histórico de registro da altura por sensores</span>
+          <div class="registro cabecalho">
+            <div>Data / Hora</div>
+            <div>Altura (cm)</div>
+            <div>Sensor</div>
+          </div>
+
+          <div class="registro preto">
+            <div>10/04/2025 10:00:00</div>
+            <div>38</div>
+            <div>1A</div>
+          </div>
+          <div class="registro preto">
+            <div>10/04/2025 10:00:00</div>
+            <div>38</div>
+            <div>1A</div>
+          </div>
+          <div class="registro preto">
+            <div>17/04/2026 14:00:00</div>
+            <div>64</div>
+            <div>1A</div>
+          </div>
+          <div class="registro preto">
+            <div>24/04/2026 10:00:00</div>
+            <div>92</div>
+            <div>1A</div>
+          </div>
+          <div class="registro preto">
+            <div>31/04/2026 14:00:00</div>
+            <div>150</div>
+            <div>1A</div>
+          </div>
+          <div class="registro preto">
+            <div>07/04/2026 10:00:00</div>
+            <div>200</div>
+            <div>1A</div>
+          </div>
+          <div class="registro preto">
+            <div>14/04/2026 14:00:00</div>
+            <div>224.6</div>
+            <div>1A</div>
           </div>
         </div>
       </div>
+
+
+
     </div>
 
+    <script>
+      const ctx = document.getElementById('myChart');
 
+      let altura = [60, 80, 120, 169, 190, 224.6];
+      let crescimento = [];
+      let eficiencia = []
 
-  </div>
+      for (let i = 0; i < altura.length; i++) {
 
-  <script>
-    const ctx = document.getElementById('myChart');
+        if (i == 0) {
+          crescimento.push(null);
+        } else {
+          let calc = (altura[i] - altura[i - 1]) / altura[i - 1] * 100;
+          crescimento.push(Number(calc.toFixed(1)));
+        }
 
-    let altura = [60, 80, 120, 169, 190, 224.6];
-    let crescimento = [];
-    let eficiencia = []
-
-    for (let i = 0; i < altura.length; i++) {
-
-      if (i == 0) {
-        crescimento.push(null);
-      } else {
-        let calc = (altura[i] - altura[i - 1]) / altura[i - 1] * 100;
-        crescimento.push(Number(calc.toFixed(1)));
       }
 
-    }
+      for (let i = 0; i < crescimento.length; i++) {
 
-    for (let i = 0; i < crescimento.length; i++) {
+        if (i == 0 || crescimento[i] == null) {
+          eficiencia.push(null);
+        } else {
+          let calc = crescimento[i] / 34.6 * 100;
+          eficiencia.push(Number(calc.toFixed(1)));
+        }
 
-      if (i == 0 || crescimento[i] == null) {
-        eficiencia.push(null);
-      } else {
-        let calc = crescimento[i] / 34.6 * 100;
-        eficiencia.push(Number(calc.toFixed(1)));
       }
 
-    }
 
 
+      new Chart(ctx, {
+        data: {
+          labels: ['Ponto base', 'Semana 2', 'Semana 3', 'Semana 4', 'Semana 5', 'Semana 6'],
+          datasets: [
+            {
+              type: 'bar',
+              label: 'Altura',
+              data: altura,
+              borderColor: '#059669',
+              backgroundColor: '#059669',
+              borderWidth: 1,
+              borderRadius: 8
 
-    new Chart(ctx, {
-      data: {
-        labels: ['Ponto base', 'Semana 2', 'Semana 3', 'Semana 4', 'Semana 5', 'Semana 6'],
-        datasets: [
-          {
-            type: 'bar',
-            label: 'Altura',
-            data: altura,
-            borderColor: '#059669',
-            backgroundColor: '#059669',
-            borderWidth: 1,
-            borderRadius: 8
-
-          },
-          {
-            type: 'bar',
-            label: 'Crescimento (%)',
-            data: crescimento,
-            //  borderColor: '#FACC15', 
-            backgroundColor: '#FBBF24',
-            borderWidth: 1,
-            borderRadius: 8
-          },
-          {
-            type: 'line',
-            label: 'Eficiencia (%)',
-            borderColor: '#064E3B',
-            backgroundColor: '#064E3B',
-            data: eficiencia,
-            borderWidth: 2,
-            borderRadius: 5
-          }
-        ]
-      },
-      options: {
-        plugins: {
-          title: {
-            display: true,
-            text: "Índice de Eficiência Temporal",
-            font: {
-              size: 18
             },
-            color: '#064E3B'
-          },
-          legend: {
-            position: 'right'
-          }
-        },
-        scales: {
-          y: {
-            beginAtZero: true
-          }
-        }
-      }
-    });
-
-
-    /*GRAFICO DE PERDA*/
-    const kgs = document.getElementById('graficoBarras');
-
-    let hectares = 1;
-    let perdaPorDiaPorHectare = 39.6;
-
-
-    let dias = [1, 5, 10, 15, 30];
-
-
-    let perdaKg = dias.map(dia => dia * perdaPorDiaPorHectare * hectares);
-
-
-    new Chart(kgs, {
-      type: 'bar',
-      data: {
-        labels: dias.map(d => `Dia ${d}`),
-        datasets: [
-          {
-            label: 'Perda Acumulada (Kg)',
-            data: perdaKg,
-            borderColor: '#003814',
-            backgroundColor: '#059669',
-            borderWidth: 1,
-            borderRadius: 5
-          },
-        ]
-      },
-      options: {
-         indexAxis: 'y',
-        responsive: true,
-        plugins: {
-          title: {
-            display: true,
-            text: "Perda de Produção (Kg) após Maturação Fisiológica",
-            font: { size: 18 },
-            color: '#064E3B'
-          },
-          legend: { position: 'right' }
-        },
-        scales: {
-          x: {
-            beginAtZero: true,
-            title: {
-              display: true,
-              text: 'Quilos (Kg)'
-            }
-          },
-          y: {
-            title: {
-              display: true,
-              text: 'Dias Decorridos'
-            }
-          }
-        }
-      }
-    });
-    // GRÁFICO CRESCIMENTO IDEAL X REAL
-    let crescimentoTotal = 224.6;
-    let semanas = 6;
-
-    let crescimentoIdealPorSemana = crescimentoTotal / semanas;
-
-    let labelsCrescimento = [];
-    for (let i = 1; i <= semanas; i++) {
-      labelsCrescimento.push("Semana " + i);
-    }
-
-    let crescimentoIdeal = [];
-    for (let i = 1; i <= semanas; i++) {
-      crescimentoIdeal.push(i * crescimentoIdealPorSemana);
-    }
-
-    let crescimentoReal = [38, 64, 92, 150, 200, 224.6];
-
-    let ctx3 = document.getElementById('graficoCrescimento');
-
-    new Chart(ctx3, {
-      type: 'line',
-      data: {
-        labels: labelsCrescimento,
-        datasets: [
-          {
-            label: 'Crescimento Ideal (cm)',
-            data: crescimentoIdeal,
-            borderColor: '#10B981',
-            backgroundColor: '#10B981',
-            borderWidth: 2,
-            tension: 0.3
-          },
-          {
-            label: 'Crescimento Real (cm)',
-            data: crescimentoReal,
-            borderColor: '#064E3B',
-            backgroundColor: '#064E3B',
-            borderWidth: 2,
-            tension: 0.3
-          }
-        ]
-      },
-      options: {
-        responsive: true,
-        plugins: {
-          title: {
-            display: true,
-            text: 'Comparação do Crescimento do Milho (6 semanas)',
-            font: { size: 18 },
-            color: '#064E3B'
-          },
-          legend: {
-            position: 'right'
-          }
-        },
-        scales: {
-          x: {
-            title: {
-              display: true,
-              text: 'Semanas'
-            }
-          },
-          y: {
-            title: {
-              display: true,
-              text: 'Crescimento (cm)'
+            {
+              type: 'bar',
+              label: 'Crescimento (%)',
+              data: crescimento,
+              //  borderColor: '#FACC15', 
+              backgroundColor: '#FBBF24',
+              borderWidth: 1,
+              borderRadius: 8
             },
-            beginAtZero: true
+            {
+              type: 'line',
+              label: 'Eficiencia (%)',
+              borderColor: '#064E3B',
+              backgroundColor: '#064E3B',
+              data: eficiencia,
+              borderWidth: 2,
+              borderRadius: 5
+            }
+          ]
+        },
+        options: {
+          plugins: {
+            title: {
+              display: true,
+              text: "Índice de Eficiência Temporal",
+              font: {
+                size: 18
+              },
+              color: '#064E3B'
+            },
+            legend: {
+              position: 'right'
+            }
+          },
+          scales: {
+            y: {
+              beginAtZero: true
+            }
           }
         }
+      });
+
+
+      /*GRAFICO DE PERDA*/
+      const kgs = document.getElementById('graficoBarras');
+
+      let hectares = 1;
+      let perdaPorDiaPorHectare = 39.6;
+
+
+      let dias = [1, 5, 10, 15, 30];
+
+
+      let perdaKg = dias.map(dia => dia * perdaPorDiaPorHectare * hectares);
+
+
+      new Chart(kgs, {
+        type: 'bar',
+        data: {
+          labels: dias.map(d => `Dia ${d}`),
+          datasets: [
+            {
+              label: 'Perda Acumulada (Kg)',
+              data: perdaKg,
+              borderColor: '#003814',
+              backgroundColor: '#059669',
+              borderWidth: 1,
+              borderRadius: 5
+            },
+          ]
+        },
+        options: {
+          indexAxis: 'y',
+          responsive: true,
+          plugins: {
+            title: {
+              display: true,
+              text: "Perda de Produção (Kg) após Maturação Fisiológica",
+              font: { size: 18 },
+              color: '#064E3B'
+            },
+            legend: { position: 'right' }
+          },
+          scales: {
+            x: {
+              beginAtZero: true,
+              title: {
+                display: true,
+                text: 'Quilos (Kg)'
+              }
+            },
+            y: {
+              title: {
+                display: true,
+                text: 'Dias Decorridos'
+              }
+            }
+          }
+        }
+      });
+      // GRÁFICO CRESCIMENTO IDEAL X REAL
+      let crescimentoTotal = 224.6;
+      let semanas = 6;
+
+      let crescimentoIdealPorSemana = crescimentoTotal / semanas;
+
+      let labelsCrescimento = [];
+      for (let i = 1; i <= semanas; i++) {
+        labelsCrescimento.push("Semana " + i);
       }
-    });
 
-    let ultimaAltura = altura[altura.length - 1];
-    let ultimaEficiencia = eficiencia[eficiencia.length - 1];
-    let perdaTotal = perdaKg[perdaKg.length - 1];
-    let menorEficiencia = 99
-
-    for (let i = 0; i < eficiencia.length - 1; i++) {
-      if (eficiencia[i] != null && eficiencia[i] < menorEficiencia) {
-        menorEficiencia = eficiencia[i]
+      let crescimentoIdeal = [];
+      for (let i = 1; i <= semanas; i++) {
+        crescimentoIdeal.push(i * crescimentoIdealPorSemana);
       }
-    }
 
-    document.getElementById('kpi-altura').innerText = `${ultimaAltura} cm`;
-    document.getElementById('kpi-eficiencia').innerText = `${ultimaEficiencia}%`;
-    document.getElementById('kpi-menor-eficiencia').innerText = `${menorEficiencia}%`;
-    document.getElementById('kpi-perda').innerText = `${perdaTotal.toFixed(0)} kg`;
+      let crescimentoReal = [38, 64, 92, 150, 200, 224.6];
 
-    document.getElementById('kpi-altura-rel').innerText = `${ultimaAltura} cm`;
-    document.getElementById('kpi-eficiencia-rel').innerText = `${ultimaEficiencia}%`;
-    document.getElementById('kpi-menor-eficiencia-rel').innerText = `${menorEficiencia}%`;
-    document.getElementById('kpi-perda-rel').innerText = `${perdaTotal.toFixed(0)} kg`;
+      let ctx3 = document.getElementById('graficoCrescimento');
 
-    let menuItems = document.querySelectorAll('.menu-item');
-    let sections = document.querySelectorAll('.section');
+      new Chart(ctx3, {
+        type: 'line',
+        data: {
+          labels: labelsCrescimento,
+          datasets: [
+            {
+              label: 'Crescimento Ideal (cm)',
+              data: crescimentoIdeal,
+              borderColor: '#10B981',
+              backgroundColor: '#10B981',
+              borderWidth: 2,
+              tension: 0.3
+            },
+            {
+              label: 'Crescimento Real (cm)',
+              data: crescimentoReal,
+              borderColor: '#064E3B',
+              backgroundColor: '#064E3B',
+              borderWidth: 2,
+              tension: 0.3
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            title: {
+              display: true,
+              text: 'Comparação do Crescimento do Milho (6 semanas)',
+              font: { size: 18 },
+              color: '#064E3B'
+            },
+            legend: {
+              position: 'right'
+            }
+          },
+          scales: {
+            x: {
+              title: {
+                display: true,
+                text: 'Semanas'
+              }
+            },
+            y: {
+              title: {
+                display: true,
+                text: 'Crescimento (cm)'
+              },
+              beginAtZero: true
+            }
+          }
+        }
+      });
 
-function removeActiveFromList(list) {
-  list.forEach(function(item) {
-    item.classList.remove('active');
-  });
-}
+      /* Gráfico de pizza */
+      let ctx4 = document.getElementById('graficoPizza');
 
-function handleMenuClick(event) {
-  let sectionId = this.getAttribute('data-section');
+      new Chart(ctx4, {
+        type: 'doughnut',
+        data: {
+          labels: ['Altura ideal', 'Altura baixo do ideal'],
+          datasets: [{
+            label: 'Quantidade de sensores',
+            data: [1, 9],
+            borderWidth: 0,
+            backgroundColor: ['#059669', '#FBBF24']
+          },
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            title: {
+              display: true,
+              text: 'Sensores na altura ideal',
+              font: { size: 18 },
+              color: '#064E3B'
+            },
+            legend: {
+              position: 'bottom'
+            }
+          },
+          scales: {
+          }
+        }
+      });
 
-  removeActiveFromList(sections);
-  removeActiveFromList(menuItems);
 
-  document.getElementById(sectionId).classList.add('active');
-  this.classList.add('active');
-}
+      let ultimaAltura = altura[altura.length - 1];
+      let ultimaEficiencia = eficiencia[eficiencia.length - 1];
+      let perdaTotal = perdaKg[perdaKg.length - 1];
+      let menorEficiencia = 99
 
-menuItems.forEach(function(item) {
-  item.addEventListener('click', handleMenuClick);
-});
+      for (let i = 0; i < eficiencia.length - 1; i++) {
+        if (eficiencia[i] != null && eficiencia[i] < menorEficiencia) {
+          menorEficiencia = eficiencia[i]
+        }
+      }
 
-  </script>
+      document.getElementById('kpi-altura').innerText = `${ultimaAltura} cm`;
+      document.getElementById('kpi-eficiencia').innerText = `${ultimaEficiencia}%`;
+      document.getElementById('kpi-menor-eficiencia').innerText = `${menorEficiencia}%`;
+      document.getElementById('kpi-perda').innerText = `${perdaTotal.toFixed(0)} kg`;
+
+      document.getElementById('kpi-altura-rel').innerText = `${ultimaAltura} cm`;
+      document.getElementById('kpi-eficiencia-rel').innerText = `${ultimaEficiencia}%`;
+      document.getElementById('kpi-menor-eficiencia-rel').innerText = `${menorEficiencia}%`;
+      document.getElementById('kpi-perda-rel').innerText = `${perdaTotal.toFixed(0)} kg`;
+
+      let menuItems = document.querySelectorAll('.menu-item');
+      let sections = document.querySelectorAll('.section');
+
+      function removeActiveFromList(list) {
+        list.forEach(function (item) {
+          item.classList.remove('active');
+        });
+      }
+
+      function handleMenuClick(event) {
+        let sectionId = this.getAttribute('data-section');
+
+        removeActiveFromList(sections);
+        removeActiveFromList(menuItems);
+
+        document.getElementById(sectionId).classList.add('active');
+        this.classList.add('active');
+      }
+
+      menuItems.forEach(function (item) {
+        item.addEventListener('click', handleMenuClick);
+      });
+
+
+      /* alertas kpi */
+      if (ultimaEficiencia < 50) {
+        kpi1.style.backgroundColor = '#ff3434'
+      } else if (ultimaEficiencia < 100) {
+        kpi1.style.backgroundColor = '#FBBF24'
+      } else {
+        kpi1.style.backgroundColor = '#059669'
+      }
+
+      if (ultimaAltura < 220) {
+        kpi2.style.backgroundColor = '#FBBF24'
+      } else {
+        kpi2.style.backgroundColor = '#059669'
+      }
+
+      if (menorEficiencia < 50) {
+        kpi3.style.backgroundColor = '#ff3434'
+      } else if (menorEficiencia < 100) {
+        kpi3.style.backgroundColor = '#FBBF24'
+      } else {
+        kpi3.style.backgroundColor = '#059669'
+      }
+
+      if (perdaTotal < 0) {
+        kpi4.style.backgroundColor = '#059669'
+      } else if (perdaTotal < 500) {
+        kpi4.style.backgroundColor = '#FBBF24'
+      } else {
+        kpi4.style.backgroundColor = '#ff3434'
+      }
+
+    </script>
 
 </body>
 
