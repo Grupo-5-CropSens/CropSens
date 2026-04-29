@@ -160,7 +160,7 @@
     <script>
       const ctx = document.getElementById('myChart');
 
-      let altura = [60, 80, 120, 169, 190, 224.6];
+      let altura = [60, 80, 120, 169, 190, 224.6,];
       let crescimento = [];
       let eficiencia = []
 
@@ -416,7 +416,7 @@
       let perdaTotal = perdaKg[perdaKg.length - 1];
       let menorEficiencia = 99
 
-      for (let i = 0; i < eficiencia.length - 1; i++) {
+      for (let i = 0; i < eficiencia.length; i++) {
         if (eficiencia[i] != null && eficiencia[i] < menorEficiencia) {
           menorEficiencia = eficiencia[i]
         }
