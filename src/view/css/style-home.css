@@ -16,7 +16,7 @@ body{
 
 .banner {
      height: 520px;
-     background-image: url(/sptech/view/img/home.png);
+     background-image: url(../html/img/home.png);
      background-size: cover;
      background-position: center;
      color: white;
