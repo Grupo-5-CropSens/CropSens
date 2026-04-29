@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CropSens</title>
+  <link rel="stylesheet" href="../css/style-landing.css" />
+</head>
+
+<body>
+  <!-- HEADER -->
+  <div class="header">
+    <img src="./img/CropSens.png" class="logo" />
+    <div class="menu">
+      <a href="#home">Home</a>
+      <a href="#quem-somos">Quem Somos</a>
+      <a href="#solucao">Solução</a>
+      <a href="#calculadora">Calculadora</a>
+    </div>
+    <a href="login.html" class="btn-cliente">ENTRAR</a>
+  </div>
+
+  <!-- SEÇÃO HOME / BANNER -->
+  <section id="home" class="banner">
+    <div class="conteudo">
+      <h1 class="title">Transforme dados em decisões mais lucrativas</h1>
+      <p style="margin-top: 10px">
+        Com dados precisos, gráficos e análises, você reduz perdas, melhora a
+        produtividade e toma decisões com respaldo tecnológico.
+      </p>
+      <a href="#calculadora" class="btn-contato">CONHEÇA A SOLUÇÃO</a>
+    </div>
+  </section>
+
+  <!-- SEÇÃO QUEM SOMOS -->
+  <section id="quem-somos" class="quem-somos">
+    <div class="container">
+
+      <div class="oi">
+        <div class="textos">
+          <h3>Quem somos</h3>
+
+          <div class="conteudo-quem-somos">
+            <h2>
+              Monitoramento Inteligente para agricultura de precisão, aumentando a rentabilidade da lavoura.
+            </h2>
+          </div>
+
+          <div class="text_msg">
+            Somos uma empresa focada em agricultura e precisão.
+          </div><br>
+
+          <div class="subtext">
+            Utilizamos sensores, análise de dados e dashboards inteligentes
+            para transformar informações da lavoura em decisões estratégicas.
+          </div>
+        </div>
+
+        <div class="foto">
+          <img src="./img/imagem-milho.png" alt="Milho na plantação" loading="lazy">
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SEÇÃO SOLUÇÃO -->
+  <section id="solucao" class="fluxo">
+
+    <div class="h1-title">
+      <h2 style="color:aliceblue;">Tecnologia aplicada ao agro</h2>
+      <h1 style="color: aliceblue;">Temos a solução que você procura!</h1>
+    </div>
+
+    <div class="carousel">
+      <div class="group">
+
+        <div class="caixa"><h3>O sensor faz a medição da altura do milho</h3></div>
+        <div class="caixa"><h3>Os dados coletados são armazenados para análise</h3></div>
+        <div class="caixa"><h3>Depois, os dados são apresentados em dashboards</h3></div>
+
+        <div class="caixa"><h3>O sensor faz a medição da altura do milho</h3></div>
+        <div class="caixa"><h3>Os dados coletados são armazenados para análise</h3></div>
+        <div class="caixa"><h3>Depois, os dados são apresentados em dashboards</h3></div>
+
+        <div class="caixa"><h3>O sensor faz a medição da altura do milho</h3></div>
+        <div class="caixa"><h3>Os dados coletados são armazenados para análise</h3></div>
+        <div class="caixa"><h3>Depois, os dados são apresentados em dashboards</h3></div>
+
+      </div>
+    </div>
+
+  </section>
+
+  <!-- SEÇÃO CALCULADORA -->
+  <section id="calculadora" class="container-calculadora">
+    <div class="main-container">
+
+      <div class="secao-superior">
+        <div class="container-imagem">
+          <img src="./img/Rectangle 9.png" alt="Milho">
+        </div>
+
+        <div class="texto-solucao">
+          <div class="header-calculadora">O Problema Invisível</div>
+          <h1>O milho perde peso mesmo parado no campo</h1>
+          <p>
+            Após a maturidade fisiológica, o grão continua "respirando" e sofre com o clima.
+            Isso causa uma perda de massa invisível.
+          </p>
+        </div>
+      </div>
+
+      <div class="painel-verde">
+        <div class="texto-calculadora">
+          <div class="header-calculadora2">Simulador de Lucratividade</div>
+          <h2>Quanto você deixa de ganhar por dia?</h2>
+          <p>Insira seus dados e veja o impacto financeiro do atraso na colheita.</p>
+        </div>
+
+        <div class="area-calculadora">
+
+          <div class="linha-inputs-topo">
+            <div class="input-group">
+              <label>Área Total (Hectares):</label>
+              <input type="number" id="iptHectare">
+            </div>
+
+            <div class="input-group">
+              <label>Produtividade (Kg/ha):</label>
+              <input type="number" id="iptProdutividade">
+            </div>
+          </div>
+
+          <div class="input-group">
+            <label>Preço do Milho (R$):</label>
+            <input type="number" id="iptPreco">
+          </div>
+
+          <button onclick="btCalcular()">ANALISAR</button>
+
+          <div id="caixaSaida"></div>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="rodape">
+  <div class="container-rodape">
+
+    <div class="rodape-top">
+
+      <div class="footer-logo">
+        <img src="./img/CropSens.png" />
+      </div>
+
+      <div class="footer-info">
+        <h3>Contato</h3>
+        <p>(11) 99999-9999</p>
+        <p>contato@cropsens.com.br</p>
+      </div>
+
+      <div class="footer-social">
+        <h3>Redes</h3>
+
+        <div class="social-links"> <!-- opcional mas ajuda -->
+          <a href="https://github.com/Grupo-5-CropSens/CropSens" class="social-icon">
+            <img src="https://cdn.jsdelivr.net/npm/simple-icons@v10/icons/github.svg" width="24">
+          </a>
+
+          <a href="#" class="social-icon">
+            <img src="https://cdn.jsdelivr.net/npm/simple-icons@v10/icons/instagram.svg" width="24">
+          </a>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+</footer>
+
+  <script>
+    function btCalcular() {
+      let hectare = Number(iptHectare.value);
+      let preco = Number(iptPreco.value);
+
+      if (hectare > 0 && preco > 0) {
+        let perdaDia = hectare * 39.6;
+
+        caixaSaida.innerHTML = `
+          <p>Perda em 7 dias: <b>R$ ${(perdaDia * 7 * preco).toFixed(2)}</b></p>
+        `;
+      } else {
+        caixaSaida.innerHTML = `<b>Preencha tudo direito aí 😅</b>`;
+      }
+    }
+  </script>
+
+</body>
+</html>

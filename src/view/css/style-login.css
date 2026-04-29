@@ -10,7 +10,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background: radial-gradient(circle, #00000066, #000000b3), url(img/milhasso2.jpg);
+            background: radial-gradient(circle, #00000066, #000000b3), url(../html/img/milhasso2.jpg);
             background-size: cover;
             background-position: center;
         }
