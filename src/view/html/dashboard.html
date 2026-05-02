@@ -251,17 +251,20 @@
       let hectares = 1;
       let perdaPorDiaPorHectare = 39.6;
 
+      let dias = [1, 7, 10, 15, 30];
 
-      let dias = [1, 5, 10, 15, 30];
+      let perdaKg = [];
+      let labelsDias = [];
 
-
-      let perdaKg = dias.map(dia => dia * perdaPorDiaPorHectare * hectares);
-
+      for (let i = 0; i < dias.length; i++) {
+        perdaKg.push(dias[i] * perdaPorDiaPorHectare * hectares);
+        labelsDias.push(`Dia ${dias[i]}`);
+      }
 
       new Chart(kgs, {
         type: 'bar',
         data: {
-          labels: dias.map(d => `Dia ${d}`),
+          labels: labelsDias,
           datasets: [
             {
               label: 'Perda Acumulada (Kg)',
