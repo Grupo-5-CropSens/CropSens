@@ -56,7 +56,6 @@ const serial = async (
         // armazena os valores dos sensores nos arrays correspondentes
         valoresSensorUltrassonico.push(SensorUltrassonico);
    
-
         // insere os dados no banco de dados (se habilitado)
         if (HABILITAR_OPERACAO_INSERIR) {
 
