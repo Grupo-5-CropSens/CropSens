@@ -14,7 +14,7 @@
     }
 
     .container {
-        background: radial-gradient(circle, #00000066, #000000b3), url(img/milhudo.png);
+        background: radial-gradient(circle, #00000066, #000000b3), url(../html/img/milhudo.png);
         background-size: cover;
         background-position: left;
         display: flex;
