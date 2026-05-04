@@ -56,8 +56,8 @@
         </div>
 
         <div class="kpi-card">
-          <h3>Perda Total</h3>
-          <p id="kpi-perda">1188 kg</p>
+          <h3>Custo Mínimo</h3>
+          <p id="kpi-perda">R$ 225</p>
         </div>
       </div>
       <div class="charts-container">
@@ -103,8 +103,8 @@
           </div>
 
           <div id="kpi4" class="kpi-card">
-            <h3 style="color: white;">Perda Total</h3>
-            <p style="color: white;" id="kpi-perda-rel">1188 kg</p>
+            <h3 style="color: white;">Custo Mínimo</h3>
+            <p style="color: white;" id="kpi-perda-rel">R$ 225</p>
           </div>
         </div>
         <div class="relatorio">
@@ -245,61 +245,147 @@
       });
 
 
-      /*GRAFICO DE PERDA*/
+      /*GRAFICO DE PERDA DE PRODUÇÃO PÓS-MATURAÇÃO*/
       const kgs = document.getElementById('graficoBarras');
 
-      let hectares = 1;
-      let perdaPorDiaPorHectare = 39.6;
+      // Dados de dias pós-maturação (DAM)
+      let potencialMaximo = 10000; // kg/ha
+      let diasDAM = [0, 15, 30, 45, 60];
+      let produtividadeReal = [10000, 9950, 9700, 9000, 7500]; // kg/ha
+      let perdaAcumulada = [0, 50, 300, 1000, 2500]; // kg
+      let percentualPerda = [0, 0.5, 3, 10, 25]; // %
+      let labelsDam = [];
+      let custoPerdaFinanceira = [];
+      let custoSecagem = [1200, 200, 0, 0, 0]; // Custo de secagem por DAM (R$/ha)
 
-      let dias = [1, 7, 10, 15, 30];
-
-      let perdaKg = [];
-      let labelsDias = [];
-
-      for (let i = 0; i < dias.length; i++) {
-        perdaKg.push(dias[i] * perdaPorDiaPorHectare * hectares);
-        labelsDias.push(`Dia ${dias[i]}`);
+      // Cálculo de custo total (secagem + perda)
+      let custoPorKg = 0.50;
+      let custoTotalDam = [];
+      
+      for (let i = 0; i < diasDAM.length; i++) {
+        labelsDam.push(`${diasDAM[i]} DAM`);
+        let custoPerda = perdaAcumulada[i] * custoPorKg;
+        let custoTotal = custoPerda + custoSecagem[i];
+        custoTotalDam.push(custoTotal);
       }
 
+      // Calcula ponto ótimo (menor custo total)
+      let custoMinimo = Math.min(...custoTotalDam);
+      let indicePontoOtimo = custoTotalDam.indexOf(custoMinimo);
+      let damPontoOtimo = diasDAM[indicePontoOtimo];
+
       new Chart(kgs, {
-        type: 'bar',
+        type: 'line',
         data: {
-          labels: labelsDias,
+          labels: labelsDam,
           datasets: [
             {
-              label: 'Perda Kg',
-              data: perdaKg,
-              borderColor: '#003814',
+              label: 'Produtividade (kg/ha)',
+              data: produtividadeReal,
+              borderColor: '#059669',
               backgroundColor: '#059669',
-              borderWidth: 1,
-              borderRadius: 5
+              borderWidth: 3,
+              tension: 0.3,
+              fill: false,
+              pointRadius: 4,
+              pointBackgroundColor: '#059669',
+              pointBorderColor: '#059669',
+              pointBorderWidth: 2,
+              yAxisID: 'y'
             },
+            {
+              label: 'Custo Total (R$)',
+              data: custoTotalDam,
+              borderColor: '#ff3434',
+              backgroundColor: '#ff3434',
+              borderWidth: 3,
+              tension: 0.3,
+              fill: false,
+              pointRadius: 4,
+              pointBackgroundColor: '#ff3434',
+              pointBorderColor: '#ff3434',
+              pointBorderWidth: 2,
+              yAxisID: 'y1'
+            }
           ]
         },
         options: {
-          indexAxis: 'y',
           responsive: true,
+          interaction: {
+            mode: 'index',
+            intersect: false
+          },
           plugins: {
             title: {
               display: true,
-              text: "Perda de Produção (Kg) após Maturação Fisiológica",
-              font: { size: 18 },
-              color: '#064E3B'
+              text: "Impacto do Tempo de Colheita na Produtividade e Custo",
+              font: { size: 16, weight: 'bold' },
+              color: '#064E3B',
+              padding: 15
             },
-            legend: { position: 'right' }
+            legend: {
+              position: 'top',
+              labels: {
+                font: { size: 12 },
+                padding: 12,  
+
+              }
+            },
+            tooltip: {
+              backgroundColor: 'rgba(0,0,0,0.7)',
+              padding: 10,
+              titleFont: { size: 12 },
+              bodyFont: { size: 11 }  
+            }
           },
           scales: {
             x: {
-              beginAtZero: true,
               title: {
                 display: true,
-                text: 'Quilos (Kg)'
+                text: 'DAM = Dias após maturação',
+                font: { size: 12 }
+              },
+              ticks: {
+                font: { size: 11 }
+              },
+              grid: {
+                color: 'rgba(0,0,0,0.05)'
               }
             },
             y: {
+              type: 'linear',
+              display: true,
+              position: 'left',
               title: {
                 display: true,
-                text: 'Dias Decorridos'
+                text: 'kg/ha',
+                font: { size: 12 },
+                color: '#059669'
+              },
+              ticks: {
+                color: '#059669',
+                font: { size: 11 }
+              },
+              grid: {
+                color: 'rgba(5, 150, 105, 0.1)'
+              }
+            },
+            y1: {
+              type: 'linear',
+              display: true,
+              position: 'right',
+              title: {
+                display: true,
+                text: 'R$',
+                font: { size: 12 },
+                color: '#ff3434'
+              },
+              ticks: {
+                color: '#ff3434',
+                font: { size: 11 }
+              },
+              grid: {
+                drawOnChartArea: false
               }
             }
           }
@@ -416,7 +502,7 @@
 
       let ultimaAltura = altura[altura.length - 1];
       let ultimaEficiencia = eficiencia[eficiencia.length - 1];
-      let perdaTotal = perdaKg[perdaKg.length - 1];
+      let custoMinimoDam = custoMinimo;
       let menorEficiencia = 99
 
       for (let i = 0; i < eficiencia.length; i++) {
@@ -428,12 +514,12 @@
       document.getElementById('kpi-altura').innerText = `${ultimaAltura} cm`;
       document.getElementById('kpi-eficiencia').innerText = `${ultimaEficiencia}%`;
       document.getElementById('kpi-menor-eficiencia').innerText = `${menorEficiencia}%`;
-      document.getElementById('kpi-perda').innerText = `${perdaTotal.toFixed(0)} kg`;
+      document.getElementById('kpi-perda').innerText = `R$ ${custoMinimoDam.toFixed(0)}`;
 
       document.getElementById('kpi-altura-rel').innerText = `${ultimaAltura} cm`;
       document.getElementById('kpi-eficiencia-rel').innerText = `${ultimaEficiencia}%`;
       document.getElementById('kpi-menor-eficiencia-rel').innerText = `${menorEficiencia}%`;
-      document.getElementById('kpi-perda-rel').innerText = `${perdaTotal.toFixed(0)} kg`;
+      document.getElementById('kpi-perda-rel').innerText = `R$ ${custoMinimoDam.toFixed(0)}`;
 
       let menuItems = document.querySelectorAll('.menu-item');
       let sections = document.querySelectorAll('.section');
@@ -482,12 +568,12 @@
         kpi3.style.backgroundColor = '#059669'
       }
 
-      if (perdaTotal < 0) {
+      if (custoMinimoDam < 100) {
         kpi4.style.backgroundColor = '#059669'
-      } else if (perdaTotal < 500) {
-        kpi4.style.backgroundColor = '#FBBF24'
+      } else if (custoMinimoDam < 230) {
+        kpi4.style.backgroundColor = '#059669'
       } else {
-        kpi4.style.backgroundColor = '#ff3434'
+        kpi4.style.backgroundColor = '#FBBF24'
       }
 
     </script>
