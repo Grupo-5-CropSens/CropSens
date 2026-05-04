@@ -81,27 +81,28 @@ SELECT * FROM plantacao;
 SELECT * FROM sensor;
 SELECT * FROM leitura_sensor;
 
-SELECT u.nome AS Usuario, u.email AS Email, f.nome AS 'Nome Fazenda', f.cep AS CEP FROM usuario AS u JOIN fazenda AS f ON u.id = f.id;
+SELECT u.nome AS Usuario, u.email AS Email, f.nome AS 'Nome Fazenda', f.cep AS CEP FROM usuario AS u JOIN fazenda AS f ON f.fkUsuario = u.id;
 
 SELECT u.nome AS Usuario, f.nome AS 'Nome Fazenda', f.cep AS CEP, p.id AS 'ID_Plantação'
- FROM usuario AS u JOIN fazenda AS f ON u.id = f.id JOIN plantacao as p ON p.id = f.id;
+ FROM usuario AS u JOIN fazenda AS f ON f.fkUsuario = u.id JOIN plantacao as p ON p.fkFazenda = f.id;
  
 SELECT u.nome AS 'Usuário', f.nome AS 'Nome Fazenda', p.id AS 'ID_Plantação', s.statusSensor AS 'Status do Sensor' 
-	FROM usuario AS u JOIN fazenda AS f ON u.id = f.id 
-		JOIN plantacao AS p ON f.id = p.id
-			JOIN sensor AS s ON p.id = s.id WHERE statusSensor = 'ativo';
-            
-SELECT u.nome AS 'Usuário', f.nome AS 'Nome Fazenda', p.id AS 'ID_Plantação', s.statusSensor AS 'Status do Sensor'
-	FROM usuario AS u JOIN fazenda AS f ON u.id = f.id 
-		JOIN plantacao AS p ON f.id = p.id
-			JOIN sensor AS s ON p.id = s.id WHERE statusSensor = 'inativo';
+	FROM usuario AS u JOIN fazenda AS f ON f.fkUsuario = u.id 
+		JOIN plantacao AS p ON p.fkFazenda = f.id
+			JOIN sensor AS s ON s.fkPlantacao = p.id WHERE statusSensor = 'ativo';
             
 SELECT u.nome AS 'Usuário', f.nome AS 'Nome Fazenda', p.id AS 'ID_Plantação', s.statusSensor AS 'Status do Sensor' 
-	FROM usuario AS u JOIN fazenda AS f ON u.id = f.id 
-		JOIN plantacao AS p ON f.id = p.id
-			JOIN sensor AS s ON p.id = s.id WHERE statusSensor = 'manutencao';
+	FROM usuario AS u JOIN fazenda AS f ON f.fkUsuario = u.id 
+		JOIN plantacao AS p ON p.fkFazenda = f.id
+			JOIN sensor AS s ON s.fkPlantacao = p.id  WHERE statusSensor = 'inativo';
+            
+SELECT u.nome AS 'Usuário', f.nome AS 'Nome Fazenda', p.id AS 'ID_Plantação', s.statusSensor AS 'Status do Sensor' 
+	FROM usuario AS u JOIN fazenda AS f ON f.fkUsuario = u.id 
+		JOIN plantacao AS p ON p.fkFazenda = f.id
+			JOIN sensor AS s ON s.fkPlantacao = p.id  WHERE statusSensor = 'manutencao';
  
 SELECT u.nome AS 'Usuário', f.nome AS 'Nome Fazenda', p.id AS 'ID_Plantação', s.statusSensor AS 'Status do Sensor' 
-	FROM usuario AS u JOIN fazenda AS f ON u.id = f.id 
-		JOIN plantacao AS p ON f.id = p.id
-			JOIN sensor AS s ON p.id = s.id;
+	FROM usuario AS u JOIN fazenda AS f ON f.fkUsuario = u.id 
+		JOIN plantacao AS p ON p.fkFazenda = f.id
+			JOIN sensor AS s ON s.fkPlantacao = p.id;
+            
