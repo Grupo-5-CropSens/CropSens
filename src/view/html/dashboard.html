@@ -290,7 +290,7 @@
               pointRadius: 4,
               pointBackgroundColor: '#059669',
               pointBorderColor: '#059669',
-              pointBorderWidth: 0,
+              pointBorderWidth: 2,
               yAxisID: 'y'
             },
             {
@@ -304,7 +304,7 @@
               pointRadius: 4,
               pointBackgroundColor: '#ff3434',
               pointBorderColor: '#ff3434',
-              pointBorderWidth: 0,
+              pointBorderWidth: 2,
               yAxisID: 'y1'
             }
           ]
@@ -318,7 +318,7 @@
           plugins: {
             title: {
               display: true,
-              text: "Custo da Espera - Dias Após Maturação",
+              text: "Impacto do Tempo de Colheita na Produtividade e Custo",
               font: { size: 16, weight: 'bold' },
               color: '#064E3B',
               padding: 15
@@ -327,7 +327,7 @@
               position: 'top',
               labels: {
                 font: { size: 12 },
-                padding: 12,
+                padding: 12,  
 
               }
             },
@@ -570,10 +570,10 @@
 
       if (custoMinimoDam < 100) {
         kpi4.style.backgroundColor = '#059669'
-      } else if (custoMinimoDam < 500) {
-        kpi4.style.backgroundColor = '#FBBF24'
+      } else if (custoMinimoDam < 230) {
+        kpi4.style.backgroundColor = '#059669'
       } else {
-        kpi4.style.backgroundColor = '#ff3434'
+        kpi4.style.backgroundColor = '#FBBF24'
       }
 
     </script>
