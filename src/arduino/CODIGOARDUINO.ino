@@ -15,18 +15,8 @@
   void loop(){
 
     float distancia = sensor.distance();
-
-    if (distancia > 0 && distancia < 5){
-
-      // Serial.println("Tem Objeto");
-      Serial.println(distancia);
-    }
-
-    else{
-
-      Serial.println(distancia);
-        // Serial.println("Não tem Objeto");
-    }
+    
+    Serial.println(distancia);
 
 
     delay(1000);
