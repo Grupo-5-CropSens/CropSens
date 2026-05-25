@@ -1,8 +1,10 @@
 var express = require("express");
 var router = express.Router();
+var path = require("path");
 
 router.get("/", function (req, res) {
-    res.render("index");
+    // Aponta para dentro da pasta html onde está o seu index
+    res.sendFile(path.join(__dirname, "../../public/html/index.html"));
 });
 
 module.exports = router;
