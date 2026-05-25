@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/style-cadastro.css">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300..700&display=swap">
+</head>
+
+<body>
+    <div class="container">
+        <a href="index.html"><img src="./img/CropSens.png" class="logo" alt=""></a>
+        <p class="paragrafo">Cultive o futuro <br> com <span class="dados_precisos">dados precisos</span></p>
+        <div class="card">
+            <div class="form">
+                <h1>Criar conta</h1>
+                <p>Preencha os dados abaixo.</p>
+                <span class="texto">Nome completo:<span style="color: red;"> *</span></span>
+                <input id="ipt_nome" class="nome" placeholder="Digite seu nome completo">
+                <div class="erro" id="erro1"></div>
+
+                <span class="texto">E-mail:<span style="color: red;"> *</span></span>
+                <input id="ipt_email" class="email" placeholder="email@exemplo.com">
+                <div class="erro" id="erro2"></div>
+
+                <span class="texto">Telefone:<span style="color: red;"> *</span></span>
+                <input id="ipt_telefone" class="telefone" placeholder="(xx) xxxxx-xxxx">
+                <div class="erro" id="erro3"></div>
+
+                <span class="texto">Senha:<span style="color: red;"> *</span></span>
+                <input id="ipt_senha" class="senha" placeholder="Digite sua senha">
+                <div class="erro" id="erro4"></div>
+
+                <span class="texto">Confirmar a senha:<span style="color: red;"> *</span></span>
+                <input id="ipt_senha2" class="senha" placeholder="Digite sua senha novamente">
+                <div class="erro" id="erro5"></div>
+
+                <button class="botao" onclick="validar()">CADASTRAR</button>
+                <div class="login">Já possui conta? <a href="login.html"><span>Login</span></a></div>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    function validar() {
+        /* declarações */
+        let iptnome = ipt_nome.value.trim()
+        let iptemail = ipt_email.value.trim()
+        let ipttelefone = ipt_telefone.value.trim()
+        let iptsenha = ipt_senha.value.trim()
+        let iptsenha2 = ipt_senha.value.trim()
+
+        let erros = 0
+        erro1.innerHTML = ''
+        erro2.innerHTML = ''
+        erro3.innerHTML = ''
+        erro4.innerHTML = ''
+        erro5.innerHTML = ''
+        ipt_nome.style.border = "none"
+        ipt_email.style.border = "none"
+        ipt_telefone.style.border = "none"
+        ipt_senha.style.border = "none"
+        ipt_senha2.style.border = "none"
+
+        /* validações */
+        /* nome */
+        if (iptnome.length <= 2) {
+            erro1.innerHTML = `Nome inválido`
+            ipt_nome.style.border = "2px solid red"
+            erros++
+        }
+        /* email */
+        if (iptemail.length <= 6 || iptemail.indexOf('@') == -1) {
+            erro2.innerHTML = `E-mail inválido`
+            ipt_email.style.border = "2px solid red"
+            erros++
+        }
+        /* telefone */
+        if (ipttelefone.length != 11) {
+            erro3.innerHTML = `Número de telefone inválido`
+            ipt_telefone.style.border = "2px solid red"
+            erros++
+        }
+        /* senha */
+        if (iptsenha.length < 6) {
+            erro4.innerHTML += `Insira no mínimo 6 caracteres para a senha.`
+            ipt_senha.style.border = "2px solid red"
+            erros++
+        }
+        if (ipt_senha.value != ipt_senha2.value) {
+            erro5.innerHTML = `As senhas devem coincidir.`
+            ipt_senha2.style.border = "2px solid red"
+            erros++
+        }
+
+        if (erros == 0) {
+            registrar()
+        }
+
+        function registrar() {
+            alert('Registro realizado com sucesso')
+        }
+
+    }
+</script>
+
+</html>

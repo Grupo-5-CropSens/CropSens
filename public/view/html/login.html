@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="../css/style-login.css">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300..700&display=swap">
+
+</head>
+
+<body>
+    <div class="container">
+        <a href="index.html"><img src="./img/CropSens.png" class="logo" /></a>
+        <div class="card">
+            <div class="form">
+                <h1>Bom te ver de novo</h1>
+                <p>Use seus dados para continuar</p>
+
+                <label>E-mail:<span style="color: red;"> *</span></label>
+                <input id="ipt_email" type="email" class="email" placeholder="Digite seu e-mail">
+                <div class="erro" id="erro1"></div>
+
+                <label>Senha:<span style="color: red;"> *</span></label>
+                <input id="ipt_senha" type="password" class="senha" placeholder="Digite sua senha">
+                <div class="erro" id="erro2"></div>
+
+                <button onclick="validar()" class="botao">ACESSAR</button>
+                <div class="cadastro texto">Não possui conta? <a href="cadastro.html"><span>Cadastrar</span></a></div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+
+<script>
+    function validar() {
+        let email = ipt_email.value.trim()
+        let senha = ipt_senha.value.trim()
+        let erros = 0
+        let emails = ['admin@crop.com', 'user@crop.com', 'caramico@gmail.com' ]
+        let senhas = ['admin123', 'user123', 'caramico123@']
+
+        erro1.innerHTML = ''
+        erro2.innerHTML = ''
+        ipt_email.style.border = 'none'
+        ipt_senha.style.border = 'none'
+
+        if (email.length == 0) {
+            erro1.innerHTML = `Insira o e-mail`
+            ipt_email.style.border = '2px solid red'
+            erros++
+        }
+        if (email.indexOf('@') == -1 && email.length > 0) {
+            erro1.innerHTML = `E-mail inválido`
+            ipt_email.style.border = '2px solid red'
+            erros++
+        }
+        if (senha.length == 0) {
+            erro2.innerHTML = `Insira a senha`
+            ipt_senha.style.border = '2px solid red'
+            erros++
+        }
+        if (erros == 0) {
+            for (let i = 0; i < emails.length; i++) {
+                if (email == emails[i] && senha == senhas[i]) {
+                    login()
+                }
+            }
+            erro2.innerHTML = `Conta inexistente`
+        }
+    }
+    function login() {
+        window.location.href = 'dashboard.html'
+    }
+</script>
