@@ -5,6 +5,10 @@
             font-size: 15px;
         }
 
+        input {
+            height: 10px;
+        }
+
         body {
             height: 100vh;
             display: flex;
@@ -26,12 +30,12 @@
             background-color: #082a20;
             padding: 30px;
             width: 350px;
-            height: 560px;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
             align-items: center;
             display: flex;
             justify-content: center;
-            border-radius: 10px;  
+            border-radius: 10px;
+            margin: auto;
         }
 
         h1 {
@@ -57,6 +61,7 @@
             flex-direction: column;
             width: 100%;
             gap: 10px;
+            
         }
 
         label {
@@ -95,22 +100,34 @@
             background-color: #c99300;
         }
 
-        .cadastro {
-            margin-top: 25px;
+        .cadastro_texto {
+            margin-top: 10px;
             align-self: center;
             font-weight: normal;
             text-decoration: none;
-            color: black;
-            margin-bottom: 20px;
+            color: #ffffff;
         }
 
-        .cadastro span {
+        .cadastro_texto span {
             color: #f4b400;
             text-decoration: none;
             font-weight: normal;
         }
 
-        .cadastro span:hover {
+        .cadastro_texto span:hover {
+            color: #c99300;
+        }
+
+        .home_texto {
+            color: #ffffff;
+            align-self: center;
+        }
+
+        .home_texto span {
+            color: #f4b400;
+        }
+
+        .home_texto span:hover {
             color: #c99300;
         }
 

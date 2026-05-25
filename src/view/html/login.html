@@ -28,7 +28,9 @@
                 <div class="erro" id="erro2"></div>
 
                 <button onclick="validar()" class="botao">ACESSAR</button>
-                <div class="cadastro texto">Não possui conta? <a href="cadastro.html"><span>Cadastrar</span></a></div>
+                <div class="cadastro_texto">Não possui conta? <a href="cadastro.html"><span>Cadastrar</span></a></div>
+                <div class="home_texto">Deseja voltar para o Início ? <a href="index.html"><span>Voltar</span></a>
+                </div>
             </div>
         </div>
     </div>
@@ -41,7 +43,7 @@
         let email = ipt_email.value.trim()
         let senha = ipt_senha.value.trim()
         let erros = 0
-        let emails = ['admin@crop.com', 'user@crop.com', 'caramico@gmail.com' ]
+        let emails = ['admin@crop.com', 'user@crop.com', 'caramico@gmail.com']
         let senhas = ['admin123', 'user123', 'caramico123@']
 
         erro1.innerHTML = ''

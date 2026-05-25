@@ -40,9 +40,11 @@
 
                 <button class="botao" onclick="validar()">CADASTRAR</button>
                 <div class="login">Já possui conta? <a href="login.html"><span>Login</span></a></div>
+                <div class="home_texto">Deseja voltar para o Início ? <a href="index.html"><span>Voltar</span></a>
+
+                </div>
             </div>
         </div>
-    </div>
 </body>
 <script>
     function validar() {
@@ -90,7 +92,7 @@
             ipt_senha.style.border = "2px solid red"
             erros++
         }
-        if (ipt_senha.value != ipt_senha2.value) {
+        if (ipt_senha.value != ipt_senha2.value || iptsenha2 == '') {
             erro5.innerHTML = `As senhas devem coincidir.`
             ipt_senha2.style.border = "2px solid red"
             erros++

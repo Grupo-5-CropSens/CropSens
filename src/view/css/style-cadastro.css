@@ -1,167 +1,187 @@
-    * {
-        padding: 0;
-        margin: 0;
-        font-family: sans-serif;
-        font-size: 15px;
-        font-weight: normal;
-    }
+* {
+    padding: 0;
+    margin: 0;
+    font-family: sans-serif;
+    font-size: 15px;
+    font-weight: normal;
+}
 
-    .logo {
-        position: absolute;
-        top: 60px;
-        left: 60px;
-        width: 200px;
-    }
+.logo {
+    position: absolute;
+    top: 30px;
+    left: 60px;
+    width: 160px;
+}
 
-    .container {
-        background: radial-gradient(circle, #00000066, #000000b3), url(../html/img/milhudo.png);
-        background-size: cover;
-        background-position: left;
-        display: flex;
-        justify-content: end;
-        align-items: center;
-        min-height: 100vh;
-        position: relative;
-    }
+.container {
+    background: radial-gradient(circle, #00000066, #000000b3), url(../html/img/milhudo.png);
+    background-size: cover;
+    background-position: left;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    min-height: 100vh;
+    position: relative;
+}
 
-    .card {
-        background-color: #082a20;
-        height: 100vh;
-        width: 30%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
+.card {
+    background-color: #082a20;
+    min-height: 100vh;
+    width: 30%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px 0;
+    box-sizing: border-box;
+}
 
-    .form {
-        display: flex;
-        flex-direction: column;
-        gap: 5px;
-        width: 80%;
-    }
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    width: 80%;
+}
 
-    .form input {
-        padding: 20px;
-        padding-left: 55px;
-        margin-bottom: 5px;
-        border-radius: 10px;
-        border: 1px solid;
-        border-color: #ffffff;
-        background-color: #ffffff;
-    }
+.form input {
+    padding: 10px;
+    padding-left: 45px;
+    margin-bottom: 2px;
+    border-radius: 10px;
+    border: 1px solid;
+    border-color: #ffffff;
+    background-color: #ffffff;
+    height: 22px;
+}
 
-    .form input::placeholder {
-        font-weight: normal;
-        color: #949494;
-    }
+.form input::placeholder {
+    font-weight: normal;
+    color: #949494;
+}
 
-    .form h1 {
-        font-size: 40px;
-        text-align: start;
-        margin: 0px;
-        height: 50px;
-        font-weight: bold;
-        font-family: 'Instrument Serif', Gerogia, serif;
-        color: white;
-    }
+.form h1 {
+    font-size: 36px;
+    text-align: start;
+    margin: 0px;
+    margin-bottom: 4px;
+    font-weight: bold;
+    font-family: 'Instrument Serif', Gerogia, serif;
+    color: white;
+}
 
-    .form p {
-        font-size: 20px;
-        height: 60px;
-        color: white;
-    }
+.form p {
+    font-size: 16px;
+    color: white;
+    margin-bottom: 6px;
+}
 
-    .botao {
-        background-color: #f4b400;
-        color: rgb(0, 0, 0);
-        padding: 20px;
-        margin-top: 20px;
-        border-radius: 10px;
-        border: 0px;
-        cursor: pointer;
-        font-weight: bold;
-        box-shadow: 0 1px 3px #082a20;
-        transition: background-color 0.3s;
-    }
+.botao {
+    background-color: #f4b400;
+    color: rgb(0, 0, 0);
+    padding: 12px;
+    margin-top: 20px;
+    border-radius: 10px;
+    border: 0px;
+    cursor: pointer;
+    font-weight: bold;
+    box-shadow: 0 1px 3px #082a20;
+    transition: background-color 0.3s;
+}
 
-    .botao:hover {
-        background-color: #c99300;
-    }
+.botao:hover {
+    background-color: #c99300;
+}
 
-    .login {
-        align-self: center;
-        font-weight: normal;
-        text-decoration: none;
-        color: #ffffff;
-        font-weight: normal;
-        margin-top: 30px;
-        margin-bottom: 1px;
-    }
+.login {
+    align-self: center;
+    font-weight: normal;
+    text-decoration: none;
+    color: #ffffff;
+    margin-top: 15px;
+    margin-bottom: 1px;
+}
 
-    .login span {
-        color: #f4b400;
-        text-decoration: none;
-        font-weight: normal;
-    }
+.login span {
+    color: #f4b400;
+    text-decoration: none;
+    font-weight: normal;
+}
 
-    .login span:hover {
-        color: #c99300;
-    }
+.login span:hover {
+    color: #c99300;
+}
 
-    a {
-        text-decoration: none;
-    }
+.home_texto {
+    color: #ffffff;
+    align-self: center;
+    margin-top: 10px;
+}
 
-    .texto {
-        color: #ffffff;
-        font-weight: normal;
-        margin-bottom: 5px;
-        margin-top: 10px;
-    }
+.home_texto span {
+    color: #f4b400;
+}
 
-    .nome {
-        background: url(img/user.png) no-repeat left;
-        background-size: 16px;
-        background-position: 20px center;
-    }
+.home_texto span:hover {
+    color: #c99300;
+}
 
-    .email {
-        background: url(img/email.png) no-repeat left;
-        background-size: 16px;
-        background-position: 20px center;
-    }
+a {
+    text-decoration: none;
+}
 
-    .telefone {
-        background: url(img/tel.png) no-repeat left;
-        background-size: 16px;
-        background-position: 20px center;
-    }
+.texto {
+    color: #ffffff;
+    font-weight: normal;
+    margin-bottom: 3px;
+    margin-top: 6px;
+}
 
-    .senha {
-        background: url(img/pwd.png) no-repeat left;
-        background-size: 16px;
-        background-position: 20px center;
-    }
+.nome {
+    background: url(img/user.png) no-repeat left;
+    background-size: 14px;
+    background-position: 16px center;
+    background-color: white;
+}
 
-    .paragrafo {
-        position: absolute;
-        bottom: 60px;
-        left: 60px;
-        font-size: 80px;
-        color: #ffffff;
-        font-family: 'Instrument Serif', Gerogia, serif;
-        font-weight: bold;
-    }
+.email {
+    background: url(img/email.png) no-repeat left;
+    background-size: 14px;
+    background-position: 16px center;
+    background-color: white;
+}
 
-    .dados_precisos {
-        font-size: 80px;
-        color: #f4b400;
-        font-family: 'Instrument Serif', Gerogia, serif;
-        font-weight: bold;
-        font-style: italic;
-    }
+.telefone {
+    background: url(img/tel.png) no-repeat left;
+    background-size: 14px;
+    background-position: 16px center;
+    background-color: white;
+}
 
-    .erro {
-        color: red;
-        font-size: 14px;
-    }
+.senha {
+    background: url(img/pwd.png) no-repeat left;
+    background-size: 14px;
+    background-position: 16px center;
+    background-color: white;
+}
+
+.paragrafo {
+    position: absolute;
+    bottom: 60px;
+    left: 60px;
+    font-size: 80px;
+    color: #ffffff;
+    font-family: 'Instrument Serif', Gerogia, serif;
+    font-weight: bold;
+}
+
+.dados_precisos {
+    font-size: 80px;
+    color: #f4b400;
+    font-family: 'Instrument Serif', Gerogia, serif;
+    font-weight: bold;
+    font-style: italic;
+}
+
+.erro {
+    color: red;
+    font-size: 13px;
+}
