@@ -104,5 +104,47 @@ SELECT u.nome AS 'Usuário', f.nome AS 'Nome Fazenda', p.id AS 'ID_Plantação',
 SELECT u.nome AS 'Usuário', f.nome AS 'Nome Fazenda', p.id AS 'ID_Plantação', s.statusSensor AS 'Status do Sensor' 
 	FROM usuario AS u JOIN fazenda AS f ON f.fkUsuario = u.id 
 		JOIN plantacao AS p ON p.fkFazenda = f.id
-			JOIN sensor AS s ON s.fkPlantacao = p.id;
             
+-- NOVAS TABELAS PARA O DASHBOARD (Criadas dinamicamente para tirar hardcode do HTML)
+
+CREATE TABLE parametros_lavoura (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    fase_atual_dam INT,
+    potencial_maximo_kgha DECIMAL(10,2),
+    fkPlantacao INT,
+    FOREIGN KEY (fkPlantacao) REFERENCES plantacao(id)
+);
+
+INSERT INTO parametros_lavoura (fase_atual_dam, potencial_maximo_kgha, fkPlantacao) VALUES 
+(30, 10000.00, 1);
+
+CREATE TABLE dados_colheita (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    dam_dias INT,
+    produtividade_kgha DECIMAL(10,2),
+    perda_acumulada_kg DECIMAL(10,2),
+    percentual_perda DECIMAL(5,2),
+    custo_secagem DECIMAL(10,2),
+    custo_total DECIMAL(10,2),
+    fkPlantacao INT,
+    FOREIGN KEY (fkPlantacao) REFERENCES plantacao(id)
+);
+
+INSERT INTO dados_colheita (dam_dias, produtividade_kgha, perda_acumulada_kg, percentual_perda, custo_secagem, custo_total, fkPlantacao) VALUES
+(0, 10000.00, 0.00, 0.00, 1200.00, 1200.00, 1),
+(15, 9950.00, 50.00, 0.50, 200.00, 250.00, 1),
+(30, 9700.00, 300.00, 3.00, 0.00, 300.00, 1),
+(45, 9000.00, 1000.00, 10.00, 0.00, 1000.00, 1),
+(60, 7500.00, 2500.00, 25.00, 0.00, 2500.00, 1);
+
+-- INSERINDO DADOS DE LEITURA (Mock) PARA GERAR A ALTURA DA PLANTAÇÃO 1
+-- Sensor 1 está na plantação 1 e tem altura de instalação de 2.40 (240cm).
+-- As alturas desejadas nas 6 semanas são: 60, 80, 120, 169, 190, 224.6
+-- Logo a distância lida = 240 - altura.
+INSERT INTO leitura_sensor (distancia_lida_cm, data_hora, fkSensor) VALUES
+(180.00, '2025-05-19 10:00:00', 1), -- Semana 1: Altura 60cm
+(160.00, '2025-05-26 10:00:00', 1), -- Semana 2: Altura 80cm
+(120.00, '2025-06-02 10:00:00', 1), -- Semana 3: Altura 120cm
+(71.00,  '2025-06-09 10:00:00', 1), -- Semana 4: Altura 169cm
+(50.00,  '2025-06-16 10:00:00', 1), -- Semana 5: Altura 190cm
+(15.40,  '2025-06-23 10:00:00', 1); -- Semana 6: Altura 224.6cm
