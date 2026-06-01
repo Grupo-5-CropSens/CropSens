@@ -1,0 +1,329 @@
+<<<<<<< HEAD:src/view/css/style-login.css
+        * {
+            padding: 0;
+            margin: 0;
+            font-family: sans-serif;
+            font-size: 15px;
+        }
+
+        input {
+            height: 10px;
+        }
+
+        body {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: radial-gradient(circle, #00000066, #000000b3), url(../html/img/milhasso2.jpg);
+            background-size: cover;
+            background-position: center;
+        }
+
+        .logo {
+            position: absolute;
+            top: 60px;
+            left: 60px;
+            width: 200px;
+        }
+
+        .card {
+            background-color: #082a20;
+            padding: 30px;
+            width: 350px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            align-items: center;
+            display: flex;
+            justify-content: center;
+            border-radius: 10px;
+            margin: auto;
+        }
+
+        h1 {
+            font-size: 40px;
+            text-align: center;
+            margin: 0px;
+            height: 50px;
+            font-weight: bold;
+            font-family: 'Instrument Serif', Gerogia, serif;
+            color: white;
+        }
+
+        p {
+            font-size: 20px;
+            height: 60px;
+            color: white;
+            text-align: center;
+            margin-bottom: -10px;
+        }
+
+        .form {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            gap: 10px;
+            
+        }
+
+        label {
+            margin-top: 10px;
+            margin-bottom: 5px;
+            color: white;
+        }
+
+        input {
+            padding: 20px;
+            padding-left: 55px;
+            border-radius: 10px;
+            border: 0;
+            background-color: #ffffff;
+        }
+
+        input::placeholder {
+            font-weight: normal;
+            color: #949494;
+        }
+
+        .botao {
+            background-color: #f4b400;
+            color: rgb(0, 0, 0);
+            padding: 20px;
+            margin-top: 10px;
+            border-radius: 10px;
+            border: 0px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 1px 3px #082a20;
+            transition: background-color 0.3s;
+        }
+
+        .botao:hover {
+            background-color: #c99300;
+        }
+
+        .cadastro_texto {
+            margin-top: 10px;
+            align-self: center;
+            font-weight: normal;
+            text-decoration: none;
+            color: #ffffff;
+        }
+
+        .cadastro_texto span {
+            color: #f4b400;
+            text-decoration: none;
+            font-weight: normal;
+        }
+
+        .cadastro_texto span:hover {
+            color: #c99300;
+        }
+
+        .home_texto {
+            color: #ffffff;
+            align-self: center;
+        }
+
+        .home_texto span {
+            color: #f4b400;
+        }
+
+        .home_texto span:hover {
+            color: #c99300;
+        }
+
+        .texto {
+            color: #ffffff;
+            font-weight: normal;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        .email {
+            background: url(img/email.png) no-repeat left;
+            background-size: 16px;
+            background-position: 20px center;
+            background-color: white;
+        }
+
+        .senha {
+            background: url(img/pwd.png) no-repeat left;
+            background-size: 16px;
+            background-position: 20px center;
+            background-color: white;
+        }
+
+        .esqueci {
+            text-align: right;
+        }
+
+        .esqueci span {
+            color: #f4b400;
+        }
+
+        .esqueci span:hover {
+            color: #c99300;
+        }
+
+        .erro {
+            color: red;
+            font-size: 14px;
+=======
+        * {
+            padding: 0;
+            margin: 0;
+            font-family: sans-serif;
+            font-size: 15px;
+        }
+
+        body {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: radial-gradient(circle, #00000066, #000000b3), url(../html/img/milhasso2.jpg);
+            background-size: cover;
+            background-position: center;
+        }
+
+        .logo {
+            position: absolute;
+            top: 60px;
+            left: 60px;
+            width: 200px;
+        }
+
+        .card {
+            background-color: #082a20;
+            padding: 30px;
+            width: 350px;
+            height: 560px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            align-items: center;
+            display: flex;
+            justify-content: center;
+            border-radius: 10px;  
+        }
+
+        h1 {
+            font-size: 40px;
+            text-align: center;
+            margin: 0px;
+            height: 50px;
+            font-weight: bold;
+            font-family: 'Instrument Serif', Gerogia, serif;
+            color: white;
+        }
+
+        p {
+            font-size: 20px;
+            height: 60px;
+            color: white;
+            text-align: center;
+            margin-bottom: -10px;
+        }
+
+        .form {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            gap: 10px;
+        }
+
+        label {
+            margin-top: 10px;
+            margin-bottom: 5px;
+            color: white;
+        }
+
+        input {
+            padding: 20px;
+            padding-left: 55px;
+            border-radius: 10px;
+            border: 0;
+            background-color: #ffffff;
+        }
+
+        input::placeholder {
+            font-weight: normal;
+            color: #949494;
+        }
+
+        .botao {
+            background-color: #f4b400;
+            color: rgb(0, 0, 0);
+            padding: 20px;
+            margin-top: 10px;
+            border-radius: 10px;
+            border: 0px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 1px 3px #082a20;
+            transition: background-color 0.3s;
+        }
+
+        .botao:hover {
+            background-color: #c99300;
+        }
+
+        .cadastro {
+            margin-top: 25px;
+            align-self: center;
+            font-weight: normal;
+            text-decoration: none;
+            color: black;
+            margin-bottom: 20px;
+        }
+
+        .cadastro span {
+            color: #f4b400;
+            text-decoration: none;
+            font-weight: normal;
+        }
+
+        .cadastro span:hover {
+            color: #c99300;
+        }
+
+        .texto {
+            color: #ffffff;
+            font-weight: normal;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        .email {
+            background: url(img/email.png) no-repeat left;
+            background-size: 16px;
+            background-position: 20px center;
+            background-color: white;
+        }
+
+        .senha {
+            background: url(img/pwd.png) no-repeat left;
+            background-size: 16px;
+            background-position: 20px center;
+            background-color: white;
+        }
+
+        .esqueci {
+            text-align: right;
+        }
+
+        .esqueci span {
+            color: #f4b400;
+        }
+
+        .esqueci span:hover {
+            color: #c99300;
+        }
+
+        .erro {
+            color: red;
+            font-size: 14px;
+>>>>>>> fd5495bb21c6cc22f8504ad0ef92c4957234545d:public/css/style-login.css
+        }
