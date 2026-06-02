@@ -325,6 +325,34 @@ canvas {
     margin: 0;
 }
 
+#bobia {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 999;
+}
+
+#bobia-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    border-radius: 50%;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+}
+
+#bobia-btn:hover {
+    transform: scale(1.1);
+}
+
+#bobia-btn img {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
 /* Modal Styles */
 .modal-overlay {
     position: fixed;
