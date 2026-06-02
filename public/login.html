@@ -69,12 +69,38 @@
         if (erros == 0) {
             for (let i = 0; i < emails.length; i++) {
                 if (email == emails[i] && senha == senhas[i]) {
-                    login()
                 }
             }
-            erro2.innerHTML = `Conta inexistente`
         }
+
+        fetch("/usuarios/autenticar", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    emailServer: email,
+                    senhaServer: senha
+                })
+            }).then(function (resposta) {
+                if (resposta.ok) {
+                    resposta.json().then(json => {
+                        // SALVANDO NA SESSÃO
+                        sessionStorage.EMAIL_USUARIO = json.email;
+                        sessionStorage.NOME_USUARIO = json.nome;
+                        sessionStorage.ID_USUARIO = json.id;
+                        login()
+
+                        console.log(resposta)
+                
+                    });
+                } else {
+                    console.log("Houve um erro ao tentar realizar o login!");
+                    erro2.innerHTML = `Email e/ou senha inválido(s)`;
+                }
+            }).catch(function (erro) {
+                console.log(erro);
+            });
     }
+
     function login() {
         window.location.href = 'dashboard.html'
     }

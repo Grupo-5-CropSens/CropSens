@@ -102,11 +102,37 @@
             registrar()
         }
 
-        function registrar() {
-            alert('Registro realizado com sucesso')
-        }
+        fetch("/usuarios/cadastrar", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                nomeServer: iptnome,
+                emailServer: iptemail,
+                senhaServer: iptsenha,
+                telefoneServer: ipttelefone,
+            }),
+        })
+            .then(function (resposta) {
+                if (resposta.ok) {
+                    mensagem.innerHTML = `<span style="color:green;">Cadastro realizado com sucesso! Redirecionando...</span>`; setTimeout(() => {
+                        window.location = "login.html";
+                    }, 1000);
+                } else {
+                    throw "Houve um erro ao tentar realizar o cadastro!";
+                }
+            })
+            .catch(function (resposta) {
+                console.log(`#ERRO: ${resposta}`);
+            });
 
+        return false;
     }
-</script>
+    
+    function registrar() {
+        alert('Registro realizado com sucesso')
+    }
 
+</script>
 </html>
