@@ -15,7 +15,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background: radial-gradient(circle, #00000066, #000000b3), url(../html/img/milhasso2.jpg);
+            background: radial-gradient(circle, #00000066, #000000b3), url('/img/milhasso2.jpg');
             background-size: cover;
             background-position: center;
         }
@@ -142,14 +142,14 @@
         }
 
         .email {
-            background: url(img/email.png) no-repeat left;
+            background: url('/img/email.png') no-repeat left;
             background-size: 16px;
             background-position: 20px center;
             background-color: white;
         }
 
         .senha {
-            background: url(img/pwd.png) no-repeat left;
+            background: url('/img/pwd.png') no-repeat left;
             background-size: 16px;
             background-position: 20px center;
             background-color: white;
@@ -183,7 +183,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background: radial-gradient(circle, #00000066, #000000b3), url(../html/img/milhasso2.jpg);
+            background: radial-gradient(circle, #00000066, #000000b3), url('/img/milhasso2.jpg');
             background-size: cover;
             background-position: center;
         }
@@ -297,14 +297,14 @@
         }
 
         .email {
-            background: url(img/email.png) no-repeat left;
+            background: url('/img/email.png') no-repeat left;
             background-size: 16px;
             background-position: 20px center;
             background-color: white;
         }
 
         .senha {
-            background: url(img/pwd.png) no-repeat left;
+            background: url('/img/pwd.png') no-repeat left;
             background-size: 16px;
             background-position: 20px center;
             background-color: white;
