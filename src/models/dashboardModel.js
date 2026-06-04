@@ -10,12 +10,13 @@ function buscarDadosColheita(idPlantacao) {
     return database.executar(instrucao);
 }
 
+//join aqui tava cagado
 function buscarLeituras(idPlantacao) {
     var instrucao = `
         SELECT ls.data_hora, 
                (s.altura_instalacao * 100 - ls.distancia_lida_cm) AS altura
         FROM leitura_sensor ls
-        JOIN sensor s ON ls.fkSensor = s.id
+        JOIN sensor s ON ls.fkSensor = s.id_sensor
         WHERE s.fkPlantacao = ${idPlantacao}
         ORDER BY ls.data_hora ASC;
     `;

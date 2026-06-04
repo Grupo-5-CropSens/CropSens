@@ -59,3 +59,32 @@ CREATE TABLE leitura_sensor (
 	CONSTRAINT fk_leitura_sensor FOREIGN KEY (fkSensor)
 		REFERENCES sensor(id_sensor)
 );
+
+-- criei pq era o que tava pedindo na dash
+CREATE TABLE parametros_lavoura (
+	id INT PRIMARY KEY AUTO_INCREMENT,
+	fase_atual_dam INT,
+	potencial_maximo_kgha DECIMAL(10,2),
+	fkPlantacao INT,
+	FOREIGN KEY (fkPlantacao) REFERENCES plantacao(id_plantacao)
+);
+
+//tambem para funcionar a dash
+CREATE TABLE dados_colheita (
+	id INT PRIMARY KEY AUTO_INCREMENT,
+	dam_dias INT,
+	produtividade_kgha DECIMAL(10,2),
+	perda_acumulada_kg DECIMAL(10,2),
+	percentual_perda DECIMAL(5,2),
+	custo_secagem DECIMAL(10,2),
+	custo_total DECIMAL(10,2),
+	fkPlantacao INT,
+	FOREIGN KEY (fkPlantacao) REFERENCES plantacao(id_plantacao)
+);
+
+-- Inserções de exemplo (opcional)
+INSERT INTO parametros_lavoura (fase_atual_dam, potencial_maximo_kgha, fkPlantacao) VALUES 
+(30, 10000.00, 1) ON DUPLICATE KEY UPDATE fase_atual_dam=fase_atual_dam;
+
+INSERT INTO dados_colheita (dam_dias, produtividade_kgha, perda_acumulada_kg, percentual_perda, custo_secagem, custo_total, fkPlantacao) VALUES
+(0, 10000.00, 0.00, 0.00, 1200.00, 1200.00, 1) ON DUPLICATE KEY UPDATE dam_dias=dam_dias;
