@@ -15,7 +15,7 @@
       <div class="menu-avatar">F</div>
       <div class="menu-user">
         <h4>Bom te ver de novo</h4>
-        <p>Fernanda Caramico</p>
+        <p id="p_nome">Fernanda Caramico</p>
       </div>
     </div>
 
@@ -211,7 +211,13 @@
 
       <script>
 
+
+        window.onload = mostrarnome(sessionStorage.NOME_USUARIO);
         window.onload = mostrarbobia(sessionStorage.ID_USUARIO);
+
+        function mostrarnome(usuario) {
+          p_nome.innerHTML = usuario;
+        }
 
         function mostrarbobia(usuario) {
           if (usuario == 1) {
