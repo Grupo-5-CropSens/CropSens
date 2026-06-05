@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="pt-br">
- 
+<html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CropSens - Cadastro</title>
+    <title>Document</title>
     <link rel="stylesheet" href="../css/style-cadastro.css">
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300..700&display=swap">
@@ -18,7 +18,6 @@
             <div class="form">
                 <h1>Criar conta</h1>
                 <p>Preencha os dados abaixo.</p>
-                
                 <span class="texto">Nome completo:<span style="color: red;"> *</span></span>
                 <input id="ipt_nome" class="nome" placeholder="Digite seu nome completo">
                 <div class="erro" id="erro1"></div>
@@ -32,23 +31,21 @@
                 <div class="erro" id="erro3"></div>
 
                 <span class="texto">Senha:<span style="color: red;"> *</span></span>
-                <input id="ipt_senha" class="senha" type="password" placeholder="Digite sua senha">
+                <input id="ipt_senha" class="senha" placeholder="Digite sua senha">
                 <div class="erro" id="erro4"></div>
 
                 <span class="texto">Confirmar a senha:<span style="color: red;"> *</span></span>
-                <input id="ipt_senha2" class="senha" type="password" placeholder="Digite sua senha novamente">
+                <input id="ipt_senha2" class="senha" placeholder="Digite sua senha novamente">
                 <div class="erro" id="erro5"></div>
-
-                <div id="mensagem" class="mensagem-feedback"></div>
 
                 <button class="botao" onclick="validar()">CADASTRAR</button>
                 <div class="login">Já possui conta? <a href="login.html"><span>Login</span></a></div>
-                <a href="index.html" class="voltar-home">
-                    Voltar ao Início
-                </a>
+                <div class="home_texto">Deseja voltar para o Início ? <a href="index.html"><span>Voltar</span></a>
+
+                </div>
             </div>
         </div>
-    </div>
+</body>
 <script>
     function validar() {
         /* declarações */
@@ -56,7 +53,7 @@
         let iptemail = ipt_email.value.trim()
         let ipttelefone = ipt_telefone.value.trim()
         let iptsenha = ipt_senha.value.trim()
-        let iptsenha2 = ipt_senha2.value.trim()
+        let iptsenha2 = ipt_senha.value.trim()
 
         let erros = 0
         erro1.innerHTML = ''
@@ -64,90 +61,78 @@
         erro3.innerHTML = ''
         erro4.innerHTML = ''
         erro5.innerHTML = ''
-        mensagem.style.display = 'none'
-        mensagem.innerHTML = ''
-
-        ipt_nome.style.borderColor = ""
-        ipt_email.style.borderColor = ""
-        ipt_telefone.style.borderColor = ""
-        ipt_senha.style.borderColor = ""
-        ipt_senha2.style.borderColor = ""
+        ipt_nome.style.border = "none"
+        ipt_email.style.border = "none"
+        ipt_telefone.style.border = "none"
+        ipt_senha.style.border = "none"
+        ipt_senha2.style.border = "none"
 
         /* validações */
         /* nome */
         if (iptnome.length <= 2) {
-            erro1.innerHTML = `Nome inválido (mínimo 3 caracteres)`
-            ipt_nome.style.borderColor = "var(--error)"
+            erro1.innerHTML = `Nome inválido`
+            ipt_nome.style.border = "2px solid red"
             erros++
         }
         /* email */
         if (iptemail.length <= 6 || iptemail.indexOf('@') == -1) {
             erro2.innerHTML = `E-mail inválido`
-            ipt_email.style.borderColor = "var(--error)"
+            ipt_email.style.border = "2px solid red"
             erros++
         }
         /* telefone */
         if (ipttelefone.length != 11) {
-            erro3.innerHTML = `Número de telefone inválido (ex: 11999998888 - 11 dígitos)`
-            ipt_telefone.style.borderColor = "var(--error)"
+            erro3.innerHTML = `Número de telefone inválido`
+            ipt_telefone.style.border = "2px solid red"
             erros++
         }
         /* senha */
         if (iptsenha.length < 6) {
-            erro4.innerHTML = `Insira no mínimo 6 caracteres para a senha.`
-            ipt_senha.style.borderColor = "var(--error)"
+            erro4.innerHTML += `Insira no mínimo 6 caracteres para a senha.`
+            ipt_senha.style.border = "2px solid red"
             erros++
         }
-        if (iptsenha != iptsenha2 || iptsenha2 == '') {
+        if (ipt_senha.value != ipt_senha2.value || iptsenha2 == '') {
             erro5.innerHTML = `As senhas devem coincidir.`
-            ipt_senha2.style.borderColor = "var(--error)"
+            ipt_senha2.style.border = "2px solid red"
             erros++
         }
 
         if (erros == 0) {
-            fetch("/usuarios/cadastrar", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    nomeServer: iptnome,
-                    emailServer: iptemail,
-                    senhaServer: iptsenha,
-                    telefoneServer: ipttelefone,
-                }),
-            })
+            registrar()
+        }
+
+        fetch("/usuarios/cadastrar", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                nomeServer: iptnome,
+                emailServer: iptemail,
+                senhaServer: iptsenha,
+                telefoneServer: ipttelefone,
+            }),
+        })
             .then(function (resposta) {
                 if (resposta.ok) {
-                    mensagem.style.backgroundColor = "rgba(46, 204, 113, 0.15)";
-                    mensagem.style.borderColor = "var(--success)";
-                    mensagem.style.color = "var(--success)";
-                    mensagem.style.display = 'block';
-                    mensagem.innerHTML = `Cadastro realizado com sucesso! Redirecionando...`; 
-                    setTimeout(() => {
+                    mensagem.innerHTML = `<span style="color:green;">Cadastro realizado com sucesso! Redirecionando...</span>`; setTimeout(() => {
                         window.location = "login.html";
-                    }, 1500);
+                    }, 1000);
                 } else {
-                    resposta.text().then(text => {
-                        mensagem.style.backgroundColor = "rgba(255, 107, 107, 0.15)";
-                        mensagem.style.borderColor = "var(--error)";
-                        mensagem.style.color = "var(--error)";
-                        mensagem.style.display = 'block';
-                        mensagem.innerHTML = `Erro no cadastro: ${text || 'Verifique seus dados.'}`;
-                    });
+                    throw "Houve um erro ao tentar realizar o cadastro!";
                 }
             })
-            .catch(function (erro) {
-                console.log(`#ERRO: ${erro}`);
-                mensagem.style.backgroundColor = "rgba(255, 107, 107, 0.15)";
-                mensagem.style.borderColor = "var(--error)";
-                mensagem.style.color = "var(--error)";
-                mensagem.style.display = 'block';
-                mensagem.innerHTML = `Erro de conexão com o servidor.`;
+            .catch(function (resposta) {
+                console.log(`#ERRO: ${resposta}`);
             });
-        }
 
         return false;
     }
+    
+    function registrar() {
+        alert('Registro realizado com sucesso')
+    }
+
 </script>
 </html>

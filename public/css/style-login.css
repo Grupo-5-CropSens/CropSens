@@ -1,298 +1,329 @@
-/* Sistema de Design e Variáveis */
-:root {
-    --fundo-escuro: #041c15;
-    --card-fundo: #082a20;
-    --card-borda: #114234;
-    --destaque: #f4b400;
-    --destaque-hover: #d49b00;
-    --texto-primario: #ffffff;
-    --texto-secundario: #a3b8b0;
-    --input-fundo: #0b3629;
-    --input-borda: #134d3d;
-    --input-foco: #f4b400;
-    --erro: #ff6b6b;
-    --sucesso: #2ecc71;
-    --fonte-titulo: 'Instrument Serif', Georgia, serif;
-    --fonte-body: 'DM Sans', sans-serif;
-}
+<<<<<<< HEAD:src/view/css/style-login.css
+        * {
+            padding: 0;
+            margin: 0;
+            font-family: sans-serif;
+            font-size: 15px;
+        }
 
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: var(--fonte-body), sans-serif;
-}
+        input {
+            height: 10px;
+        }
 
-body {
-    background-color: var(--fundo-escuro);
-    min-height: 100vh;
-    display: flex;
-    overflow-x: hidden;
-}
+        body {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: radial-gradient(circle, #00000066, #000000b3), url('/img/milhasso2.jpg');
+            background-size: cover;
+            background-position: center;
+        }
 
-.container {
-    width: 100%;
-    min-height: 100vh;
-    display: flex;
-    justify-content: flex-end;
-    align-items: stretch;
-    background: radial-gradient(circle at center, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.85) 100%), url('/img/milhudo.png');
-    background-size: cover;
-    background-position: left center;
-    position: relative;
-}
+        .logo {
+            position: absolute;
+            top: 60px;
+            left: 60px;
+            width: 200px;
+        }
 
-/* Detalhes do slogan à esquerda */
-.logo {
-    position: absolute;
-    top: 40px;
-    left: 60px;
-    width: 180px;
-    z-index: 10;
-    transition: transform 0.3s ease;
-}
+        .card {
+            background-color: #082a20;
+            padding: 30px;
+            width: 350px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            align-items: center;
+            display: flex;
+            justify-content: center;
+            border-radius: 10px;
+            margin: auto;
+        }
 
-.logo:hover {
-    transform: scale(1.05);
-}
+        h1 {
+            font-size: 40px;
+            text-align: center;
+            margin: 0px;
+            height: 50px;
+            font-weight: bold;
+            font-family: 'Instrument Serif', Gerogia, serif;
+            color: white;
+        }
 
-.paragrafo {
-    position: absolute;
-    bottom: 60px;
-    left: 60px;
-    font-size: clamp(3rem, 5vw, 5.5rem);
-    color: var(--texto-primario);
-    font-family: var(--fonte-titulo);
-    font-weight: bold;
-    line-height: 1.1;
-    text-shadow: 0 4px 10px rgba(0,0,0,0.6);
-    pointer-events: none;
-    z-index: 5;
-}
+        p {
+            font-size: 20px;
+            height: 60px;
+            color: white;
+            text-align: center;
+            margin-bottom: -10px;
+        }
 
-.dados_precisos {
-    color: var(--destaque);
-    font-family: var(--fonte-titulo);
-    font-weight: bold;
-    font-style: italic;
-}
+        .form {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            gap: 10px;
+            
+        }
 
-/* Container do formulário */
-.card {
-    background-color: var(--card-fundo);
-    border-left: 1px solid var(--card-borda);
-    width: 450px;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 40px;
-    box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5);
-    z-index: 10;
-    position: relative;
-}
+        label {
+            margin-top: 10px;
+            margin-bottom: 5px;
+            color: white;
+        }
 
-.form {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    max-width: 360px;
-}
+        input {
+            padding: 20px;
+            padding-left: 55px;
+            border-radius: 10px;
+            border: 0;
+            background-color: #ffffff;
+        }
 
-.form h1 {
-    font-size: 2.5rem;
-    font-family: var(--fonte-titulo);
-    color: var(--texto-primario);
-    margin-bottom: 8px;
-    font-weight: bold;
-}
+        input::placeholder {
+            font-weight: normal;
+            color: #949494;
+        }
 
-.form p {
-    font-size: 1rem;
-    color: var(--texto-secundario);
-    margin-bottom: 24px;
-}
+        .botao {
+            background-color: #f4b400;
+            color: rgb(0, 0, 0);
+            padding: 20px;
+            margin-top: 10px;
+            border-radius: 10px;
+            border: 0px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 1px 3px #082a20;
+            transition: background-color 0.3s;
+        }
 
-/* Estilos de input */
-.form label, 
-.texto {
-    font-size: 0.85rem;
-    font-weight: 500;
-    color: var(--texto-primario);
-    margin-bottom: 6px;
-    margin-top: 14px;
-    display: block;
-}
+        .botao:hover {
+            background-color: #c99300;
+        }
 
-.form input {
-    width: 100%;
-    padding: 12px 16px;
-    border-radius: 8px;
-    border: 1px solid var(--input-borda);
-    background-color: var(--input-fundo);
-    color: var(--texto-primario);
-    font-size: 0.95rem;
-    outline: none;
-    transition: all 0.3s ease;
-}
+        .cadastro_texto {
+            margin-top: 10px;
+            align-self: center;
+            font-weight: normal;
+            text-decoration: none;
+            color: #ffffff;
+        }
 
-.form input::placeholder {
-    color: #6a8279;
-}
+        .cadastro_texto span {
+            color: #f4b400;
+            text-decoration: none;
+            font-weight: normal;
+        }
 
-.form input:focus {
-    border-color: var(--input-foco);
-    box-shadow: 0 0 0 3px rgba(244, 180, 0, 0.15);
-    background-color: #0d4234;
-}
+        .cadastro_texto span:hover {
+            color: #c99300;
+        }
 
-/* Mensagem de erro abaixo dos inputs */
-.erro {
-    color: var(--erro);
-    font-size: 0.78rem;
-    margin-top: 4px;
-    min-height: 16px;
-    font-weight: 500;
-}
+        .home_texto {
+            color: #ffffff;
+            align-self: center;
+        }
 
-/* Botão de ação */
-.botao {
-    background-color: var(--destaque);
-    color: #041c15;
-    padding: 14px;
-    font-size: 0.95rem;
-    font-weight: 700;
-    border-radius: 8px;
-    border: none;
-    cursor: pointer;
-    margin-top: 24px;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 4px 12px rgba(244, 180, 0, 0.2);
-}
+        .home_texto span {
+            color: #f4b400;
+        }
 
-.botao:hover {
-    background-color: var(--destaque-hover);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 18px rgba(244, 180, 0, 0.3);
-}
+        .home_texto span:hover {
+            color: #c99300;
+        }
 
-.botao:active {
-    transform: translateY(0);
-}
+        .texto {
+            color: #ffffff;
+            font-weight: normal;
+        }
 
-/* Links de redirecionamento */
-.login,
-.cadastro_texto,
-.cadastro {
-    text-align: center;
-    color: var(--texto-secundario);
-    font-size: 0.9rem;
-    margin-top: 20px;
-}
+        a {
+            text-decoration: none;
+        }
 
-.login span,
-.cadastro_texto span,
-.cadastro span {
-    color: var(--destaque);
-    font-weight: 600;
-    cursor: pointer;
-    transition: color 0.2s ease;
-}
+        .email {
+            background: url('/img/email.png') no-repeat left;
+            background-size: 16px;
+            background-position: 20px center;
+            background-color: white;
+        }
 
-.login span:hover,
-.cadastro_texto span:hover,
-.cadastro span:hover {
-    color: var(--destaque-hover);
-}
+        .senha {
+            background: url('/img/pwd.png') no-repeat left;
+            background-size: 16px;
+            background-position: 20px center;
+            background-color: white;
+        }
 
-.home_texto {
-    text-align: center;
-    color: var(--texto-secundario);
-    font-size: 0.85rem;
-    margin-top: 12px;
-}
+        .esqueci {
+            text-align: right;
+        }
 
-.home_texto span {
-    color: var(--destaque);
-    font-weight: 500;
-}
+        .esqueci span {
+            color: #f4b400;
+        }
 
-.home_texto span:hover {
-    color: var(--destaque-hover);
-}
+        .esqueci span:hover {
+            color: #c99300;
+        }
 
-a, a:hover, a:focus, a:active, a:visited {
-    text-decoration: none !important;
-    color: inherit;
-}
+        .erro {
+            color: red;
+            font-size: 14px;
+=======
+        * {
+            padding: 0;
+            margin: 0;
+            font-family: sans-serif;
+            font-size: 15px;
+        }
 
-/* Botão voltar ao início */
-.voltar-home {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    color: var(--destaque) !important;
-    font-size: 0.95rem;
-    font-weight: 600;
-    margin-top: 24px;
-    align-self: center;
-    transition: color 0.2s ease, transform 0.2s ease;
-}
+        body {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: radial-gradient(circle, #00000066, #000000b3), url('/img/milhasso2.jpg');
+            background-size: cover;
+            background-position: center;
+        }
 
-.voltar-home:hover {
-    color: var(--texto-primario) !important;
-    transform: translateY(-2px);
-}
+        .logo {
+            position: absolute;
+            top: 60px;
+            left: 60px;
+            width: 200px;
+        }
 
-/* Mensagens gerais (feedback da API) */
-.mensagem-feedback {
-    background-color: rgba(46, 204, 113, 0.15);
-    border: 1px solid var(--sucesso);
-    color: var(--sucesso);
-    padding: 12px;
-    border-radius: 8px;
-    font-size: 0.9rem;
-    text-align: center;
-    margin-top: 15px;
-    display: none;
-    font-weight: 500;
-}
+        .card {
+            background-color: #082a20;
+            padding: 30px;
+            width: 350px;
+            height: 560px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            align-items: center;
+            display: flex;
+            justify-content: center;
+            border-radius: 10px;  
+        }
 
-/* Responsividade */
-@media (max-width: 1024px) {
-    .card {
-        width: 400px;
-    }
-    .paragrafo {
-        font-size: 3.5rem;
-    }
-}
+        h1 {
+            font-size: 40px;
+            text-align: center;
+            margin: 0px;
+            height: 50px;
+            font-weight: bold;
+            font-family: 'Instrument Serif', Gerogia, serif;
+            color: white;
+        }
 
-@media (max-width: 768px) {
-    .container {
-        justify-content: center;
-        background-position: center;
-    }
-    .logo {
-        left: 50%;
-        transform: translateX(-50%);
-        top: 30px;
-    }
-    .logo:hover {
-        transform: translateX(-50%) scale(1.05);
-    }
-    .paragrafo {
-        display: none;
-    }
-    .card {
-        width: 100%;
-        border-left: none;
-        background-color: rgba(8, 42, 32, 0.95);
-        backdrop-filter: blur(10px);
-        padding: 80px 24px 40px 24px;
-        min-height: 100vh;
-    }
-}
+        p {
+            font-size: 20px;
+            height: 60px;
+            color: white;
+            text-align: center;
+            margin-bottom: -10px;
+        }
+
+        .form {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            gap: 10px;
+        }
+
+        label {
+            margin-top: 10px;
+            margin-bottom: 5px;
+            color: white;
+        }
+
+        input {
+            padding: 20px;
+            padding-left: 55px;
+            border-radius: 10px;
+            border: 0;
+            background-color: #ffffff;
+        }
+
+        input::placeholder {
+            font-weight: normal;
+            color: #949494;
+        }
+
+        .botao {
+            background-color: #f4b400;
+            color: rgb(0, 0, 0);
+            padding: 20px;
+            margin-top: 10px;
+            border-radius: 10px;
+            border: 0px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 1px 3px #082a20;
+            transition: background-color 0.3s;
+        }
+
+        .botao:hover {
+            background-color: #c99300;
+        }
+
+        .cadastro {
+            margin-top: 25px;
+            align-self: center;
+            font-weight: normal;
+            text-decoration: none;
+            color: black;
+            margin-bottom: 20px;
+        }
+
+        .cadastro span {
+            color: #f4b400;
+            text-decoration: none;
+            font-weight: normal;
+        }
+
+        .cadastro span:hover {
+            color: #c99300;
+        }
+
+        .texto {
+            color: #ffffff;
+            font-weight: normal;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        .email {
+            background: url('/img/email.png') no-repeat left;
+            background-size: 16px;
+            background-position: 20px center;
+            background-color: white;
+        }
+
+        .senha {
+            background: url('/img/pwd.png') no-repeat left;
+            background-size: 16px;
+            background-position: 20px center;
+            background-color: white;
+        }
+
+        .esqueci {
+            text-align: right;
+        }
+
+        .esqueci span {
+            color: #f4b400;
+        }
+
+        .esqueci span:hover {
+            color: #c99300;
+        }
+
+        .erro {
+            color: red;
+            font-size: 14px;
+>>>>>>> fd5495bb21c6cc22f8504ad0ef92c4957234545d:public/css/style-login.css
+        }
