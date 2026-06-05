@@ -33,7 +33,8 @@
 	('Bruno Alves', 'bruno@gmail.com', '123456', 2),
 	('Juliana Martins', 'juliana@gmail.com', '123456', 2),
 	('Rafael Gomes', 'rafael@gmail.com', '123456', 3),
-	('Patricia Oliveira', 'patricia@gmail.com', '123456', 3);
+	('Patricia Oliveira', 'patricia@gmail.com', '123456', 3),
+	('Admin BobIA', 'admin@cropsens.com', 'admin123', 3);
 
 	CREATE TABLE fazenda (
 		id_fazenda INT PRIMARY KEY AUTO_INCREMENT,

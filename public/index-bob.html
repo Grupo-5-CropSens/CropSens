@@ -18,6 +18,9 @@
     </div>
 
     <script>
+        if (sessionStorage.EMAIL_USUARIO !== 'admin@cropsens.com') {
+            window.location.href = 'login.html';
+        }
         
         async function gerarResposta() {
             const pergunta = document.getElementById('pergunta').value;
