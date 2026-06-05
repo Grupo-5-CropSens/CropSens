@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>CropSens - Login</title>
     <link rel="stylesheet" href="../css/style-login.css">
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300..700&display=swap">
@@ -14,6 +14,7 @@
 <body>
     <div class="container">
         <a href="index.html"><img src="/img/CropSens.png" class="logo" /></a>
+        <p class="paragrafo">Cultive o futuro <br> com <span class="dados_precisos">dados precisos</span></p>
         <div class="card">
             <div class="form">
                 <h1>Bom te ver de novo</h1>
@@ -27,10 +28,13 @@
                 <input id="ipt_senha" type="password" class="senha" placeholder="Digite sua senha">
                 <div class="erro" id="erro2"></div>
 
+                <div id="mensagem" class="mensagem-feedback"></div>
+
                 <button onclick="validar()" class="botao">ACESSAR</button>
                 <div class="cadastro_texto">Não possui conta? <a href="cadastro.html"><span>Cadastrar</span></a></div>
-                <div class="home_texto">Deseja voltar para o Início ? <a href="index.html"><span>Voltar</span></a>
-                </div>
+                <a href="index.html" class="voltar-home">
+                    Voltar ao Início
+                </a>
             </div>
         </div>
     </div>
@@ -43,37 +47,33 @@
         let email = ipt_email.value.trim()
         let senha = ipt_senha.value.trim()
         let erros = 0
-        let emails = ['admin@crop.com', 'user@crop.com', 'caramico@gmail.com']
-        let senhas = ['admin123', 'user123', 'caramico123@']
 
         erro1.innerHTML = ''
         erro2.innerHTML = ''
-        ipt_email.style.border = 'none'
-        ipt_senha.style.border = 'none'
+        mensagem.style.display = 'none'
+        mensagem.innerHTML = ''
+        
+        ipt_email.style.borderColor = ''
+        ipt_senha.style.borderColor = ''
 
         if (email.length == 0) {
             erro1.innerHTML = `Insira o e-mail`
-            ipt_email.style.border = '2px solid red'
+            ipt_email.style.borderColor = 'var(--error)'
             erros++
-        }
-        if (email.indexOf('@') == -1 && email.length > 0) {
+        } else if (email.indexOf('@') == -1) {
             erro1.innerHTML = `E-mail inválido`
-            ipt_email.style.border = '2px solid red'
+            ipt_email.style.borderColor = 'var(--error)'
             erros++
         }
+        
         if (senha.length == 0) {
             erro2.innerHTML = `Insira a senha`
-            ipt_senha.style.border = '2px solid red'
+            ipt_senha.style.borderColor = 'var(--error)'
             erros++
         }
-        if (erros == 0) {
-            for (let i = 0; i < emails.length; i++) {
-                if (email == emails[i] && senha == senhas[i]) {
-                }
-            }
-        }
 
-        fetch("/usuarios/autenticar", {
+        if (erros == 0) {
+            fetch("/usuarios/autenticar", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
@@ -87,21 +87,42 @@
                         sessionStorage.EMAIL_USUARIO = json.email;
                         sessionStorage.NOME_USUARIO = json.nome;
                         sessionStorage.ID_USUARIO = json.id;
-                        login()
-
-                        console.log(resposta)
-                
+                        mensagem.style.backgroundColor = "rgba(46, 204, 113, 0.15)";
+                        mensagem.style.borderColor = "var(--success)";
+                        mensagem.style.color = "var(--success)";
+                        mensagem.style.display = 'block';
+                        mensagem.innerHTML = `Login bem-sucedido! Redirecionando...`;
+                        
+                        setTimeout(() => {
+                            login();
+                        }, 1000);
                     });
                 } else {
                     console.log("Houve um erro ao tentar realizar o login!");
-                    erro2.innerHTML = `Email e/ou senha inválido(s)`;
+                    resposta.text().then(text => {
+                        mensagem.style.backgroundColor = "rgba(255, 107, 107, 0.15)";
+                        mensagem.style.borderColor = "var(--error)";
+                        mensagem.style.color = "var(--error)";
+                        mensagem.style.display = 'block';
+                        mensagem.innerHTML = `Email e/ou senha inválido(s)`;
+                    });
                 }
             }).catch(function (erro) {
                 console.log(erro);
+                mensagem.style.backgroundColor = "rgba(255, 107, 107, 0.15)";
+                mensagem.style.borderColor = "var(--error)";
+                mensagem.style.color = "var(--error)";
+                mensagem.style.display = 'block';
+                mensagem.innerHTML = `Erro de conexão com o servidor.`;
             });
+        }
     }
 
     function login() {
-        window.location.href = 'dashboard.html'
+        if (sessionStorage.EMAIL_USUARIO === 'admin@cropsens.com') {
+            window.location.href = 'index-bob.html';
+        } else {
+            window.location.href = 'dashboard.html';
+        }
     }
 </script>
