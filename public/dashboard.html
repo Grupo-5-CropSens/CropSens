@@ -32,7 +32,11 @@
         <span class="menu-icon">🆘</span>
         <span>Ajuda</span>
       </div>
-
+      <!-- Visível apenas para admins -->
+      <div class="menu-item menu-item-admin" id="menu-item-cadastro" data-section="cadastro" style="display:none;">
+        <span class="menu-icon">➕</span>
+        <span>Cadastrar Cliente</span>
+      </div>
     </div>
 
     <div class="menu-footer">
@@ -43,47 +47,85 @@
   <div class="container">
 
     <div id="dashboard" class="section active">
-      <div class="kpi-container">
-        <div class="kpi-card" id="dash-kpi-eficiencia" onclick="openKpiModal('eficiencia')">
-          <h3>Eficiência Atual</h3>
-          <p id="kpi-eficiencia">35.5%</p>
-        </div>
+      <!-- Dashboard do Cliente -->
+      <div id="dashboard-cliente" style="display: block;">
+        <div class="kpi-container">
+          <div class="kpi-card" id="dash-kpi-eficiencia" onclick="openKpiModal('eficiencia')">
+            <h3>Eficiência Atual</h3>
+            <p id="kpi-eficiencia">35.5%</p>
+          </div>
 
-        <div class="kpi-card" id="dash-kpi-altura" onclick="openKpiModal('altura')">
-          <h3>Altura atual</h3>
-          <p id="kpi-altura">224.6 cm</p>
-        </div>
+          <div class="kpi-card" id="dash-kpi-altura" onclick="openKpiModal('altura')">
+            <h3>Altura atual</h3>
+            <p id="kpi-altura">224.6 cm</p>
+          </div>
 
-        <div class="kpi-card" id="dash-kpi-tempo-colheita" onclick="openKpiModal('tempo-colheita')">
-          <h3>Status da Colheita</h3>
-          <p id="kpi-tempo-colheita">0 Dias</p>
-        </div>
+          <div class="kpi-card" id="dash-kpi-tempo-colheita" onclick="openKpiModal('tempo-colheita')">
+            <h3>Status da Colheita</h3>
+            <p id="kpi-tempo-colheita">0 Dias</p>
+          </div>
 
-        <div class="kpi-card" id="dash-kpi-custo" onclick="openKpiModal('custo')">
-          <h3>Custo Mínimo</h3>
-          <p id="kpi-perda">R$ 225</p>
+          <div class="kpi-card" id="dash-kpi-custo" onclick="openKpiModal('custo')">
+            <h3>Custo Mínimo</h3>
+            <p id="kpi-perda">R$ 225</p>
+          </div>
+        </div>
+        <div class="charts-container">
+
+          <div class="esq">
+            <div class="chart-container1">
+              <canvas id="myChart"></canvas>
+            </div>
+
+            <div class="chart-container3">
+              <canvas id="graficoCrescimento"></canvas>
+            </div>
+          </div>
+          <div class="esq">
+            <div class="chart-container2" style="height: 360px;">
+              <canvas id="graficoBarras"></canvas>
+            </div>
+            <div class="chart-container4">
+              <canvas id="graficoPizza"></canvas>
+            </div>
+          </div>
+
         </div>
       </div>
-      <div class="charts-container">
 
-        <div class="esq">
-          <div class="chart-container1">
-            <canvas id="myChart"></canvas>
+      <!-- Dashboard do Administrador -->
+      <div id="dashboard-admin" style="display: none;">
+        <div class="kpi-container">
+          <div class="kpi-card" style="border-bottom: 4px solid #3b82f6;" onclick="openKpiModal('usuarios')">
+            <h3>Total de Usuários</h3>
+            <p id="kpi-admin-usuarios" style="font-size: 32px; font-weight: bold; color: #1e293b;">--</p>
           </div>
-
-          <div class="chart-container3">
-            <canvas id="graficoCrescimento"></canvas>
+          <div class="kpi-card" style="border-bottom: 4px solid #10b981;" onclick="openKpiModal('empresas')">
+            <h3>Total de Empresas</h3>
+            <p id="kpi-admin-empresas" style="font-size: 32px; font-weight: bold; color: #1e293b;">--</p>
+          </div>
+          <div class="kpi-card" style="border-bottom: 4px solid #f59e0b;" onclick="openKpiModal('fazendas')">
+            <h3>Total de Fazendas</h3>
+            <p id="kpi-admin-fazendas" style="font-size: 32px; font-weight: bold; color: #1e293b;">--</p>
+          </div>
+          <div class="kpi-card" style="border-bottom: 4px solid #ef4444;" onclick="openKpiModal('sensores')">
+            <h3>Total de Sensores</h3>
+            <p id="kpi-admin-sensores" style="font-size: 32px; font-weight: bold; color: #1e293b;">--</p>
           </div>
         </div>
-        <div class="esq">
-          <div class="chart-container2">
-            <canvas id="graficoBarras"></canvas>
+        
+        <div class="charts-container">
+          <div class="esq">
+            <div class="chart-container1" style="height: 350px;">
+              <canvas id="graficoSensoresFazenda"></canvas>
+            </div>
           </div>
-          <div class="chart-container4">
-            <canvas id="graficoPizza"></canvas>
+          <div class="esq">
+            <div class="chart-container2" style="height: 350px;">
+              <canvas id="graficoUsuariosEmpresa"></canvas>
+            </div>
           </div>
         </div>
-
       </div>
     </div>
 
@@ -159,6 +201,50 @@
 
     </div>
 
+    <!-- ===== SEÇÃO CADASTRO (SOMENTE ADMIN) ===== -->
+    <div id="cadastro" class="section">
+      <div class="relatorios-content">
+        <h2>Cadastrar Novo Cliente</h2>
+        <div class="cadastro-card">
+          <div class="cadastro-header">
+            <div class="cadastro-icon">👤</div>
+            <div>
+              <h3>Criar Credenciais de Acesso</h3>
+              <p>Após o cadastro, o cliente receberá o e-mail e senha para acessar o sistema.</p>
+            </div>
+          </div>
+
+          <div class="cadastro-form">
+            <div class="cadastro-row">
+              <div class="cadastro-field">
+                <label class="cadastro-label">Nome Completo <span class="obrigatorio">*</span></label>
+                <input id="cad-nome" type="text" class="cadastro-input" placeholder="Ex: João da Silva">
+                <div class="cadastro-erro" id="cad-erro-nome"></div>
+              </div>
+              <div class="cadastro-field">
+                <label class="cadastro-label">E-mail <span class="obrigatorio">*</span></label>
+                <input id="cad-email" type="email" class="cadastro-input" placeholder="Ex: joao@fazenda.com">
+                <div class="cadastro-erro" id="cad-erro-email"></div>
+              </div>
+            </div>
+            <div class="cadastro-row">
+              <div class="cadastro-field">
+                <label class="cadastro-label">Senha <span class="obrigatorio">*</span></label>
+                <input id="ipt_senha" type="password" class="cadastro-input" placeholder="Mínimo 6 caracteres">
+                <div class="cadastro-erro" id="cad-erro-senha"></div>
+              </div>
+            </div>
+
+            <div id="cad-feedback" class="cadastro-feedback" style="display:none;"></div>
+
+            <button class="cadastro-btn" onclick="cadastrarCliente()">
+              ➕ Cadastrar Cliente
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div id="ajuda" class="section">
       <div class="ajuda-content">
         <h2>Central de Ajuda e Documentação</h2>
@@ -201,629 +287,976 @@
             antes gera alto custo de secagem, e colher depois gera alta perda por tombamento ou umidade.</p>
         </div>
       </div>
+    </div> <!-- Fim da section ajuda -->
+  </div> <!-- Fim do container -->
 
-      <div id="bobia" style="display:none;">
-        <button onclick="window.location.href='index-bob.html'" id="bobia-btn">
+    <div id="bobia" style="display:none;">
+      <button onclick="window.location.href='index-bob.html'" id="bobia-btn">
+        <img src="/img/bob_logo.png" alt="bob-logo">
+      </button>
+    </div>
 
-          <img src="/img/bob_logo.png" alt="bob-logo">
-        </button>
-      </div>
+    <script>
+        // Variáveis globais do Dashboard do Cliente para o Modal
+        let ultimaAltura = 0;
+        let ultimaEficiencia = 0;
+        let textoTempoColheita = "";
+        let diasDAM = [];
+        let faseAtualIndex = 0;
+        let custoMinimoDam = 0;
+        let damPontoOtimo = 0;
+        let semanas = 6;
+        let globalProdutividadeReal = [];
+        let globalPerdaAcumulada = [];
+        let globalCustoTotalDam = [];
 
-      <script>
+        // Variáveis globais do Dashboard Admin para o Modal
+        let totalUsuarios = 0;
+        let totalEmpresas = 0;
+        let totalFazendas = 0;
+        let totalSensores = 0;
+        let sensoresAtivos = 0;
+        let sensoresInativos = 0;
 
+        // Inicialização
+        window.onload = function() {
+          mostrarnome(sessionStorage.NOME_USUARIO);
+          configurarMenu();
+          
+          let tipo = sessionStorage.TIPO_USUARIO;
+          const bobia = document.getElementById('bobia');
+          if (tipo === 'admin') {
+            if (bobia) bobia.style.display = 'flex';
+            
+            // Oculta relatórios do menu do admin, exibe cadastro
+            const itemRel = document.querySelector('[data-section="relatorios"]');
+            if (itemRel) itemRel.style.display = 'none';
 
-        window.onload = mostrarnome(sessionStorage.NOME_USUARIO);
-        window.onload = mostrarbobia(sessionStorage.ID_USUARIO);
+            const itemCad = document.getElementById('menu-item-cadastro');
+            if (itemCad) itemCad.style.display = 'flex';
+
+            // Atualiza avatar com inicial do admin
+            const avatar = document.querySelector('.menu-avatar');
+            const nome = sessionStorage.NOME_USUARIO || 'A';
+            if (avatar) avatar.innerText = nome.charAt(0).toUpperCase();
+
+            // Alterna visibilidade das divs do dashboard
+            document.getElementById('dashboard-cliente').style.display = 'none';
+            document.getElementById('dashboard-admin').style.display = 'block';
+
+            carregarDashboardAdmin();
+          } else {
+            if (bobia) bobia.style.display = 'none';
+
+            // Atualiza avatar com inicial do cliente
+            const avatar = document.querySelector('.menu-avatar');
+            const nome = sessionStorage.NOME_USUARIO || 'C';
+            if (avatar) avatar.innerText = nome.charAt(0).toUpperCase();
+
+            document.getElementById('dashboard-cliente').style.display = 'block';
+            document.getElementById('dashboard-admin').style.display = 'none';
+
+            carregarDashboardCliente();
+          }
+        };
 
         function mostrarnome(usuario) {
-          p_nome.innerHTML = usuario;
+          const p_nome = document.getElementById('p_nome');
+          if (usuario && p_nome) {
+            p_nome.innerHTML = usuario;
+          }
         }
 
-        function mostrarbobia(usuario) {
-          if (usuario == 1) {
-            bobia.style.display = 'flex';
+        function configurarMenu() {
+          let menuItems = document.querySelectorAll('.menu-item');
+          let sections = document.querySelectorAll('.section');
 
-            
-          } 
+          function removeActiveFromList(list) {
+            list.forEach(function (item) {
+              item.classList.remove('active');
+            });
+          }
+
+          function handleMenuClick(event) {
+            let sectionId = this.getAttribute('data-section');
+
+            removeActiveFromList(sections);
+            removeActiveFromList(menuItems);
+
+            document.getElementById(sectionId).classList.add('active');
+            this.classList.add('active');
+          }
+
+          menuItems.forEach(function (item) {
+            item.addEventListener('click', handleMenuClick);
+          });
+
+          // Marcar o item de menu ativo ao carregar (sempre começa no Dashboard)
+          const itemDashboard = document.querySelector('[data-section="dashboard"]');
+          if (itemDashboard) itemDashboard.classList.add('active');
         }
 
-        const ctx = document.getElementById('myChart');
+        function carregarDashboardAdmin() {
+          fetch('/dashboard/dadosAdmin')
+            .then(function(res) { return res.json(); })
+            .then(function(dados) {
+              totalUsuarios = dados.kpis.totalUsuarios;
+              totalEmpresas = dados.kpis.totalEmpresas;
+              totalFazendas = dados.kpis.totalFazendas;
+              totalSensores = dados.kpis.totalSensores;
+              sensoresAtivos = dados.kpis.sensoresAtivos;
+              sensoresInativos = dados.kpis.sensoresInativos;
 
-        fetch('/dashboard/dados/1')
-          .then(res => res.json())
-          .then(dados => {
+              document.getElementById('kpi-admin-usuarios').innerText = totalUsuarios;
+              document.getElementById('kpi-admin-empresas').innerText = totalEmpresas;
+              document.getElementById('kpi-admin-fazendas').innerText = totalFazendas;
+              document.getElementById('kpi-admin-sensores').innerText = sensoresAtivos + ' / ' + totalSensores;
 
-            let altura = dados.altura;
-            let crescimento = dados.crescimento;
-            let eficiencia = dados.eficiencia;
-            let Semanas = altura.length;
+              // Chart 1: Sensores por Fazenda (Ativos vs Inativos)
+              var ctxSensores = document.getElementById('graficoSensoresFazenda').getContext('2d');
+              var labelsFazendas = dados.graficos.sensoresPorFazenda.map(function(f) { return f.fazenda; });
+              var ativos = dados.graficos.sensoresPorFazenda.map(function(f) { return f.ativos || 0; });
+              var inativos = dados.graficos.sensoresPorFazenda.map(function(f) { return f.inativos || 0; });
 
-
-
-            new Chart(ctx, {
-              data: {
-                labels: ['Ponto base', 'Semana 2', 'Semana 3', 'Semana 4', 'Semana 5', 'Semana 6'],
-                datasets: [
-                  {
-                    type: 'bar',
-                    label: 'Altura',
-                    data: altura,
-                    borderColor: '#059669',
-                    backgroundColor: '#059669',
-                    borderWidth: 1,
-                    borderRadius: 8
-
-                  },
-                  {
-                    type: 'bar',
-                    label: 'Cresc (%)',
-                    data: crescimento,
-                    //  borderColor: '#FACC15', 
-                    backgroundColor: '#FBBF24',
-                    borderWidth: 1,
-                    borderRadius: 8
-                  },
-                  {
-                    type: 'line',
-                    label: 'Efici (%)',
-                    borderColor: '#064E3B',
-                    backgroundColor: '#064E3B',
-                    data: eficiencia,
-                    borderWidth: 2,
-                    borderRadius: 5
-                  }
-                ]
-              },
-              options: {
-                plugins: {
-                  title: {
-                    display: true,
-                    text: "Índice de Eficiência Temporal",
-                    font: {
-                      size: 18
+              new Chart(ctxSensores, {
+                type: 'bar',
+                data: {
+                  labels: labelsFazendas,
+                  datasets: [
+                    {
+                      label: 'Sensores Ativos',
+                      data: ativos,
+                      backgroundColor: '#10b981',
+                      borderRadius: 6
                     },
-                    color: '#064E3B'
-                  },
-                  legend: {
-                    position: 'right'
-                  }
+                    {
+                      label: 'Sensores Inativos',
+                      data: inativos,
+                      backgroundColor: '#ef4444',
+                      borderRadius: 6
+                    }
+                  ]
                 },
-                scales: {
-                  y: {
-                    beginAtZero: true
+                options: {
+                  responsive: true,
+                  maintainAspectRatio: false,
+                  plugins: {
+                    title: {
+                      display: true,
+                      text: 'Sensores por Fazenda (Ativos vs Inativos)',
+                      font: { size: 16 },
+                      color: '#064E3B'
+                    }
+                  },
+                  scales: {
+                    x: { stacked: true },
+                    y: { stacked: true, beginAtZero: true }
                   }
                 }
-              }
-            });
-
-
-            /*GRAFICO DE PERDA DE PRODUÇÃO PÓS-MATURAÇÃO*/
-            const kgs = document.getElementById('graficoBarras');
-
-            // Dados de dias pós-maturação (DAM) puxados do banco
-            let potencialMaximo = dados.potencialMaximo;
-            let diasDAM = dados.diasDAM;
-            let produtividadeReal = dados.produtividadeReal;
-            let perdaAcumulada = dados.perdaAcumulada;
-            let percentualPerda = dados.percentualPerda;
-            let custoSecagem = dados.custoSecagem;
-            let custoTotalDam = dados.custoTotalDam;
-
-            let labelsDam = [];
-            let custoPerdaFinanceira = [];
-            let custoPorKg = 0.50; // Constante financeira da fazenda
-
-            for (let i = 0; i < diasDAM.length; i++) {
-              labelsDam.push(`${diasDAM[i]} DAM`);
-            }
-
-            // Calcula ponto ótimo (menor custo total)
-            let custoMinimo = Math.min(...custoTotalDam);
-            let indicePontoOtimo = custoTotalDam.indexOf(custoMinimo);
-            let damPontoOtimo = diasDAM[indicePontoOtimo];
-
-            let faseAtualIndex = dados.diasDAM.indexOf(dados.faseAtualDam);
-            if (faseAtualIndex === -1) faseAtualIndex = 2; // Fallback se não encontrar
-
-
-
-            new Chart(kgs, {
-              type: 'line',
-              data: {
-                labels: labelsDam,
-                datasets: [
-                  {
-                    label: 'Produtividade (kg/ha)',
-                    data: produtividadeReal,
-                    borderColor: '#059669',
-                    backgroundColor: '#059669',
-                    borderWidth: 3,
-                    tension: 0.3,
-                    fill: false,
-                    pointRadius: 4,
-                    pointBackgroundColor: '#059669',
-                    pointBorderColor: '#059669',
-                    pointBorderWidth: 2,
-                    yAxisID: 'y'
-                  },
-                  {
-                    label: 'Custo Total (R$)',
-                    data: custoTotalDam,
-                    borderColor: '#ff3434',
-                    backgroundColor: '#ff3434',
-                    borderWidth: 3,
-                    tension: 0.3,
-                    fill: false,
-                    pointRadius: 4,
-                    pointBackgroundColor: '#ff3434',
-                    pointBorderColor: '#ff3434',
-                    pointBorderWidth: 2,
-                    yAxisID: 'y1'
-                  },
-                  {
-                    type: 'line',
-                    label: 'Melhor momento para colheita',
-                    data: produtividadeReal.map((v, i) => i <= faseAtualIndex ? v : null),
-                    fill: 'origin',
-                    backgroundColor: 'rgba(16, 185, 129, 0.3)',
-                    borderColor: '#10B981',
-                    borderWidth: 4,
-                    pointBackgroundColor: produtividadeReal.map((v, i) => i === indicePontoOtimo ? '#059669' : '#10B981'),
-                    pointBorderColor: produtividadeReal.map((v, i) => i === indicePontoOtimo ? '#ffffff' : '#ffffff'),
-                    pointRadius: produtividadeReal.map((v, i) => i === indicePontoOtimo ? 16 : 0),
-                    pointHoverRadius: produtividadeReal.map((v, i) => i === indicePontoOtimo ? 20 : 0),
-                    pointStyle: produtividadeReal.map((v, i) => i === indicePontoOtimo ? 'star' : 'circle'),
-                    yAxisID: 'y'
-                  }
-                ]
-              },
-              options: {
-                responsive: true,
-                interaction: {
-                  mode: 'index',
-                  intersect: false
-                },
-                plugins: {
-                  title: {
-                    display: true,
-                    text: "Impacto do Tempo de Colheita na Produtividade e Custo",
-                    font: { size: 16, weight: 'bold' },
-                    color: '#064E3B',
-                    padding: 15
-                  },
-                  legend: {
-                    position: 'top',
-                    labels: {
-                      font: { size: 12 },
-                      padding: 12,
-
-                    }
-                  },
-                  tooltip: {
-                    backgroundColor: 'rgba(0,0,0,0.7)',
-                    padding: 10,
-                    titleFont: { size: 12 },
-                    bodyFont: { size: 11 }
-                  }
-                },
-                scales: {
-                  x: {
-                    title: {
-                      display: true,
-                      text: 'DAM = Dias após maturação',
-                      font: { size: 12 }
-                    },
-                    ticks: {
-                      font: { size: 11 }
-                    },
-                    grid: {
-                      color: 'rgba(0,0,0,0.05)'
-                    }
-                  },
-                  y: {
-                    type: 'linear',
-                    display: true,
-                    position: 'left',
-                    title: {
-                      display: true,
-                      text: 'kg/ha',
-                      font: { size: 12 },
-                      color: '#059669'
-                    },
-                    ticks: {
-                      color: '#059669',
-                      font: { size: 11 }
-                    },
-                    grid: {
-                      color: 'rgba(5, 150, 105, 0.1)'
-                    }
-                  },
-                  y1: {
-                    type: 'linear',
-                    display: true,
-                    position: 'right',
-                    title: {
-                      display: true,
-                      text: 'R$',
-                      font: { size: 12 },
-                      color: '#ff3434'
-                    },
-                    ticks: {
-                      color: '#ff3434',
-                      font: { size: 11 }
-                    },
-                    grid: {
-                      drawOnChartArea: false
-                    }
-                  }
-                }
-              }
-            });
-            // GRÁFICO CRESCIMENTO IDEAL X REAL
-            let crescimentoTotal = 224.6;
-            let semanas = 6;
-
-            let crescimentoIdealPorSemana = crescimentoTotal / semanas;
-
-            let labelsCrescimento = [];
-            for (let i = 1; i <= semanas; i++) {
-              labelsCrescimento.push("Semana " + i);
-            }
-
-            let crescimentoIdeal = [];
-            for (let i = 1; i <= semanas; i++) {
-              crescimentoIdeal.push(i * crescimentoIdealPorSemana);
-            }
-
-            let crescimentoReal = [38, 64, 92, 150, 200, 224.6];
-
-            let ctx3 = document.getElementById('graficoCrescimento');
-
-            new Chart(ctx3, {
-              type: 'line',
-              data: {
-                labels: labelsCrescimento,
-                datasets: [
-                  {
-                    label: 'Crescimento Ideal (cm)',
-                    data: crescimentoIdeal,
-                    borderColor: '#10B981',
-                    backgroundColor: '#10B981',
-                    borderWidth: 2,
-                    tension: 0.3
-                  },
-                  {
-                    label: 'Crescimento Real (cm)',
-                    data: crescimentoReal,
-                    borderColor: '#064E3B',
-                    backgroundColor: '#064E3B',
-                    borderWidth: 2,
-                    tension: 0.3
-                  }
-                ]
-              },
-              options: {
-                responsive: true,
-                plugins: {
-                  title: {
-                    display: true,
-                    text: 'Comparação do Crescimento do Milho (6 semanas)',
-                    font: { size: 18 },
-                    color: '#064E3B'
-                  },
-                  legend: {
-                    position: 'top'
-                  }
-                },
-                scales: {
-                  x: {
-                    title: {
-                      display: true,
-                      text: 'Semanas'
-                    }
-                  },
-                  y: {
-                    title: {
-                      display: true,
-                      text: 'Crescimento (cm)'
-                    },
-                    beginAtZero: true
-                  }
-                }
-              }
-            });
-
-            /* Gráfico de pizza */
-            let ctx4 = document.getElementById('graficoPizza');
-
-            new Chart(ctx4, {
-              type: 'doughnut',
-              data: {
-                labels: ['Altura ideal', 'Altura baixo do ideal'],
-                datasets: [{
-                  label: 'Quantidade de sensores',
-                  data: [1, 9],
-                  borderWidth: 0,
-                  backgroundColor: ['#059669', '#FBBF24']
-                },
-                ]
-              },
-              options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                  title: {
-                    display: true,
-                    text: 'Sensores na altura ideal',
-                    font: { size: 18 },
-                    color: '#064E3B'
-                  },
-                  legend: {
-                    position: 'bottom'
-                  }
-                },
-                scales: {
-                }
-              }
-            });
-
-
-            let ultimaAltura = altura[altura.length - 1];
-            let ultimaEficiencia = eficiencia[eficiencia.length - 1];
-            let custoMinimoDam = custoMinimo;
-            let menorEficiencia = 99
-
-            for (let i = 0; i < eficiencia.length; i++) {
-              if (eficiencia[i] != null && eficiencia[i] < menorEficiencia) {
-                menorEficiencia = eficiencia[i]
-              }
-            }
-
-            let diasParaColheita = diasDAM[indicePontoOtimo] - diasDAM[faseAtualIndex];
-            let textoTempoColheita = diasParaColheita === 0 ? "Ponto Ideal" : (diasParaColheita > 0 ? `Faltam ${diasParaColheita}d` : `Atraso ${Math.abs(diasParaColheita)}d`);
-
-            document.getElementById('kpi-altura').innerText = `${ultimaAltura} cm`;
-            document.getElementById('kpi-eficiencia').innerText = `${ultimaEficiencia}%`;
-            document.getElementById('kpi-tempo-colheita').innerText = textoTempoColheita;
-            document.getElementById('kpi-perda').innerText = `R$ ${custoMinimoDam.toFixed(0)}`;
-
-            document.getElementById('kpi-altura-rel').innerText = `${ultimaAltura} cm`;
-            document.getElementById('kpi-eficiencia-rel').innerText = `${ultimaEficiencia}%`;
-            document.getElementById('kpi-tempo-colheita-rel').innerText = textoTempoColheita;
-            document.getElementById('kpi-perda-rel').innerText = `R$ ${custoMinimoDam.toFixed(0)}`;
-
-            let menuItems = document.querySelectorAll('.menu-item');
-            let sections = document.querySelectorAll('.section');
-
-            function removeActiveFromList(list) {
-              list.forEach(function (item) {
-                item.classList.remove('active');
               });
-            }
 
-            function handleMenuClick(event) {
-              let sectionId = this.getAttribute('data-section');
+              // Chart 2: Usuários por Empresa
+              var ctxUsuarios = document.getElementById('graficoUsuariosEmpresa').getContext('2d');
+              var labelsEmpresas = dados.graficos.usuariosPorEmpresa.map(function(e) { return e.empresa; });
+              var totaisUsuarios = dados.graficos.usuariosPorEmpresa.map(function(e) { return e.total; });
 
-              removeActiveFromList(sections);
-              removeActiveFromList(menuItems);
-
-              document.getElementById(sectionId).classList.add('active');
-              this.classList.add('active');
-            }
-
-            menuItems.forEach(function (item) {
-              item.addEventListener('click', handleMenuClick);
+              new Chart(ctxUsuarios, {
+                type: 'doughnut',
+                data: {
+                  labels: labelsEmpresas,
+                  datasets: [{
+                    data: totaisUsuarios,
+                    backgroundColor: ['#3b82f6', '#10b981', '#f59e0b', '#8b5cf6', '#ec4899']
+                  }]
+                },
+                options: {
+                  responsive: true,
+                  maintainAspectRatio: false,
+                  plugins: {
+                    title: {
+                      display: true,
+                      text: 'Distribuição de Usuários por Empresa',
+                      font: { size: 16 },
+                      color: '#064E3B'
+                    },
+                    legend: { position: 'bottom' }
+                  }
+                }
+              });
+            })
+            .catch(function(err) {
+              console.error('Erro ao carregar dados do dashboard admin:', err);
             });
+        }
 
+        function setDashKpiStatus(cardId, statusColor) {
+          var card = document.getElementById(cardId);
+          if (card) {
+            card.style.borderBottom = '4px solid ' + statusColor;
+          }
+        }
 
-            /* alertas kpi */
-            if (ultimaEficiencia < 50) {
-              kpi1.style.backgroundColor = '#ff3434'
-            } else if (ultimaEficiencia < 100) {
-              kpi1.style.backgroundColor = '#FBBF24'
+        function carregarDashboardCliente() {
+          var ctx = document.getElementById('myChart');
+
+          fetch('/dashboard/dados/1')
+            .then(function(res) { return res.json(); })
+            .then(function(dados) {
+
+              let altura = dados.altura;
+              let crescimento = dados.crescimento;
+              let eficiencia = dados.eficiencia;
+
+              new Chart(ctx, {
+                data: {
+                  labels: ['Ponto base', 'Semana 2', 'Semana 3', 'Semana 4', 'Semana 5', 'Semana 6'],
+                  datasets: [
+                    {
+                      type: 'bar',
+                      label: 'Altura',
+                      data: altura,
+                      borderColor: '#059669',
+                      backgroundColor: '#059669',
+                      borderWidth: 1,
+                      borderRadius: 8
+                    },
+                    {
+                      type: 'bar',
+                      label: 'Cresc (%)',
+                      data: crescimento,
+                      backgroundColor: '#FBBF24',
+                      borderWidth: 1,
+                      borderRadius: 8
+                    },
+                    {
+                      type: 'line',
+                      label: 'Efici (%)',
+                      borderColor: '#064E3B',
+                      backgroundColor: '#064E3B',
+                      data: eficiencia,
+                      borderWidth: 2,
+                      borderRadius: 5
+                    }
+                  ]
+                },
+                options: {
+                  plugins: {
+                    title: {
+                      display: true,
+                      text: "Índice de Eficiência Temporal",
+                      font: {
+                        size: 18
+                      },
+                      color: '#064E3B'
+                    },
+                    legend: {
+                      position: 'right'
+                    }
+                  },
+                  scales: {
+                    y: {
+                      beginAtZero: true
+                    }
+                  }
+                }
+              });
+
+              /*GRAFICO DE PERDA DE PRODUÇÃO PÓS-MATURAÇÃO*/
+              const kgs = document.getElementById('graficoBarras');
+
+              // Dados de dias pós-maturação (DAM) puxados do banco
+              let potencialMaximo = dados.potencialMaximo;
+              diasDAM = dados.diasDAM;
+              let produtividadeReal = dados.produtividadeReal;
+              let perdaAcumulada = dados.perdaAcumulada;
+              let percentualPerda = dados.percentualPerda;
+              let custoSecagem = dados.custoSecagem;
+              let custoTotalDam = dados.custoTotalDam;
+
+              globalProdutividadeReal = produtividadeReal;
+              globalPerdaAcumulada = perdaAcumulada;
+              globalCustoTotalDam = custoTotalDam;
+
+              let labelsDam = [];
+              let custoPerdaFinanceira = [];
+              let custoPorKg = 0.50; // Constante financeira da fazenda
+
+              for (let i = 0; i < diasDAM.length; i++) {
+                labelsDam.push(`${diasDAM[i]} DAM`);
+              }
+
+              // Calcula ponto ótimo (menor custo total)
+              let custoMinimo = Math.min(...custoTotalDam);
+              let indicePontoOtimo = custoTotalDam.indexOf(custoMinimo);
+              damPontoOtimo = diasDAM[indicePontoOtimo];
+
+              faseAtualIndex = dados.diasDAM.indexOf(dados.faseAtualDam);
+              if (faseAtualIndex === -1) faseAtualIndex = 2; // Fallback se não encontrar
+
+              new Chart(kgs, {
+                type: 'line',
+                data: {
+                  labels: labelsDam,
+                  datasets: [
+                    // ── Linha 1: Produtividade total (cinza/verde) ──
+                    {
+                      label: 'Produtividade (kg/ha)',
+                      data: produtividadeReal,
+                      borderColor: 'rgba(5,150,105,0.35)',
+                      backgroundColor: 'transparent',
+                      borderWidth: 2,
+                      tension: 0.3,
+                      fill: false,
+                      pointRadius: 3,
+                      pointBackgroundColor: 'rgba(5,150,105,0.4)',
+                      pointBorderColor: 'transparent',
+                      yAxisID: 'y',
+                      order: 3
+                    },
+                    // ── Linha 2: Custo Total (vermelho) ──
+                    {
+                      label: 'Custo Total (R$)',
+                      data: custoTotalDam,
+                      borderColor: 'rgba(239,68,68,0.4)',
+                      backgroundColor: 'transparent',
+                      borderWidth: 2,
+                      tension: 0.3,
+                      fill: false,
+                      pointRadius: 3,
+                      pointBackgroundColor: 'rgba(239,68,68,0.4)',
+                      pointBorderColor: 'transparent',
+                      yAxisID: 'y1',
+                      order: 3
+                    },
+                    // ── Linha 3: Fase atual da lavoura (linha laranja simples) ──
+                    {
+                      label: 'Fase Atual da Sua Lavoura',
+                      data: produtividadeReal.map((v, i) => i <= faseAtualIndex ? v : null),
+                      borderColor: '#F59E0B',
+                      backgroundColor: 'transparent',
+                      borderWidth: 2.5,
+                      tension: 0.3,
+                      fill: false,
+                      pointRadius: produtividadeReal.map((v, i) => i === faseAtualIndex ? 10 : 0),
+                      pointStyle: produtividadeReal.map((v, i) => i === faseAtualIndex ? 'circle' : 'circle'),
+                      pointBackgroundColor: '#F59E0B',
+                      pointBorderColor: '#ffffff',
+                      pointBorderWidth: 2,
+                      pointHoverRadius: 13,
+                      yAxisID: 'y',
+                      order: 1
+                    },
+                    // ── Ponto: Melhor Momento de Colheita (estrela verde) ──
+                    {
+                      label: 'Melhor Momento de Colheita',
+                      data: produtividadeReal.map((v, i) => i === indicePontoOtimo ? v : null),
+                      pointBackgroundColor: faseAtualIndex === indicePontoOtimo ? '#10B981' : '#ffffff',
+                      pointBorderColor: '#10B981',
+                      pointBorderWidth: 3,
+                      pointRadius: 14,
+                      pointHoverRadius: 18,
+                      pointStyle: 'star',
+                      showLine: false,
+                      yAxisID: 'y',
+                      order: 0
+                    }
+                  ]
+                },
+                options: {
+                  responsive: true,
+                  maintainAspectRatio: false,
+                  interaction: {
+                    mode: 'index',
+                    intersect: false
+                  },
+                  plugins: {
+                    title: {
+                      display: true,
+                      text: 'Impacto do Tempo de Colheita na Produtividade e Custo',
+                      font: { size: 15, weight: 'bold' },
+                      color: '#064E3B',
+                      padding: { top: 10, bottom: 15 }
+                    },
+                    legend: {
+                      position: 'top',
+                      labels: {
+                        font: { size: 12 },
+                        padding: 16,
+                        usePointStyle: true,
+                        pointStyleWidth: 14,
+                        filter: function(item) {
+                          // Oculta as duas linhas base da legenda para não poluir
+                          return item.datasetIndex >= 2;
+                        }
+                      }
+                    },
+                    tooltip: {
+                      backgroundColor: 'rgba(6,78,59,0.92)',
+                      titleColor: '#A7F3D0',
+                      bodyColor: '#ffffff',
+                      padding: 12,
+                      cornerRadius: 8,
+                      callbacks: {
+                        title: function(items) {
+                          return items[0].label;
+                        },
+                        label: function(context) {
+                          const ds = context.datasetIndex;
+                          const idx = context.dataIndex;
+                          if (ds === 0) return `  Produtividade: ${context.parsed.y?.toFixed(0)} kg/ha`;
+                          if (ds === 1) return `  Custo Total: R$ ${context.parsed.y?.toFixed(0)}/ha`;
+                          if (ds === 2 && idx === faseAtualIndex) return `  📍 Sua Lavoura Hoje: ${context.parsed.y?.toFixed(0)} kg/ha`;
+                          if (ds === 3) return `  ⭐ Melhor Momento: ${context.parsed.y?.toFixed(0)} kg/ha`;
+                          return null;
+                        },
+                        afterBody: function(items) {
+                          const idx = items[0].dataIndex;
+                          if (idx === faseAtualIndex && idx === indicePontoOtimo) {
+                            return ['', '🌟 COLHER AGORA — LUCRO MÁXIMO!'];
+                          } else if (idx === indicePontoOtimo) {
+                            return ['', '⭐ Este é o ponto ideal de colheita'];
+                          } else if (idx === faseAtualIndex) {
+                            const dias = diasDAM[indicePontoOtimo] - diasDAM[faseAtualIndex];
+                            return dias > 0
+                              ? [``, `⏳ Faltam ${dias} dias para o ponto ideal`]
+                              : [``, `🚨 Atrasado ${Math.abs(dias)} dias — Colha agora!`];
+                          }
+                          return [];
+                        }
+                      }
+                    }
+                  },
+                  scales: {
+                    x: {
+                      title: {
+                        display: true,
+                        text: 'DAM = Dias após maturação',
+                        font: { size: 12 }
+                      },
+                      ticks: { font: { size: 11 } },
+                      grid: { color: 'rgba(0,0,0,0.04)' }
+                    },
+                    y: {
+                      type: 'linear',
+                      display: true,
+                      position: 'left',
+                      title: {
+                        display: true,
+                        text: 'kg/ha',
+                        font: { size: 12 },
+                        color: '#059669'
+                      },
+                      ticks: { color: '#059669', font: { size: 11 } },
+                      grid: { color: 'rgba(5,150,105,0.08)' }
+                    },
+                    y1: {
+                      type: 'linear',
+                      display: true,
+                      position: 'right',
+                      title: {
+                        display: true,
+                        text: 'R$',
+                        font: { size: 12 },
+                        color: '#EF4444'
+                      },
+                      ticks: { color: '#EF4444', font: { size: 11 } },
+                      grid: { drawOnChartArea: false }
+                    }
+                  }
+                }
+              });
+
+              // GRÁFICO CRESCIMENTO IDEAL X REAL
+              let crescimentoTotal = 224.6;
+              semanas = 6;
+
+              let crescimentoIdealPorSemana = crescimentoTotal / semanas;
+
+              let labelsCrescimento = [];
+              for (let i = 1; i <= semanas; i++) {
+                labelsCrescimento.push("Semana " + i);
+              }
+
+              let crescimentoIdeal = [];
+              for (let i = 1; i <= semanas; i++) {
+                crescimentoIdeal.push(i * crescimentoIdealPorSemana);
+              }
+
+              let crescimentoReal = [38, 64, 92, 150, 200, 224.6];
+
+              let ctx3 = document.getElementById('graficoCrescimento');
+
+              new Chart(ctx3, {
+                type: 'line',
+                data: {
+                  labels: labelsCrescimento,
+                  datasets: [
+                    {
+                      label: 'Crescimento Ideal (cm)',
+                      data: crescimentoIdeal,
+                      borderColor: '#10B981',
+                      backgroundColor: '#10B981',
+                      borderWidth: 2,
+                      tension: 0.3
+                    },
+                    {
+                      label: 'Crescimento Real (cm)',
+                      data: crescimentoReal,
+                      borderColor: '#064E3B',
+                      backgroundColor: '#064E3B',
+                      borderWidth: 2,
+                      tension: 0.3
+                    }
+                  ]
+                },
+                options: {
+                  responsive: true,
+                  plugins: {
+                    title: {
+                      display: true,
+                      text: 'Comparação do Crescimento do Milho (6 semanas)',
+                      font: { size: 18 },
+                      color: '#064E3B'
+                    },
+                    legend: {
+                      position: 'top'
+                    }
+                  },
+                  scales: {
+                    x: {
+                      title: {
+                        display: true,
+                        text: 'Semanas'
+                      }
+                    },
+                    y: {
+                      title: {
+                        display: true,
+                        text: 'Crescimento (cm)'
+                      },
+                      beginAtZero: true
+                    }
+                  }
+                }
+              });
+
+              /* Gráfico de pizza */
+              let ctx4 = document.getElementById('graficoPizza');
+
+              new Chart(ctx4, {
+                type: 'doughnut',
+                data: {
+                  labels: ['Altura ideal', 'Altura baixo do ideal'],
+                  datasets: [{
+                    label: 'Quantidade de sensores',
+                    data: [1, 9],
+                    borderWidth: 0,
+                    backgroundColor: ['#059669', '#FBBF24']
+                  }]
+                },
+                options: {
+                  responsive: true,
+                  maintainAspectRatio: false,
+                  plugins: {
+                    title: {
+                      display: true,
+                      text: 'Sensores na altura ideal',
+                      font: { size: 18 },
+                      color: '#064E3B'
+                    },
+                    legend: {
+                      position: 'bottom'
+                    }
+                  }
+                }
+              });
+
+              ultimaAltura = altura[altura.length - 1];
+              ultimaEficiencia = eficiencia[eficiencia.length - 1];
+              custoMinimoDam = custoMinimo;
+
+              let diasParaColheita = diasDAM[indicePontoOtimo] - diasDAM[faseAtualIndex];
+              textoTempoColheita = diasParaColheita === 0 ? "Ponto Ideal" : (diasParaColheita > 0 ? `Faltam ${diasParaColheita}d` : `Atraso ${Math.abs(diasParaColheita)}d`);
+
+              document.getElementById('kpi-altura').innerText = `${ultimaAltura} cm`;
+              document.getElementById('kpi-eficiencia').innerText = `${ultimaEficiencia}%`;
+              document.getElementById('kpi-tempo-colheita').innerText = textoTempoColheita;
+              document.getElementById('kpi-perda').innerText = `R$ ${custoMinimoDam.toFixed(0)}`;
+
+              document.getElementById('kpi-altura-rel').innerText = `${ultimaAltura} cm`;
+              document.getElementById('kpi-eficiencia-rel').innerText = `${ultimaEficiencia}%`;
+              document.getElementById('kpi-tempo-colheita-rel').innerText = textoTempoColheita;
+              document.getElementById('kpi-perda-rel').innerText = `R$ ${custoMinimoDam.toFixed(0)}`;
+
+              /* alertas kpi */
+              const kpi1 = document.getElementById('kpi1');
+              const kpi2 = document.getElementById('kpi2');
+              const kpi3 = document.getElementById('kpi3');
+              const kpi4 = document.getElementById('kpi4');
+
+              if (kpi1) {
+                if (ultimaEficiencia < 50) {
+                  kpi1.style.backgroundColor = '#ff3434';
+                } else if (ultimaEficiencia < 100) {
+                  kpi1.style.backgroundColor = '#FBBF24';
+                } else {
+                  kpi1.style.backgroundColor = '#059669';
+                }
+              }
+
+              if (kpi2) {
+                if (ultimaAltura < 220) {
+                  kpi2.style.backgroundColor = '#FBBF24';
+                } else {
+                  kpi2.style.backgroundColor = '#059669';
+                }
+              }
+
+              if (kpi3) {
+                if (diasParaColheita === 0) {
+                  kpi3.style.backgroundColor = '#10B981';
+                } else if (diasParaColheita > 0) {
+                  kpi3.style.backgroundColor = '#FBBF24';
+                } else {
+                  kpi3.style.backgroundColor = '#EF4444';
+                }
+              }
+
+              if (kpi4) {
+                if (custoMinimoDam < 100) {
+                  kpi4.style.backgroundColor = '#059669';
+                } else if (custoMinimoDam < 230) {
+                  kpi4.style.backgroundColor = '#059669';
+                } else {
+                  kpi4.style.backgroundColor = '#FBBF24';
+                }
+              }
+
+              let colorEfi = ultimaEficiencia < 50 ? '#ff3434' : (ultimaEficiencia < 100 ? '#FBBF24' : '#059669');
+              setDashKpiStatus('dash-kpi-eficiencia', colorEfi);
+
+              let colorAlt = ultimaAltura < 220 ? '#FBBF24' : '#059669';
+              setDashKpiStatus('dash-kpi-altura', colorAlt);
+
+              let colorTempoColheita = diasParaColheita === 0 ? '#10B981' : (diasParaColheita > 0 ? '#FBBF24' : '#EF4444');
+              setDashKpiStatus('dash-kpi-tempo-colheita', colorTempoColheita);
+
+              // Se chegou ao ponto ideal, destacar o card de Status da Colheita no dashboard
+              if (faseAtualIndex === indicePontoOtimo) {
+                const statusCard = document.getElementById('dash-kpi-tempo-colheita');
+                if (statusCard) {
+                  statusCard.classList.add('kpi-ready');
+                  // Força o texto a mostrar claramente a ação
+                  const p = statusCard.querySelector('p');
+                  if (p) {
+                    p.innerHTML = '🌟 COLHER AGORA';
+                    p.style.fontSize = '18px';
+                    p.style.color = '#064E3B';
+                  }
+                }
+                const custoCard = document.getElementById('dash-kpi-custo');
+                if (custoCard) custoCard.classList.add('kpi-ready');
+              }
+            })
+            .catch(function(err) {
+              console.error('Erro ao carregar dados do dashboard do Banco de Dados:', err);
+            });
+        }
+
+        /* Logica do Modal de KPI */
+        function openKpiModal(type) {
+          const overlay    = document.getElementById('kpiModalOverlay');
+          const mTitle     = document.getElementById('modalTitle');
+          const mBanner    = document.getElementById('modalBanner');
+          const mBannerIcon= document.getElementById('modalBannerIcon');
+          const mBannerText= document.getElementById('modalBannerText');
+          const mBannerSub = document.getElementById('modalBannerSub');
+          const mValue     = document.getElementById('modalValue');
+          const mPeriod    = document.getElementById('modalPeriod');
+          const mWhy       = document.getElementById('modalWhy');
+          const mAlerts    = document.getElementById('modalAlerts');
+          const mStatusNum = document.getElementById('modalStatusNum');
+          const mStatusInd = document.getElementById('statusIndicator');
+          const mStatusTitle=document.getElementById('modalStatusTitle');
+          const mStatusText= document.getElementById('modalStatusText');
+
+          mStatusInd.classList.remove('status-zero','status-one');
+          mBanner.className = 'modal-action-banner';
+
+          let status = 0;
+
+          // ============ EFICIÊNCIA ============
+          if (type === 'eficiencia') {
+            mTitle.innerText = '🌿 Eficiência da Lavoura';
+            mValue.innerText = `${ultimaEficiencia}%`;
+            mPeriod.innerText = `Semana ${semanas}`;
+            if (ultimaEficiencia >= 33.3) {
+              status = 1;
+              mBanner.classList.add('banner-ok');
+              mBannerIcon.innerText = '✅';
+              mBannerText.innerText = 'CRESCIMENTO DENTRO DO ESPERADO';
+              mBannerSub.innerText  = 'Mantenha as condições de irrigação e adubação atuais.';
+              mWhy.innerHTML = 'A eficiência ≥ 33,3% indica que o milho está se desenvolvendo dentro da curva esperada para este estágio.';
+              mAlerts.innerHTML = '<span style="color:#059669;">✔ Nenhum alerta crítico.</span>';
+              mStatusText.innerText = 'O índice de eficiência indica o vigor vegetativo geral das plantas.';
             } else {
-              kpi1.style.backgroundColor = '#059669'
+              status = 0;
+              mBanner.classList.add('banner-warn');
+              mBannerIcon.innerText = '⚠️';
+              mBannerText.innerText = 'EFICIÊNCIA ABAIXO DO IDEAL';
+              mBannerSub.innerText  = 'Ação recomendada: verificar irrigação e nutrição.';
+              mWhy.innerHTML = 'Eficiência < 33,3% indica possível déficit hídrico ou nutricional que pode comprometer o rendimento final da safra.';
+              mAlerts.innerHTML = '<strong>Possíveis causas:</strong> estresse hídrico, solo compactado ou deficiência de nitrogênio.';
+              mStatusText.innerText = 'O desenvolvimento vegetativo está abaixo do planejado. Acompanhe a irrigação.';
             }
-
-            if (ultimaAltura < 220) {
-              kpi2.style.backgroundColor = '#FBBF24'
+          }
+          // ============ ALTURA ============
+          else if (type === 'altura') {
+            mTitle.innerText = '📏 Altura da Planta';
+            mValue.innerText = `${ultimaAltura} cm`;
+            mPeriod.innerText = `Semana ${semanas}`;
+            if (ultimaAltura >= 220) {
+              status = 1;
+              mBanner.classList.add('banner-ok');
+              mBannerIcon.innerText = '✅';
+              mBannerText.innerText = 'ALTURA NA META';
+              mBannerSub.innerText  = 'Planta dentro do desenvolvimento esperado.';
+              mWhy.innerHTML = 'Altura ≥ 220 cm indica que a lavoura atingiu o porte adequado para a fase de maturação, otimizando a colheita mecanizada.';
+              mAlerts.innerHTML = '<span style="color:#059669;">✔ Nenhum alerta crítico.</span>';
+              mStatusText.innerText = 'A altura atingiu o patamar esperado para este ciclo.';
             } else {
-              kpi2.style.backgroundColor = '#059669'
+              status = 0;
+              mBanner.classList.add('banner-warn');
+              mBannerIcon.innerText = '⚠️';
+              mBannerText.innerText = 'PLANTA ABAIXO DA META';
+              mBannerSub.innerText  = 'Monitorar crescimento e verificar espaçamento.';
+              mWhy.innerHTML = 'Plantas abaixo de 220 cm na semana 6 podem indicar atraso no desenvolvimento, o que pode dificultar a colheita mecanizada.';
+              mAlerts.innerHTML = 'Verifique: densidade de plantio, disponibilidade de nutrientes e histórico de chuvas.';
+              mStatusText.innerText = 'A altura está abaixo do histórico ideal. Verifique condições de solo e nutrição.';
             }
+          }
+          // ============ TEMPO DE COLHEITA ============
+          else if (type === 'tempo-colheita') {
+            mTitle.innerText = '🌾 Status da Colheita';
+            let currentDam = diasDAM[faseAtualIndex] !== undefined ? diasDAM[faseAtualIndex] : 0;
+            let diasParaColheita = damPontoOtimo - currentDam;
+            mValue.innerText = textoTempoColheita || (diasParaColheita === 0 ? 'Ponto Ideal' : (diasParaColheita > 0 ? `Faltam ${diasParaColheita}d` : `Atraso ${Math.abs(diasParaColheita)}d`));
+            mPeriod.innerHTML = `Fase: <strong>${currentDam} DAM</strong> &nbsp;|&nbsp; Ideal: <strong>${damPontoOtimo} DAM</strong>`;
 
             if (diasParaColheita === 0) {
-              kpi3.style.backgroundColor = '#10B981'
+              status = 1;
+              mBanner.classList.add('banner-ideal');
+              mBannerIcon.innerText = '🌟';
+              mBannerText.innerText = 'COLHER AGORA — LUCRO MÁXIMO!';
+              mBannerSub.innerText  = 'Sua lavoura atingiu a janela perfeita de colheita.';
+              mWhy.innerHTML = 'No ponto ideal (DAM ' + damPontoOtimo + '), o custo de secagem é <strong>mínimo</strong> e as perdas físicas por acamamento são <strong>quase nulas</strong>. Este é o momento de maior rentabilidade.';
+              mAlerts.innerHTML = '<span style="color:#059669;">✨ <strong>Lucro máximo garantido.</strong> Produtividade no topo, custo de secagem zerado.</span>';
+              mStatusText.innerText = 'A colheita deve ser iniciada imediatamente para evitar perdas físicas.';
             } else if (diasParaColheita > 0) {
-              kpi3.style.backgroundColor = '#FBBF24'
+              status = 0;
+              mBanner.classList.add('banner-warn');
+              mBannerIcon.innerText = '⏳';
+              mBannerText.innerHTML = `AGUARDAR MAIS ${diasParaColheita} DIA(S)`;
+              mBannerSub.innerText  = 'O milho ainda está maturando. Colher antes gerará alto custo.';
+              let custoHoje = globalCustoTotalDam[faseAtualIndex] !== undefined ? globalCustoTotalDam[faseAtualIndex] : 1200;
+              mWhy.innerHTML = 'O grão ainda está úmido. Cada dia que o milho seca no campo <strong>economiza R$ ' + Math.round((custoHoje - (globalCustoTotalDam[indicePontoOtimo]||250)) / diasParaColheita) + '/ha</strong> em secagem artificial.';
+              mAlerts.innerHTML = `⚠️ Custo de secagem atual estimado: <strong>R$ ${custoHoje.toFixed ? custoHoje.toFixed(0) : custoHoje}/ha</strong>. Aguarde para reduzir esse custo.`;
+              mStatusText.innerText = 'Deixe o grão perder umidade no campo para reduzir os custos com secagem.';
             } else {
-              kpi3.style.backgroundColor = '#EF4444'
+              status = 0;
+              let atrasoDias = Math.abs(diasParaColheita);
+              mBanner.classList.add('banner-danger');
+              mBannerIcon.innerText = '🚨';
+              mBannerText.innerText = `COLHER COM URGÊNCIA! (${atrasoDias}d de atraso)`;
+              mBannerSub.innerText  = 'Cada dia de atraso aumenta as perdas financeiras.';
+              let perdaKg = globalPerdaAcumulada[faseAtualIndex] !== undefined ? globalPerdaAcumulada[faseAtualIndex] : 0;
+              let perdaR$ = (perdaKg * 0.50).toFixed(0);
+              mWhy.innerHTML = 'Passado o ponto ideal, o milho começa a perder peso por <strong>acamamento de colmo, podridão e ataques de pragas</strong>. As perdas são irreversíveis e crescentes.';
+              mAlerts.innerHTML = `🚨 <strong>Perda acumulada: ${perdaKg.toFixed ? perdaKg.toFixed(0) : perdaKg} kg/ha</strong> (Prejuízo de <strong>R$ ${perdaR$}/ha</strong>). Colha IMEDIATAMENTE para não perder mais!`;
+              mStatusText.innerText = 'A umidade está caindo e as perdas no campo estão aumentando. Colha já.';
             }
-
-            if (custoMinimoDam < 100) {
-              kpi4.style.backgroundColor = '#059669'
-            } else if (custoMinimoDam < 230) {
-              kpi4.style.backgroundColor = '#059669'
+          }
+          // ============ CUSTO ============
+          else if (type === 'custo') {
+            mTitle.innerText = '💰 Custo Mínimo de Colheita';
+            mValue.innerText = `R$ ${custoMinimoDam.toFixed ? custoMinimoDam.toFixed(0) : custoMinimoDam}/ha`;
+            mPeriod.innerText = `Ponto ótimo: DAM ${damPontoOtimo}`;
+            status = 1;
+            mBanner.classList.add('banner-ok');
+            mBannerIcon.innerText = '💰';
+            mBannerText.innerText = 'CUSTO MÍNIMO CALCULADO';
+            mBannerSub.innerText  = 'Este é o menor custo total possível para esta safra.';
+            mWhy.innerHTML = 'O custo mínimo ocorre no DAM ' + damPontoOtimo + ', quando a umidade do grão está ideal para colheita direta. Antecipar ou postergar aumenta os custos de secagem e perdas físicas.';
+            mAlerts.innerHTML = '<span style="color:#059669;">✔ Colher em DAM ' + damPontoOtimo + ' garante o maior lucro líquido por hectare.</span>';
+            mStatusText.innerText = 'Representa o menor ponto de custo total da colheita (secagem + perdas no campo).';
+          }
+          // ============ ADMIN KPIs ============
+          else if (type === 'usuarios') {
+            mTitle.innerText = '👥 Total de Usuários';
+            mValue.innerText = totalUsuarios;
+            mPeriod.innerText = 'Todos os registros';
+            status = 1;
+            mBanner.classList.add('banner-ok');
+            mBannerIcon.innerText = '👥';
+            mBannerText.innerText = 'USUÁRIOS CADASTRADOS';
+            mBannerSub.innerText  = 'Plataforma com usuários ativos.';
+            mWhy.innerHTML = 'Total de produtores e gestores com acesso à plataforma CropSens.';
+            mAlerts.innerHTML = '<span style="color:#059669;">✔ Sistema operando normalmente.</span>';
+            mStatusText.innerText = 'Indica a quantidade de contas registradas e ativas no CropSens.';
+          }
+          else if (type === 'empresas') {
+            mTitle.innerText = '🏢 Total de Empresas';
+            mValue.innerText = totalEmpresas;
+            mPeriod.innerText = 'Parceiros registrados';
+            status = 1;
+            mBanner.classList.add('banner-ok');
+            mBannerIcon.innerText = '🏢';
+            mBannerText.innerText = 'EMPRESAS PARCEIRAS';
+            mBannerSub.innerText  = 'Convênios e contratos ativos.';
+            mWhy.innerHTML = 'Empresas agrícolas e cooperativas integradas à plataforma.';
+            mAlerts.innerHTML = '<span style="color:#059669;">✔ Nenhum alerta.</span>';
+            mStatusText.innerText = 'Mostra o total de cooperativas e corporações parceiras cadastradas.';
+          }
+          else if (type === 'fazendas') {
+            mTitle.innerText = '🌱 Total de Fazendas';
+            mValue.innerText = totalFazendas;
+            mPeriod.innerText = 'Propriedades monitoradas';
+            status = 1;
+            mBanner.classList.add('banner-ok');
+            mBannerIcon.innerText = '🌱';
+            mBannerText.innerText = 'FAZENDAS MONITORADAS';
+            mBannerSub.innerText  = 'Propriedades rurais com sensores ativos.';
+            mWhy.innerHTML = 'Cada fazenda cadastrada tem dados de plantação e leituras de sensores em tempo real.';
+            mAlerts.innerHTML = '<span style="color:#059669;">✔ Nenhum alerta.</span>';
+            mStatusText.innerText = 'Número de fazendas registradas e monitoradas pela nossa plataforma.';
+          }
+          else if (type === 'sensores') {
+            mTitle.innerText = '📡 Status dos Sensores';
+            mValue.innerText = `${sensoresAtivos} / ${totalSensores} ativos`;
+            mPeriod.innerText = 'Leitura em tempo real';
+            status = sensoresInativos > 0 ? 0 : 1;
+            if (sensoresInativos > 0) {
+              mBanner.classList.add('banner-warn');
+              mBannerIcon.innerText = '⚠️';
+              mBannerText.innerText = `${sensoresInativos} SENSOR(ES) OFFLINE`;
+              mBannerSub.innerText  = 'Verificar e fazer manutenção em campo.';
+              mWhy.innerHTML = 'Sensores offline podem causar lacunas nos dados e comprometer a acurácia das recomendações.';
+              mAlerts.innerHTML = `⚠️ <strong>${sensoresInativos} sensor(es) inativos.</strong> Acione a equipe de manutenção.`;
+              mStatusText.innerText = 'Sensores offline requerem manutenção física ou substituição de bateria.';
             } else {
-              kpi4.style.backgroundColor = '#FBBF24'
+              mBanner.classList.add('banner-ok');
+              mBannerIcon.innerText = '📡';
+              mBannerText.innerText = 'TODOS OS SENSORES ATIVOS';
+              mBannerSub.innerText  = 'Monitoramento operando em 100%.';
+              mWhy.innerHTML = 'Todos os sensores estão transmitindo dados corretamente. Nenhuma ação necessária.';
+              mAlerts.innerHTML = '<span style="color:#059669;">✔ Sistema funcionando perfeitamente.</span>';
+              mStatusText.innerText = 'Todos os sensores estão comunicando dados de forma estável.';
             }
+          }
 
-            function setDashKpiStatus(cardId, statusColor) {
-              const card = document.getElementById(cardId);
-              if (card) {
-                card.style.borderBottom = '4px solid ' + statusColor;
-              }
+          // ---- Atualizar indicador de status ----
+          mStatusNum.innerHTML = status === 1 ? '<span style="font-size:36px;">✓</span>' : '<span style="font-size:36px;">✕</span>';
+          if (status === 1) {
+            mStatusInd.classList.add('status-one');
+            if (mStatusTitle) { mStatusTitle.innerText = 'Status: Ideal / Liberado'; mStatusTitle.style.color = '#10B981'; }
+          } else {
+            mStatusInd.classList.add('status-zero');
+            if (mStatusTitle) { mStatusTitle.innerText = 'Status: Requer Atenção'; mStatusTitle.style.color = '#EF4444'; }
+          }
+
+          overlay.classList.add('show');
+        }
+
+        // ============ CADASTRO DE CLIENTE (ADMIN) ============
+        function cadastrarCliente() {
+          const nome   = document.getElementById('cad-nome').value.trim();
+          const email  = document.getElementById('cad-email').value.trim();
+          const senha  = document.getElementById('cad-senha').value.trim();
+          const fb     = document.getElementById('cad-feedback');
+          let erros = 0;
+
+          document.getElementById('cad-erro-nome').innerText  = '';
+          document.getElementById('cad-erro-email').innerText = '';
+          document.getElementById('cad-erro-senha').innerText = '';
+          fb.style.display = 'none';
+
+          if (nome.length < 2)  { document.getElementById('cad-erro-nome').innerText  = 'Nome obrigatório (mín. 2 caracteres)'; erros++; }
+          if (!email.includes('@')) { document.getElementById('cad-erro-email').innerText = 'E-mail inválido'; erros++; }
+          if (senha.length < 6) { document.getElementById('cad-erro-senha').innerText = 'Senha mínima: 6 caracteres'; erros++; }
+
+          if (erros > 0) return;
+
+          fetch('/usuarios/cadastrar', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ nomeServer: nome, emailServer: email, senhaServer: senha })
+          }).then(function(res) {
+            if (res.ok) {
+              fb.style.display = 'flex';
+              fb.className = 'cadastro-feedback cadastro-feedback-ok';
+              fb.innerHTML = '✅ Cliente <strong>' + nome + '</strong> cadastrado com sucesso! Compartilhe as credenciais: <strong>' + email + '</strong> / <strong>' + senha + '</strong>';
+              document.getElementById('cad-nome').value  = '';
+              document.getElementById('cad-email').value = '';
+              document.getElementById('cad-senha').value = '';
+            } else {
+              res.text().then(function(t) {
+                fb.style.display = 'flex';
+                fb.className = 'cadastro-feedback cadastro-feedback-erro';
+                fb.innerHTML = '❌ Erro: ' + (t || 'Verifique os dados e tente novamente.');
+              });
             }
-
-            let colorEfi = ultimaEficiencia < 50 ? '#ff3434' : (ultimaEficiencia < 100 ? '#FBBF24' : '#059669');
-            setDashKpiStatus('dash-kpi-eficiencia', colorEfi);
-
-            let colorAlt = ultimaAltura < 220 ? '#FBBF24' : '#059669';
-            setDashKpiStatus('dash-kpi-altura', colorAlt);
-
-            let colorTempoColheita = diasParaColheita === 0 ? '#10B981' : (diasParaColheita > 0 ? '#FBBF24' : '#EF4444');
-            setDashKpiStatus('dash-kpi-tempo-colheita', colorTempoColheita);
-
-            if (faseAtualIndex === indicePontoOtimo) {
-              const custoCard = document.getElementById('dash-kpi-custo');
-              if (custoCard) custoCard.classList.add('kpi-ready');
-            }
-
-            /* Logica do Modal de KPI */
-            function closeKpiModal() {
-              const modalOverlay = document.getElementById('kpiModalOverlay');
-              if (modalOverlay) modalOverlay.classList.remove('show');
-            }
-
-            function openKpiModal(type) {
-              const modalOverlay = document.getElementById('kpiModalOverlay');
-              const modalTitle = document.getElementById('modalTitle');
-              const modalValue = document.getElementById('modalValue');
-              const modalIdealTime = document.getElementById('modalIdealTime');
-              const modalPeriod = document.getElementById('modalPeriod');
-              const modalAction = document.getElementById('modalAction');
-              const modalStatusNum = document.getElementById('modalStatusNum');
-              const statusIndicator = document.getElementById('statusIndicator');
-              const modalStatusText = document.getElementById('modalStatusText');
-              const modalAlerts = document.getElementById('modalAlerts');
-              const modalStatusTitle = document.getElementById('modalStatusTitle');
-
-              // Remove old classes
-              statusIndicator.classList.remove('status-zero', 'status-one');
-
-              let status = 0;
-
-              if (type === 'eficiencia') {
-                modalTitle.innerText = 'Detalhes: Eficiência Atual';
-                modalValue.innerText = `${ultimaEficiencia}%`;
-                modalPeriod.innerText = `Semana ${semanas}`;
-
-                if (ultimaEficiencia >= 33.3) {
-                  status = 1;
-                  modalIdealTime.innerText = 'Sim (>= 33.3%)';
-                  modalAction.innerText = 'Sim (Manter condições)';
-                  modalStatusText.innerText = 'Crescimento dentro do esperado.';
-                  modalAlerts.innerText = 'Nenhum alerta crítico.';
-                } else {
-                  status = 0;
-                  modalIdealTime.innerText = 'Não (< 33.3%)';
-                  modalAction.innerText = 'Não (Ajustar ambiente/irrigação)';
-                  modalStatusText.innerText = 'Atenção necessária, eficiência baixa.';
-                  modalAlerts.innerText = 'Possível déficit hídrico ou nutricional.';
-                }
-              }
-              else if (type === 'altura') {
-                modalTitle.innerText = 'Detalhes: Altura Atual';
-                modalValue.innerText = `${ultimaAltura} cm`;
-                modalPeriod.innerText = `Semana ${semanas}`;
-
-                if (ultimaAltura >= 220) {
-                  status = 1;
-                  modalIdealTime.innerText = 'Sim';
-                  modalAction.innerText = 'Sim (Crescimento adequado)';
-                  modalStatusText.innerText = 'Altura atingiu a meta da semana.';
-                  modalAlerts.innerText = 'Nenhum alerta crítico.';
-                } else {
-                  status = 0;
-                  modalIdealTime.innerText = 'Não';
-                  modalAction.innerText = 'Não (Abaixo da meta)';
-                  modalStatusText.innerText = 'Atenção necessária, atraso no desenvolvimento.';
-                  modalAlerts.innerText = 'Planta abaixo de 220cm na semana 6.';
-                }
-              }
-              else if (type === 'tempo-colheita') {
-                modalTitle.innerText = 'Detalhes: Status da Colheita';
-                modalValue.innerText = textoTempoColheita;
-                modalPeriod.innerText = `Fase Atual: DAM ${diasDAM[faseAtualIndex]}`;
-
-                if (diasParaColheita === 0) {
-                  status = 1;
-                  modalIdealTime.innerText = 'Sim (Ponto ideal)';
-                  modalAction.innerHTML = '<span style="color: #059669; font-weight: bold;">Colher agora!</span>';
-                  modalStatusText.innerText = 'Você atingiu o ponto ótimo de colheita.';
-                  modalAlerts.innerText = 'Nenhum atraso.';
-                } else {
-                  status = diasParaColheita > 0 ? 1 : 0;
-                  modalIdealTime.innerText = diasParaColheita > 0 ? 'Aguardando' : 'Atrasado';
-                  modalAction.innerText = diasParaColheita > 0 ? 'Aguardar o ponto ideal' : 'Colher imediatamente (Atraso)';
-                  modalStatusText.innerText = diasParaColheita > 0 ? 'O milho ainda está maturando.' : 'Passou do ponto ideal de colheita!';
-                  modalAlerts.innerText = diasParaColheita > 0 ? `Faltam ${diasParaColheita} dias.` : `Atraso de ${Math.abs(diasParaColheita)} dias!`;
-                }
-              }
-              else if (type === 'custo') {
-                modalTitle.innerText = 'Detalhes: Ponto de Colheita / Custo Mínimo';
-                modalValue.innerText = `R$ ${custoMinimoDam.toFixed(0)}`;
-                modalPeriod.innerText = `DAM ${damPontoOtimo} (Dias Após Maturação)`;
-
-                // Se estamos no ponto ótimo de DAM (ex: 30), status 1.
-                status = 1;
-
-                if (status === 1) {
-                  modalIdealTime.innerText = 'Sim (Ponto ótimo atingido)';
-                  modalAction.innerHTML = '<span style="color: #059669; font-weight: bold; font-size: 14px;">O momento ideal chegou. É hora de colher!</span>';
-                  modalStatusText.innerText = 'Menor custo de secagem e perda física aceitável.';
-                  modalAlerts.innerText = 'Nenhum alerta crítico. Período ideal.';
-                } else {
-                  status = 0;
-                  modalIdealTime.innerText = 'Não';
-                  modalAction.innerText = 'Não (Aguardar ou Atrasado)';
-                  modalStatusText.innerText = 'Custo de secagem alto ou grande perda física.';
-                  modalAlerts.innerText = 'Verificar curva de maturação.';
-                }
-              }
-
-              modalStatusNum.innerHTML = status === 1 ? '<span style="font-size: 36px;">✓</span>' : '<span style="font-size: 36px;">✕</span>';
-              if (status === 1) {
-                statusIndicator.classList.add('status-one');
-                if (modalStatusTitle) {
-                  modalStatusTitle.innerText = 'Status: Ideal / Liberado';
-                  modalStatusTitle.style.color = '#10B981';
-                }
-              } else {
-                statusIndicator.classList.add('status-zero');
-                if (modalStatusTitle) {
-                  modalStatusTitle.innerText = 'Status: Requer Atenção';
-                  modalStatusTitle.style.color = '#EF4444';
-                }
-              }
-
-              modalOverlay.classList.add('show');
-            }
-
-            // Fim do bloco fetch API
-          }).catch(err => {
-            console.error("Erro ao carregar dados do dashboard do Banco de Dados:", err);
+          }).catch(function(err) {
+            fb.style.display = 'flex';
+            fb.className = 'cadastro-feedback cadastro-feedback-erro';
+            fb.innerText = '❌ Erro de conexão.';
           });
+        }
       </script>
 
-      <!-- Estrutura do Modal de KPI -->
-      <div id="kpiModalOverlay" class="modal-overlay" onclick="if(event.target === this) closeKpiModal()">
+      <!-- Estrutura do Modal de KPI (Redesenhado) -->
+      <div id="kpiModalOverlay" class="modal-overlay" onclick="if(event.target===this) closeKpiModal()">
         <div class="modal-content">
-          <button class="modal-close" onclick="closeKpiModal()">&times;</button>
+          <button class="modal-close" onclick="closeKpiModal()">×</button>
           <div class="modal-header">
             <h3 id="modalTitle">Detalhes da KPI</h3>
           </div>
           <div class="modal-body">
-            <div class="modal-item">
-              <span class="label">Dado Atual:</span>
-              <span class="value" id="modalValue">--</span>
-            </div>
-            <div class="modal-item">
-              <span class="label">Dentro do tempo ideal?</span>
-              <span class="value" id="modalIdealTime">--</span>
-            </div>
-            <div class="modal-item">
-              <span class="label">Período / Dia:</span>
-              <span class="value" id="modalPeriod">--</span>
-            </div>
-            <div class="modal-item">
-              <span class="label">Pode realizar ação?</span>
-              <span class="value" id="modalAction">--</span>
-            </div>
-            <div class="modal-item" style="border-bottom: none;">
-              <span class="label">Alertas/Atrasos:</span>
-              <span class="value" id="modalAlerts" style="color: #EF4444;">--</span>
+
+            <!-- BANNER DE AÇÃO -->
+            <div id="modalBanner" class="modal-action-banner">
+              <div class="modal-banner-left">
+                <span id="modalBannerIcon" class="modal-banner-icon">⭐</span>
+              </div>
+              <div class="modal-banner-right">
+                <div id="modalBannerText" class="modal-banner-title">AÇÃO RECOMENDADA</div>
+                <div id="modalBannerSub" class="modal-banner-sub">Carregando...</div>
+              </div>
             </div>
 
+            <!-- LINHA: Dado Atual + Período -->
+            <div class="modal-row">
+              <div class="modal-stat">
+                <span class="modal-stat-label">Dado Atual</span>
+                <span class="modal-stat-value" id="modalValue">--</span>
+              </div>
+              <div class="modal-stat">
+                <span class="modal-stat-label">Período</span>
+                <span class="modal-stat-value" id="modalPeriod">--</span>
+              </div>
+            </div>
+
+            <!-- POR QUÊ? -->
+            <div class="modal-why">
+              <span class="modal-why-label">Por que isso importa?</span>
+              <p id="modalWhy" class="modal-why-text">--</p>
+            </div>
+
+            <!-- ALERTAS -->
+            <div class="modal-alerts-box">
+              <p id="modalAlerts">--</p>
+            </div>
+
+            <!-- INDICADOR DE STATUS -->
             <div class="status-indicator-container">
               <div id="statusIndicator" class="status-indicator status-one">
                 <span id="modalStatusNum">1</span>
@@ -833,6 +1266,7 @@
                 <p id="modalStatusText">Mensagem explicativa.</p>
               </div>
             </div>
+
           </div>
         </div>
       </div>

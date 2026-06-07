@@ -62,10 +62,10 @@
 
 	INSERT INTO link VALUES
 	(1,1,'Administrador'),
-	(2,1,'Gerente'),
-	(3,2,'Administrador'),
+	(2,1,'Administrador'),
+	(3,2,'Gerente'),
 	(4,2,'Operador'),
-	(5,3,'Administrador'),
+	(5,3,'Gerente'),
 	(6,3,'Gerente'),
 	(7,4,'Operador'),
 	(8,4,'Supervisor'),
