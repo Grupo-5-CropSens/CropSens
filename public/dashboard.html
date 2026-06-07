@@ -230,7 +230,7 @@
             <div class="cadastro-row">
               <div class="cadastro-field">
                 <label class="cadastro-label">Senha <span class="obrigatorio">*</span></label>
-                <input id="ipt_senha" type="password" class="cadastro-input" placeholder="Mínimo 6 caracteres">
+                <input id="cad-senha" type="password" class="cadastro-input" placeholder="Mínimo 6 caracteres">
                 <div class="cadastro-erro" id="cad-erro-senha"></div>
               </div>
             </div>
@@ -1165,6 +1165,9 @@
           }
 
           overlay.classList.add('show');
+        }
+        function closeKpiModal() {
+          document.getElementById('kpiModalOverlay')?.classList.remove('show');
         }
 
         // ============ CADASTRO DE CLIENTE (ADMIN) ============

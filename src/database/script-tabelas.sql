@@ -69,7 +69,7 @@ CREATE TABLE parametros_lavoura (
 	FOREIGN KEY (fkPlantacao) REFERENCES plantacao(id_plantacao)
 );
 
-//tambem para funcionar a dash
+ --tambem para funcionar a dash
 CREATE TABLE dados_colheita (
 	id INT PRIMARY KEY AUTO_INCREMENT,
 	dam_dias INT,

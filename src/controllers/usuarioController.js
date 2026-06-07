@@ -15,12 +15,15 @@ function autenticar(req, res) {
 
                 if (resultado.length == 1) {
                     let tipoUsuario = resultado[0].isAdmin > 0 ? 'admin' : 'usuario';
-                    res.json({
-                        id: resultado[0].id,
-                        nome: resultado[0].nome,
-                        email: resultado[0].email,
-                        tipo: tipoUsuario
-                    });
+                        // Determina tipo de usuário (admin se email pertencer ao domínio cropsens)
+                        const emailUser = resultado[0].email || '';
+                        const tipo = emailUser.endsWith('@cropsens.com') ? 'admin' : 'cliente';
+                        res.json({
+                            id: resultado[0].id,
+                            nome: resultado[0].nome,
+                            email: emailUser,
+                            tipo: tipo
+                        });
                 } else if (resultado.length == 0) {
                     res.status(403).send("Email e/ou senha inválido(s)!");
                 } else {
