@@ -81,10 +81,12 @@ body {
 }
 
 .menu-item.active {
-    background-color: rgba(16, 185, 129, 0.3);
+    background-color: rgba(16, 185, 129, 0.18);
     color: #10B981;
     border-left: 4px solid #10B981;
     padding-left: 11px;
+    font-weight: 600;
+    box-shadow: inset 0 0 0 1px rgba(16, 185, 129, 0.15);
 }
 
 .menu-icon {
@@ -566,3 +568,289 @@ canvas {
 #relatorios .kpi-card::after {
     color: white;
 }
+
+/* ========== NOVO MODAL: BANNER DE AÇÃO ========== */
+.modal-content {
+    background-color: white;
+    padding: 30px;
+    border-radius: 16px;
+    width: 520px;
+    max-width: 95vw;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    position: relative;
+    transform: translateY(-20px);
+    transition: transform 0.3s ease;
+}
+
+.modal-overlay.show .modal-content {
+    transform: translateY(0);
+}
+
+.modal-action-banner {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 18px 20px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    background: #f0fdf4;
+    border: 2px solid #10B981;
+}
+
+.banner-ok    { background: #f0fdf4; border-color: #10B981; }
+.banner-ideal { background: linear-gradient(135deg, #064E3B, #10B981); border: none; }
+.banner-warn  { background: #fffbeb; border-color: #F59E0B; }
+.banner-danger { background: #fef2f2; border-color: #EF4444; }
+
+.banner-ideal .modal-banner-icon { color: #FEF3C7; }
+.banner-ideal .modal-banner-title { color: white; }
+.banner-ideal .modal-banner-sub  { color: rgba(255,255,255,0.85); }
+
+.banner-warn .modal-banner-title  { color: #92400E; }
+.banner-warn .modal-banner-sub    { color: #B45309; }
+
+.banner-danger .modal-banner-title { color: #991B1B; }
+.banner-danger .modal-banner-sub   { color: #B91C1C; }
+
+.modal-banner-left {
+    flex-shrink: 0;
+}
+
+.modal-banner-icon {
+    font-size: 36px;
+    line-height: 1;
+    display: block;
+}
+
+.modal-banner-right {
+    flex: 1;
+}
+
+.modal-banner-title {
+    font-size: 15px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    color: #064E3B;
+    margin-bottom: 4px;
+}
+
+.modal-banner-sub {
+    font-size: 13px;
+    color: #047857;
+    line-height: 1.4;
+}
+
+/* Modal: Linha de dados Atual + Período */
+.modal-row {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 16px;
+}
+
+.modal-stat {
+    flex: 1;
+    background: #F9FAFB;
+    border-radius: 10px;
+    padding: 12px 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.modal-stat-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: #6B7280;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.modal-stat-value {
+    font-size: 18px;
+    font-weight: 700;
+    color: #111827;
+}
+
+/* Modal: Por que isso importa? */
+.modal-why {
+    background: #f8fafc;
+    border-left: 4px solid #10B981;
+    padding: 12px 15px;
+    border-radius: 0 8px 8px 0;
+    margin-bottom: 14px;
+}
+
+.modal-why-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: #047857;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.modal-why-text {
+    font-size: 13px;
+    color: #374151;
+    line-height: 1.5;
+    margin: 0;
+}
+
+/* Modal: Alertas */
+.modal-alerts-box {
+    background: #FEF9EC;
+    border: 1px solid #FDE68A;
+    border-radius: 8px;
+    padding: 12px 15px;
+    margin-bottom: 16px;
+    font-size: 13px;
+    color: #374151;
+    line-height: 1.5;
+}
+
+/* ========== SEÇÃO CADASTRO (ADMIN) ========== */
+.cadastro-card {
+    background: white;
+    border-radius: 16px;
+    padding: 30px;
+    width: 100%;
+    max-width: 700px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    margin: 0 auto;
+}
+
+.cadastro-header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #E5E7EB;
+}
+
+.cadastro-icon {
+    width: 56px;
+    height: 56px;
+    background: linear-gradient(135deg, #064E3B, #10B981);
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    color: white;
+    flex-shrink: 0;
+}
+
+.cadastro-header h3 {
+    font-size: 18px;
+    color: #111827;
+    margin-bottom: 4px;
+}
+
+.cadastro-header p {
+    font-size: 13px;
+    color: #6B7280;
+    margin: 0;
+}
+
+.cadastro-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.cadastro-row {
+    display: flex;
+    gap: 16px;
+}
+
+.cadastro-field {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    flex: 1;
+}
+
+.cadastro-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #374151;
+}
+
+.obrigatorio {
+    color: #EF4444;
+}
+
+.cadastro-input {
+    padding: 11px 14px;
+    border: 1.5px solid #D1D5DB;
+    border-radius: 8px;
+    font-size: 14px;
+    color: #111827;
+    background: #FAFAFA;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    outline: none;
+}
+
+.cadastro-input:focus {
+    border-color: #10B981;
+    box-shadow: 0 0 0 3px rgba(16,185,129,0.12);
+    background: white;
+}
+
+.cadastro-erro {
+    font-size: 12px;
+    color: #EF4444;
+    min-height: 16px;
+}
+
+.cadastro-btn {
+    background: linear-gradient(135deg, #064E3B, #059669);
+    color: white;
+    padding: 14px 24px;
+    border: none;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    letter-spacing: 0.5px;
+    transition: opacity 0.2s, transform 0.1s;
+    margin-top: 6px;
+    align-self: flex-start;
+}
+
+.cadastro-btn:hover {
+    opacity: 0.92;
+    transform: translateY(-1px);
+}
+
+.cadastro-btn:active {
+    transform: translateY(0);
+}
+
+.cadastro-feedback {
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 13px;
+    line-height: 1.5;
+    align-items: center;
+    gap: 8px;
+}
+
+.cadastro-feedback-ok {
+    background: #F0FDF4;
+    border: 1.5px solid #10B981;
+    color: #065F46;
+}
+
+.cadastro-feedback-erro {
+    background: #FEF2F2;
+    border: 1.5px solid #EF4444;
+    color: #991B1B;
+}
+
+/* Menu admin badge */
+.menu-item-admin {
+    border: 1px dashed rgba(16,185,129,0.4);
+}

@@ -7,4 +7,8 @@ router.get("/dados/:idPlantacao", function (req, res) {
     dashboardController.buscarDados(req, res);
 });
 
+router.get("/dadosAdmin", function (req, res) {
+    dashboardController.buscarDadosAdmin(req, res);
+});
+
 module.exports = router;

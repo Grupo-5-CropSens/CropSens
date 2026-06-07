@@ -14,10 +14,12 @@ function autenticar(req, res) {
                 console.log(`\nResultados encontrados: ${resultado.length}`);
 
                 if (resultado.length == 1) {
+                    let tipoUsuario = resultado[0].isAdmin > 0 ? 'admin' : 'usuario';
                     res.json({
                         id: resultado[0].id,
                         nome: resultado[0].nome,
-                        email: resultado[0].email
+                        email: resultado[0].email,
+                        tipo: tipoUsuario
                     });
                 } else if (resultado.length == 0) {
                     res.status(403).send("Email e/ou senha inválido(s)!");

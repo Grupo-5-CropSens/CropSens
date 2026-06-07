@@ -83,6 +83,28 @@ function buscarDados(req, res) {
         });
 }
 
+function buscarDadosAdmin(req, res) {
+    Promise.all([
+        dashboardModel.obterKpisAdmin(),
+        dashboardModel.obterGraficosAdmin()
+    ]).then(function (resultados) {
+        let kpis = resultados[0][0];
+        let graficos = resultados[1];
+
+        res.json({
+            kpis: kpis,
+            graficos: {
+                sensoresPorFazenda: graficos.sensoresPorFazenda,
+                usuariosPorEmpresa: graficos.usuariosPorEmpresa
+            }
+        });
+    }).catch(function (erro) {
+        console.log(erro);
+        res.status(500).json(erro.sqlMessage || erro.message);
+    });
+}
+
 module.exports = {
-    buscarDados
+    buscarDados,
+    buscarDadosAdmin
 };

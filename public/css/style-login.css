@@ -1,329 +1,174 @@
-<<<<<<< HEAD:src/view/css/style-login.css
-        * {
-            padding: 0;
-            margin: 0;
-            font-family: sans-serif;
-            font-size: 15px;
-        }
+* {
+    padding: 0;
+    margin: 0;
+    font-family: sans-serif;
+    font-size: 15px;
+    font-weight: normal;
+}
 
-        input {
-            height: 10px;
-        }
+.logo {
+    position: absolute;
+    top: 30px;
+    left: 60px;
+    width: 160px;
+}
 
-        body {
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: radial-gradient(circle, #00000066, #000000b3), url('/img/milhasso2.jpg');
-            background-size: cover;
-            background-position: center;
-        }
+.container {
+    background: radial-gradient(circle, #00000066, #000000b3), url('/img/milhasso2.jpg');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    min-height: 100vh;
+    position: relative;
+    width: 100%;
+}
 
-        .logo {
-            position: absolute;
-            top: 60px;
-            left: 60px;
-            width: 200px;
-        }
+.card {
+    background-color: #082a20;
+    min-height: 100vh;
+    width: 30%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px 0;
+    box-sizing: border-box;
+}
 
-        .card {
-            background-color: #082a20;
-            padding: 30px;
-            width: 350px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
-            align-items: center;
-            display: flex;
-            justify-content: center;
-            border-radius: 10px;
-            margin: auto;
-        }
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    width: 80%;
+}
 
-        h1 {
-            font-size: 40px;
-            text-align: center;
-            margin: 0px;
-            height: 50px;
-            font-weight: bold;
-            font-family: 'Instrument Serif', Gerogia, serif;
-            color: white;
-        }
+.form input {
+    padding: 10px;
+    padding-left: 45px;
+    margin-bottom: 2px;
+    border-radius: 10px;
+    border: 1px solid;
+    border-color: #ffffff;
+    background-color: #ffffff;
+    height: 22px;
+}
 
-        p {
-            font-size: 20px;
-            height: 60px;
-            color: white;
-            text-align: center;
-            margin-bottom: -10px;
-        }
+.form input::placeholder {
+    font-weight: normal;
+    color: #949494;
+}
 
-        .form {
-            display: flex;
-            flex-direction: column;
-            width: 100%;
-            gap: 10px;
-            
-        }
+.form h1 {
+    font-size: 36px;
+    text-align: start;
+    margin: 0px;
+    margin-bottom: 4px;
+    font-weight: bold;
+    font-family: 'Instrument Serif', Georgia, serif;
+    color: white;
+}
 
-        label {
-            margin-top: 10px;
-            margin-bottom: 5px;
-            color: white;
-        }
+.form p {
+    font-size: 16px;
+    color: white;
+    margin-bottom: 6px;
+}
 
-        input {
-            padding: 20px;
-            padding-left: 55px;
-            border-radius: 10px;
-            border: 0;
-            background-color: #ffffff;
-        }
+.botao {
+    background-color: #f4b400;
+    color: rgb(0, 0, 0);
+    padding: 12px;
+    margin-top: 20px;
+    border-radius: 10px;
+    border: 0px;
+    cursor: pointer;
+    font-weight: bold;
+    box-shadow: 0 1px 3px #082a20;
+    transition: background-color 0.3s;
+}
 
-        input::placeholder {
-            font-weight: normal;
-            color: #949494;
-        }
+.botao:hover {
+    background-color: #c99300;
+}
 
-        .botao {
-            background-color: #f4b400;
-            color: rgb(0, 0, 0);
-            padding: 20px;
-            margin-top: 10px;
-            border-radius: 10px;
-            border: 0px;
-            cursor: pointer;
-            font-weight: bold;
-            box-shadow: 0 1px 3px #082a20;
-            transition: background-color 0.3s;
-        }
+.login {
+    align-self: center;
+    font-weight: normal;
+    text-decoration: none;
+    color: #ffffff;
+    margin-top: 15px;
+    margin-bottom: 1px;
+}
 
-        .botao:hover {
-            background-color: #c99300;
-        }
+.login span {
+    color: #f4b400;
+    text-decoration: none;
+    font-weight: normal;
+}
 
-        .cadastro_texto {
-            margin-top: 10px;
-            align-self: center;
-            font-weight: normal;
-            text-decoration: none;
-            color: #ffffff;
-        }
+.login span:hover {
+    color: #c99300;
+}
 
-        .cadastro_texto span {
-            color: #f4b400;
-            text-decoration: none;
-            font-weight: normal;
-        }
+.home_texto {
+    color: #ffffff;
+    align-self: center;
+    margin-top: 10px;
+}
 
-        .cadastro_texto span:hover {
-            color: #c99300;
-        }
+.home_texto span {
+    color: #f4b400;
+}
 
-        .home_texto {
-            color: #ffffff;
-            align-self: center;
-        }
+.home_texto span:hover {
+    color: #c99300;
+}
 
-        .home_texto span {
-            color: #f4b400;
-        }
+a {
+    text-decoration: none;
+}
 
-        .home_texto span:hover {
-            color: #c99300;
-        }
+.texto {
+    color: #ffffff;
+    font-weight: normal;
+    margin-bottom: 3px;
+    margin-top: 6px;
+}
 
-        .texto {
-            color: #ffffff;
-            font-weight: normal;
-        }
+.email {
+    background: url('/img/email.png') no-repeat left;
+    background-size: 14px;
+    background-position: 16px center;
+    background-color: white;
+}
 
-        a {
-            text-decoration: none;
-        }
+.senha {
+    background: url('/img/pwd.png') no-repeat left;
+    background-size: 14px;
+    background-position: 16px center;
+    background-color: white;
+}
 
-        .email {
-            background: url('/img/email.png') no-repeat left;
-            background-size: 16px;
-            background-position: 20px center;
-            background-color: white;
-        }
+.paragrafo {
+    position: absolute;
+    bottom: 60px;
+    left: 60px;
+    font-size: 80px;
+    color: #ffffff;
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-weight: bold;
+}
 
-        .senha {
-            background: url('/img/pwd.png') no-repeat left;
-            background-size: 16px;
-            background-position: 20px center;
-            background-color: white;
-        }
+.dados_precisos {
+    font-size: 80px;
+    color: #f4b400;
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-weight: bold;
+    font-style: italic;
+}
 
-        .esqueci {
-            text-align: right;
-        }
-
-        .esqueci span {
-            color: #f4b400;
-        }
-
-        .esqueci span:hover {
-            color: #c99300;
-        }
-
-        .erro {
-            color: red;
-            font-size: 14px;
-=======
-        * {
-            padding: 0;
-            margin: 0;
-            font-family: sans-serif;
-            font-size: 15px;
-        }
-
-        body {
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: radial-gradient(circle, #00000066, #000000b3), url('/img/milhasso2.jpg');
-            background-size: cover;
-            background-position: center;
-        }
-
-        .logo {
-            position: absolute;
-            top: 60px;
-            left: 60px;
-            width: 200px;
-        }
-
-        .card {
-            background-color: #082a20;
-            padding: 30px;
-            width: 350px;
-            height: 560px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
-            align-items: center;
-            display: flex;
-            justify-content: center;
-            border-radius: 10px;  
-        }
-
-        h1 {
-            font-size: 40px;
-            text-align: center;
-            margin: 0px;
-            height: 50px;
-            font-weight: bold;
-            font-family: 'Instrument Serif', Gerogia, serif;
-            color: white;
-        }
-
-        p {
-            font-size: 20px;
-            height: 60px;
-            color: white;
-            text-align: center;
-            margin-bottom: -10px;
-        }
-
-        .form {
-            display: flex;
-            flex-direction: column;
-            width: 100%;
-            gap: 10px;
-        }
-
-        label {
-            margin-top: 10px;
-            margin-bottom: 5px;
-            color: white;
-        }
-
-        input {
-            padding: 20px;
-            padding-left: 55px;
-            border-radius: 10px;
-            border: 0;
-            background-color: #ffffff;
-        }
-
-        input::placeholder {
-            font-weight: normal;
-            color: #949494;
-        }
-
-        .botao {
-            background-color: #f4b400;
-            color: rgb(0, 0, 0);
-            padding: 20px;
-            margin-top: 10px;
-            border-radius: 10px;
-            border: 0px;
-            cursor: pointer;
-            font-weight: bold;
-            box-shadow: 0 1px 3px #082a20;
-            transition: background-color 0.3s;
-        }
-
-        .botao:hover {
-            background-color: #c99300;
-        }
-
-        .cadastro {
-            margin-top: 25px;
-            align-self: center;
-            font-weight: normal;
-            text-decoration: none;
-            color: black;
-            margin-bottom: 20px;
-        }
-
-        .cadastro span {
-            color: #f4b400;
-            text-decoration: none;
-            font-weight: normal;
-        }
-
-        .cadastro span:hover {
-            color: #c99300;
-        }
-
-        .texto {
-            color: #ffffff;
-            font-weight: normal;
-        }
-
-        a {
-            text-decoration: none;
-        }
-
-        .email {
-            background: url('/img/email.png') no-repeat left;
-            background-size: 16px;
-            background-position: 20px center;
-            background-color: white;
-        }
-
-        .senha {
-            background: url('/img/pwd.png') no-repeat left;
-            background-size: 16px;
-            background-position: 20px center;
-            background-color: white;
-        }
-
-        .esqueci {
-            text-align: right;
-        }
-
-        .esqueci span {
-            color: #f4b400;
-        }
-
-        .esqueci span:hover {
-            color: #c99300;
-        }
-
-        .erro {
-            color: red;
-            font-size: 14px;
->>>>>>> fd5495bb21c6cc22f8504ad0ef92c4957234545d:public/css/style-login.css
-        }
+.erro {
+    color: red;
+    font-size: 13px;
+}

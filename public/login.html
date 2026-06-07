@@ -14,6 +14,7 @@
 <body>
     <div class="container">
         <a href="index.html"><img src="/img/CropSens.png" class="logo" /></a>
+        <p class="paragrafo">Cultive o futuro <br> com <span class="dados_precisos">dados precisos</span></p>
         <div class="card">
             <div class="form">
                 <h1>Bom te ver de novo</h1>
@@ -28,9 +29,7 @@
                 <div class="erro" id="erro2"></div>
 
                 <button onclick="validar()" class="botao">ACESSAR</button>
-                <div class="cadastro_texto">Não possui conta? <a href="cadastro.html"><span>Cadastrar</span></a></div>
-                <div class="home_texto">Deseja voltar para o Início ? <a href="index.html"><span>Voltar</span></a>
-                </div>
+                <div class="home_texto"><a href="index.html"><span>Voltar ao início</span></a></div>
             </div>
         </div>
     </div>
@@ -43,8 +42,6 @@
         let email = ipt_email.value.trim()
         let senha = ipt_senha.value.trim()
         let erros = 0
-        let emails = ['admin@crop.com', 'user@crop.com', 'caramico@gmail.com']
-        let senhas = ['admin123', 'user123', 'caramico123@']
 
         erro1.innerHTML = ''
         erro2.innerHTML = ''
@@ -66,11 +63,9 @@
             ipt_senha.style.border = '2px solid red'
             erros++
         }
-        if (erros == 0) {
-            for (let i = 0; i < emails.length; i++) {
-                if (email == emails[i] && senha == senhas[i]) {
-                }
-            }
+
+        if (erros > 0) {
+            return;
         }
 
         fetch("/usuarios/autenticar", {
@@ -87,6 +82,7 @@
                         sessionStorage.EMAIL_USUARIO = json.email;
                         sessionStorage.NOME_USUARIO = json.nome;
                         sessionStorage.ID_USUARIO = json.id;
+                        sessionStorage.TIPO_USUARIO = json.tipo;
                         login()
 
                         console.log(resposta)
