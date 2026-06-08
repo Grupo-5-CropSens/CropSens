@@ -1,6 +1,5 @@
 	CREATE DATABASE CropSens;
 	USE CropSens;
-
 	CREATE TABLE empresa (
 		id_empresa INT PRIMARY KEY AUTO_INCREMENT,
 		nome VARCHAR(45) NOT NULL
@@ -116,7 +115,6 @@
 	(1, 200.00, 7),
 	(1, 210.00, 7);
 
-	truncate table sensor;
 	CREATE TABLE leitura_sensor (
 		id_leitura_sensor INT PRIMARY KEY AUTO_INCREMENT,
 		distancia_lida_cm DECIMAL(10,2),
@@ -126,7 +124,6 @@
 			REFERENCES sensor(id_sensor)
 	);
 
-TRUNCATE TABLE leitura_sensor;
 
 INSERT INTO leitura_sensor
 (distancia_lida_cm, data_hora, fkSensor)
@@ -149,12 +146,6 @@ VALUES
 
 -- Semana 6
 (5,'2026-07-06 08:00:00',1);
-
-	SELECT *FROM vw_ultima_leitura_sensor;
-	SELECT *FROM vw_media_leitura_plantacao;
-	SELECT *FROM vw_sensores_por_fazenda;
-	SELECT *FROM vw_status_sensores;
-	SELECT *FROM vw_dashboard_geral;
 
 	CREATE TABLE parametros_lavoura (
 		id INT PRIMARY KEY AUTO_INCREMENT,
@@ -196,7 +187,6 @@ VALUES
         
 	SELECT * FROM usuario;
     
-    TRUNCATE TABLE dados_colheita;
     
        SELECT ls.data_hora, 
                (s.altura_instalacao * 100 - ls.distancia_lida_cm) AS altura
@@ -214,9 +204,7 @@ ORDER BY ls.data_hora;
 
 SELECT * FROM sensor;
 
-TRUNCATE TABLE dados_colheita ;
 
-TRUNCATE TABLE parametros_lavoura;    
 
 CREATE VIEW vwInstalacaoDistancia AS 
 SELECT ls.data_hora,
@@ -241,7 +229,6 @@ FROM usuario;
             
             SELECT * FROM vwKpiAdmin;
             
-            DROP VIEW vwKpiAdmin;
             
             CREATE VIEW vwGraficoAdmin AS
               SELECT f.nome AS fazenda, 
@@ -270,11 +257,13 @@ FROM usuario;
         
         SELECT * FROM vwUsuario;
         
-        DROP VIEW vwUsuario;
         
         SELECT * FROM parametros_lavoura;
         
-        TRUNCATE TABLE parametros_lavoura;
+        DROP VIEW vwKpiAdmin;
+        DROP VIEW vwUsuario;
+        DROP DATABASE cropsens;
+        
         
 	
             

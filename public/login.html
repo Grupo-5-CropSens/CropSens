@@ -30,7 +30,6 @@
 
                 <button onclick="validar()" class="botao">ACESSAR</button>
                 <div class="home_texto"><a href="index.html"><span>Voltar ➔</span></a></div>
-                <div class="home_texto"><a href="index.html"><span>Voltar ➔</span></a></div>
             </div>
         </div>
     </div>
@@ -85,42 +84,17 @@
                     sessionStorage.ID_USUARIO = json.id;
                     sessionStorage.TIPO_USUARIO = json.tipo || 'cliente';
                     login()
-                    method: "POST",
-                        headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({
-                        emailServer: email,
-                        senhaServer: senha
-                    })
-                }).then(function (resposta) {
-                    if (resposta.ok) {
-                        resposta.json().then(json => {
-                            // SALVANDO NA SESSÃO
-                            sessionStorage.EMAIL_USUARIO = json.email;
-                            sessionStorage.NOME_USUARIO = json.nome;
-                            sessionStorage.ID_USUARIO = json.id;
-                            sessionStorage.TIPO_USUARIO = json.tipo || 'cliente';
-                            login()
 
-                            console.log(resposta)
+                    console.log(resposta)
 
-                        });
-                    } else {
-                        console.log("Houve um erro ao tentar realizar o login!");
-                        erro2.innerHTML = `Email e/ou senha inválido(s)`;
-                    }
-                }).catch(function (erro) {
-                    console.log(erro);
                 });
-                console.log(resposta)
-
-            });
-    } else {
-        console.log("Houve um erro ao tentar realizar o login!");
-        erro2.innerHTML = `Email e/ou senha inválido(s)`;
-    }
-        }).catch (function (erro) {
-        console.log(erro);
-    });
+            } else {
+                console.log("Houve um erro ao tentar realizar o login!");
+                erro2.innerHTML = `Email e/ou senha inválido(s)`;
+            }
+        }).catch(function (erro) {
+            console.log(erro);
+        });
     }
 
     function login() {

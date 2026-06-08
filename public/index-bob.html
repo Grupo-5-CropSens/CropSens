@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BobIA</title>
     <link rel="stylesheet" href="../css/style-bob.css">
 </head>
+
 <body>
 
     <div id="container">
@@ -13,12 +15,13 @@
         <textarea id="pergunta" type="text" placeholder="Digite a pergunta..."></textarea>
         <br><br>
         <button onclick="gerarResposta()">Gerar Resposta</button>
+        <button onclick="voltar()">Voltar</button>
         <h3>Resposta da IA:</h3>
         <div id="resposta"></div>
     </div>
 
     <script>
-        
+
         async function gerarResposta() {
             const pergunta = document.getElementById('pergunta').value;
 
@@ -36,7 +39,11 @@
             document.getElementById('resposta').innerText = data.resultado;
         }
 
+        function voltar() {
+            window.location.href = './dashboard.html'
+        }
     </script>
-    
+
 </body>
+
 </html>
