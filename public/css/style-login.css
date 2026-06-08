@@ -1,7 +1,7 @@
 * {
     padding: 0;
     margin: 0;
-    font-family: sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-size: 15px;
     font-weight: normal;
 }
@@ -37,10 +37,11 @@
 }
 
 .form {
+    width: 85%;
+    max-width: 420px;
     display: flex;
     flex-direction: column;
-    gap: 2px;
-    width: 80%;
+    justify-content: center;
 }
 
 .form input {
@@ -51,7 +52,10 @@
     border: 1px solid;
     border-color: #ffffff;
     background-color: #ffffff;
-    height: 22px;
+    height: 26px;
+    padding: 14px 14px 14px 45px;
+    margin-bottom: 10px;
+
 }
 
 .form input::placeholder {
@@ -60,19 +64,22 @@
 }
 
 .form h1 {
-    font-size: 36px;
-    text-align: start;
-    margin: 0px;
-    margin-bottom: 4px;
-    font-weight: bold;
-    font-family: 'Instrument Serif', Georgia, serif;
-    color: white;
+    font-size: 42px;
+    font-weight: 700;
+    color: #f4b400;
+    margin-bottom: 8px;
+    line-height: 1.1;
+    display: flex;
+    align-items: center;
+    margin-left: 70px;
+    margin-bottom: 40px;
 }
 
 .form p {
+    color: #d8e3dd;
     font-size: 16px;
-    color: white;
-    margin-bottom: 6px;
+    line-height: 1.5;
+    margin-bottom: 30px;
 }
 
 .botao {
@@ -171,4 +178,12 @@ a {
 .erro {
     color: red;
     font-size: 13px;
+}
+
+.form label {
+    color: #ffffff;
+    font-size: 15px;
+    margin-top: 8px;
+    margin-bottom: 4px;
+    font-weight: 500;
 }
