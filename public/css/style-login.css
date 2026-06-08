@@ -66,13 +66,14 @@
 .form h1 {
     font-size: 42px;
     font-weight: 700;
-    color: #f4b400;
+    color: white;
     margin-bottom: 8px;
     line-height: 1.1;
     display: flex;
     align-items: center;
-    margin-left: 70px;
+    margin-left: 100px;
     margin-bottom: 40px;
+    font-family: 'Instrument Serif', Georgia, serif;
 }
 
 .form p {
