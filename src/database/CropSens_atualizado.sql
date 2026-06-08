@@ -39,7 +39,7 @@
 		id_fazenda INT PRIMARY KEY AUTO_INCREMENT,
 		nome VARCHAR(45),
 		municipio VARCHAR(45),
-		cep CHAR(8)
+		cep VARCHAR(45)
 	);
 
 	INSERT INTO fazenda (nome, municipio, cep) VALUES
@@ -116,6 +116,7 @@
 	(1, 200.00, 7),
 	(1, 210.00, 7);
 
+	truncate table sensor;
 	CREATE TABLE leitura_sensor (
 		id_leitura_sensor INT PRIMARY KEY AUTO_INCREMENT,
 		distancia_lida_cm DECIMAL(10,2),
@@ -125,127 +126,29 @@
 			REFERENCES sensor(id_sensor)
 	);
 
-	INSERT INTO leitura_sensor
-	(distancia_lida_cm, data_hora, fkSensor)
-	VALUES
+TRUNCATE TABLE leitura_sensor;
 
-	(34.5,'2026-06-01 08:00:00',1),
-	(36.2,'2026-06-01 12:00:00',1),
-	(35.8,'2026-06-01 16:00:00',1),
-	(41.2,'2026-06-01 08:00:00',2),
-	(42.5,'2026-06-01 12:00:00',2),
-	(43.0,'2026-06-01 16:00:00',2),
-	(28.3,'2026-06-01 08:00:00',3),
-	(29.1,'2026-06-01 12:00:00',3),
-	(30.4,'2026-06-01 16:00:00',3),
-	(55.7,'2026-06-01 08:00:00',4),
-	(56.1,'2026-06-01 12:00:00',4),
-	(22.4,'2026-06-01 08:00:00',5),
-	(24.3,'2026-06-01 12:00:00',5),
-	(25.0,'2026-06-01 16:00:00',5),
-	(18.6,'2026-06-01 08:00:00',6),
-	(19.1,'2026-06-01 12:00:00',6),
-	(20.5,'2026-06-01 16:00:00',6),
-	(62.7,'2026-06-01 08:00:00',7),
-	(61.5,'2026-06-01 12:00:00',7),
-	(70.2,'2026-06-01 08:00:00',8),
-	(68.9,'2026-06-01 12:00:00',8),
-	(31.7,'2026-06-01 08:00:00',9),
-	(32.8,'2026-06-01 12:00:00',9),
-	(38.4,'2026-06-01 08:00:00',10),
-	(39.6,'2026-06-01 12:00:00',10),
-	(44.2,'2026-06-01 08:00:00',11),
-	(45.1,'2026-06-01 12:00:00',11),
-	(58.8,'2026-06-01 08:00:00',12),
-	(57.9,'2026-06-01 12:00:00',12),
-	(27.6,'2026-06-01 08:00:00',13),
-	(28.9,'2026-06-01 12:00:00',13),
-	(15.3,'2026-06-01 08:00:00',14),
-	(16.7,'2026-06-01 12:00:00',14);
+INSERT INTO leitura_sensor
+(distancia_lida_cm, data_hora, fkSensor)
+VALUES
 
-	CREATE VIEW vw_ultima_leitura_sensor AS
-	SELECT
-		s.id_sensor,
-		p.id_plantacao,
-		f.nome AS fazenda,
-		ls.distancia_lida_cm,
-		ls.data_hora
-	FROM sensor s
-	JOIN plantacao p
-		ON s.fkPlantacao = p.id_plantacao
-	JOIN fazenda f
-		ON p.id_fazenda = f.id_fazenda
-	JOIN leitura_sensor ls
-		ON s.id_sensor = ls.fkSensor
-	WHERE ls.data_hora = (
-		SELECT MAX(ls2.data_hora)
-		FROM leitura_sensor ls2
-		WHERE ls2.fkSensor = s.id_sensor
-	);
+-- Semana 1
+(60,'2026-06-01 08:00:00',1),
 
-	CREATE VIEW vw_media_leitura_plantacao AS
-	SELECT
-		p.id_plantacao,
-		f.nome AS fazenda,
-		AVG(ls.distancia_lida_cm) AS media_distancia_cm
-	FROM plantacao p
-	JOIN fazenda f
-		ON p.id_fazenda = f.id_fazenda
-	JOIN sensor s
-		ON p.id_plantacao = s.fkPlantacao
-	JOIN leitura_sensor ls
-		ON s.id_sensor = ls.fkSensor
-	GROUP BY
-		p.id_plantacao,
-		f.nome;
-		
-	CREATE VIEW vw_sensores_por_fazenda AS
-	SELECT
-		f.id_fazenda,
-		f.nome AS fazenda,
-		COUNT(s.id_sensor) AS total_sensores
-	FROM fazenda f
-	LEFT JOIN plantacao p
-		ON f.id_fazenda = p.id_fazenda
-	LEFT JOIN sensor s
-		ON p.id_plantacao = s.fkPlantacao
-	GROUP BY
-		f.id_fazenda,
-		f.nome;
-		
-	CREATE VIEW vw_status_sensores AS
-	SELECT
-		s.id_sensor,
-		f.nome AS fazenda,
-		p.id_plantacao,
-		CASE
-			WHEN s.status = 1 THEN 'Ativo'
-			ELSE 'Inativo'
-		END AS status_sensor,
-		s.altura_instalacao
-	FROM sensor s
-	JOIN plantacao p
-		ON s.fkPlantacao = p.id_plantacao
-	JOIN fazenda f
-		ON p.id_fazenda = f.id_fazenda;
+-- Semana 2
+(45,'2026-06-08 08:00:00',1),
 
-	CREATE VIEW vw_dashboard_geral AS
-	SELECT
-		f.nome AS fazenda,
-		p.id_plantacao,
-		s.id_sensor,
-		s.status,
-		ls.distancia_lida_cm,
-		ls.data_hora
-	FROM fazenda f
-	JOIN plantacao p
-		ON f.id_fazenda = p.id_fazenda
-	JOIN sensor s
-		ON p.id_plantacao = s.fkPlantacao
-	JOIN leitura_sensor ls
-		ON s.id_sensor = ls.fkSensor;
+-- Semana 3
+(30,'2026-06-15 08:00:00',1),
 
+-- Semana 4
+(20,'2026-06-22 08:00:00',1),
 
+-- Semana 5
+(12,'2026-06-29 08:00:00',1),
+
+-- Semana 6
+(5,'2026-07-06 08:00:00',1);
 
 	SELECT *FROM vw_ultima_leitura_sensor;
 	SELECT *FROM vw_media_leitura_plantacao;
@@ -274,11 +177,104 @@
 	);
 
 	-- Inserções de exemplo que ta tudo errado
-	INSERT INTO parametros_lavoura (fase_atual_dam, potencial_maximo_kgha, fkPlantacao) VALUES 
-	(30, 10000.00, 1) ON DUPLICATE KEY UPDATE fase_atual_dam=fase_atual_dam;
+	INSERT INTO parametros_lavoura 
+(fase_atual_dam, potencial_maximo_kgha, fkPlantacao)
+VALUES
+(30, 10000.00, 1);
 
-	INSERT INTO dados_colheita (dam_dias, produtividade_kgha, perda_acumulada_kg, percentual_perda, custo_secagem, custo_total, fkPlantacao) VALUES
-	(0, 10000.00, 0.00, 0.00, 1200.00, 1200.00, 1) ON DUPLICATE KEY UPDATE dam_dias=dam_dias;
+INSERT INTO dados_colheita
+(dam_dias, produtividade_kgha, perda_acumulada_kg, percentual_perda, custo_secagem, custo_total, fkPlantacao)
+VALUES
+(0, 10000.00,    0.00,  0.00, 1200.00, 1200.00, 1),
+(10, 9950.00,   50.00,  0.50,  700.00,  725.00, 1),
+(20, 9850.00,  150.00,  1.50,  300.00,  375.00, 1),
+(30, 9700.00,  300.00,  3.00,    0.00,  150.00, 1), 
+(40, 9300.00,  700.00,  7.00,    0.00,  350.00, 1),
+(50, 8700.00, 1300.00, 13.00,    0.00,  650.00, 1);
 
-
+        
+        
 	SELECT * FROM usuario;
+    
+    TRUNCATE TABLE dados_colheita;
+    
+       SELECT ls.data_hora, 
+               (s.altura_instalacao * 100 - ls.distancia_lida_cm) AS altura
+        FROM leitura_sensor ls
+        JOIN sensor s ON ls.fkSensor = s.id_sensor
+        WHERE s.fkPlantacao = 1
+        ORDER BY ls.data_hora ASC;
+        
+        SELECT ls.data_hora,
+       s.altura_instalacao - ls.distancia_lida_cm AS altura_planta
+FROM leitura_sensor ls
+JOIN sensor s ON ls.fkSensor = s.id_sensor
+WHERE s.fkPlantacao = 1
+ORDER BY ls.data_hora;
+
+SELECT * FROM sensor;
+
+TRUNCATE TABLE dados_colheita ;
+
+TRUNCATE TABLE parametros_lavoura;    
+
+CREATE VIEW vwInstalacaoDistancia AS 
+SELECT ls.data_hora,
+		fkPlantacao,
+            s.altura_instalacao - ls.distancia_lida_cm AS altura_planta
+        FROM leitura_sensor ls
+        JOIN sensor s ON ls.fkSensor = s.id_sensor
+        ORDER BY ls.data_hora;
+        
+        SELECT * FROM vwInstalacaoDistancia WHERE fkPlantacao = 1;
+        
+  CREATE VIEW vwKpiAdmin AS
+SELECT
+    COUNT(*) AS totalUsuarios,
+    (SELECT COUNT(*) FROM empresa) AS totalEmpresas,
+    (SELECT COUNT(*) FROM fazenda) AS totalFazendas,
+    (SELECT COUNT(*) FROM sensor) AS totalSensores,
+    (SELECT COUNT(*) FROM sensor WHERE status = 1) AS sensoresAtivos,
+    (SELECT COUNT(*) FROM sensor WHERE status = 0) AS sensoresInativos,
+    (SELECT COUNT(*) FROM plantacao) AS totalPlantacoes
+FROM usuario;
+            
+            SELECT * FROM vwKpiAdmin;
+            
+            DROP VIEW vwKpiAdmin;
+            
+            CREATE VIEW vwGraficoAdmin AS
+              SELECT f.nome AS fazenda, 
+               COUNT(s.id_sensor) AS total,
+               SUM(CASE WHEN s.status = 1 THEN 1 ELSE 0 END) AS ativos,
+               SUM(CASE WHEN s.status = 0 THEN 1 ELSE 0 END) AS inativos
+        FROM fazenda f
+        LEFT JOIN plantacao p ON f.id_fazenda = p.id_fazenda
+        LEFT JOIN sensor s ON p.id_plantacao = s.fkPlantacao
+        GROUP BY f.id_fazenda, f.nome;
+        
+        SELECT * FROM vwGraficoAdmin;
+        
+        CREATE VIEW vwInstrucaoPorEmpresa AS
+                SELECT e.nome AS empresa, COUNT(u.id_usuario) AS total
+        FROM empresa e
+        LEFT JOIN usuario u ON e.id_empresa = u.empresa_id_empresa
+        GROUP BY e.id_empresa, e.nome;
+        
+        select * from vwInstrucaoPorEmpresa;
+        
+        CREATE VIEW vwUsuario AS
+        SELECT id_usuario AS id, nome, email, senha,
+               (SELECT COUNT(*) FROM link WHERE id_usuario = usuario.id_usuario AND cargo = 'Administrador') AS isAdmin 
+        FROM usuario;
+        
+        SELECT * FROM vwUsuario;
+        
+        DROP VIEW vwUsuario;
+        
+        SELECT * FROM parametros_lavoura;
+        
+        TRUNCATE TABLE parametros_lavoura;
+        
+	
+            
