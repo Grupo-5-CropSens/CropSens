@@ -2,6 +2,7 @@
     padding: 0;
     margin: 0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-size: 15px;
     font-weight: normal;
 }
@@ -39,8 +40,11 @@
 .form {
     width: 85%;
     max-width: 420px;
+    width: 85%;
+    max-width: 420px;
     display: flex;
     flex-direction: column;
+    justify-content: center;
     justify-content: center;
 }
 
@@ -52,6 +56,10 @@
     border: 1px solid;
     border-color: #ffffff;
     background-color: #ffffff;
+    height: 26px;
+    padding: 14px 14px 14px 45px;
+    margin-bottom: 10px;
+
     height: 26px;
     padding: 14px 14px 14px 45px;
     margin-bottom: 10px;
@@ -78,7 +86,10 @@
 
 .form p {
     color: #d8e3dd;
+    color: #d8e3dd;
     font-size: 16px;
+    line-height: 1.5;
+    margin-bottom: 30px;
     line-height: 1.5;
     margin-bottom: 30px;
 }
@@ -179,6 +190,14 @@ a {
 .erro {
     color: red;
     font-size: 13px;
+}
+
+.form label {
+    color: #ffffff;
+    font-size: 15px;
+    margin-top: 8px;
+    margin-bottom: 4px;
+    font-weight: 500;
 }
 
 .form label {
