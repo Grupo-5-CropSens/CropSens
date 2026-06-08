@@ -400,6 +400,7 @@
           fetch('/dashboard/dadosAdmin')
             .then(function(res) { return res.json(); })
             .then(function(dados) {
+
               totalUsuarios = dados.kpis.totalUsuarios;
               totalEmpresas = dados.kpis.totalEmpresas;
               totalFazendas = dados.kpis.totalFazendas;
@@ -503,9 +504,13 @@
             .then(function(res) { return res.json(); })
             .then(function(dados) {
 
+                 console.log(dados);
               let altura = dados.altura;
               let crescimento = dados.crescimento;
               let eficiencia = dados.eficiencia;
+
+    console.log(altura);
+    console.log(eficiencia);
 
               new Chart(ctx, {
                 data: {

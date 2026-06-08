@@ -4,9 +4,7 @@ function autenticar(email, senha) {
     console.log("ACESSEI O USUARIO MODEL - function autenticar():", email, senha);
     
     var instrucaoSql = `
-        SELECT id_usuario AS id, nome, email, 
-               (SELECT COUNT(*) FROM link WHERE id_usuario = usuario.id_usuario AND cargo = 'Administrador') AS isAdmin 
-        FROM usuario 
+        SELECT * FROM vwUsuario 
         WHERE email = '${email}' AND senha = '${senha}';
     `;
     console.log("Executando a instrução SQL: \n" + instrucaoSql);

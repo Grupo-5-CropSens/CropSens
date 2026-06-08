@@ -55,7 +55,7 @@ function buscarDados(req, res) {
             let crescimentoIdeal = [60, 80, 120, 169, 190, 224.6]; // Simulação de modelo de semente
 
             for (let i = 0; i < respostaApi.leituras.length; i++) {
-                let alturaCm = parseFloat(respostaApi.leituras[i].altura);
+                let alturaCm = parseFloat(respostaApi.leituras[i].altura_planta);
                 formatado.altura.push(alturaCm);
                 
                 // Crescimento semana a semana (percentual em relação à anterior)
