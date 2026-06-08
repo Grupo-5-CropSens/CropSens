@@ -260,9 +260,9 @@ FROM usuario;
         
         SELECT * FROM parametros_lavoura;
         
-        DROP VIEW vwKpiAdmin;
-        DROP VIEW vwUsuario;
-        DROP DATABASE cropsens;
+    -- DROP VIEW vwKpiAdmin;
+      --  DROP VIEW vwUsuario;
+       -- DROP DATABASE cropsens;
         
         
 	
