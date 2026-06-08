@@ -11,4 +11,8 @@ router.get("/dadosAdmin", function (req, res) {
     dashboardController.buscarDadosAdmin(req, res);
 });
 
+router.get("/dadosGrafico/:idSensor", function (req, res) {
+    dashboardController.buscarDadosGrafico(req, res);
+});
+
 module.exports = router;

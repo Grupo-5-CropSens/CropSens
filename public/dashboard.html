@@ -86,7 +86,7 @@
               <canvas id="graficoBarras"></canvas>
             </div>
             <div class="chart-container4">
-              <canvas id="graficoPizza"></canvas>
+              <canvas id="SensorUltrassonico"></canvas>
             </div>
           </div>
 
@@ -298,6 +298,8 @@
   </div>
 
   <script>
+    let proximaAtualizacao;
+
     // Variáveis globais do Dashboard do Cliente para o Modal
     let ultimaAltura = 0;
     let ultimaEficiencia = 0;
@@ -846,54 +848,92 @@
             }
           });
 
-          /* Gráfico de pizza */
-          let ctx4 = document.getElementById('graficoPizza');
+          if (sessionStorage.TIPO_USUARIO !== 'admin') {
+            obterDadosGrafico(1);
+          }
 
-          new Chart(ctx4, {
-            type: 'doughnut',
-            data: {
-              labels: ['Altura ideal', 'Altura baixo do ideal'],
-              datasets: [{
-                label: 'Quantidade de sensores',
-                data: [1, 9],
-                borderWidth: 0,
-                backgroundColor: ['#059669', '#FBBF24']
-              }]
-            },
-            options: {
-              responsive: true,
-              maintainAspectRatio: false,
-              plugins: {
-                title: {
-                  display: true,
-                  text: 'Sensores na altura ideal',
-                  font: { size: 18 },
-                  color: '#064E3B'
-                },
-                legend: {
-                  position: 'bottom'
-                }
-              }
+          function obterDadosGrafico(idSensor) {
+
+
+            if (proximaAtualizacao != undefined) {
+              clearTimeout(proximaAtualizacao);
             }
-          });
 
-          ultimaAltura = altura[altura.length - 1];
-          ultimaEficiencia = eficiencia[eficiencia.length - 1];
-          custoMinimoDam = custoMinimo;
+            fetch(`/dashboard/dadosGrafico/${idSensor}`, { cache: 'no-store' }).then(function (response) {
+              if (response.ok) {
+                response.json().then(function (resposta) {
+                  console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+                  resposta.reverse();
 
-          let diasParaColheita = diasDAM[indicePontoOtimo] - diasDAM[faseAtualIndex];
-          textoTempoColheita = diasParaColheita === 0 ? "Ponto Ideal" : (diasParaColheita > 0 ? `Faltam ${diasParaColheita}d` : `Atraso ${Math.abs(diasParaColheita)}d`);
+                  plotarGrafico(resposta, idSensor);
 
-          document.getElementById('kpi-altura').innerText = `${ultimaAltura} cm`;
-          document.getElementById('kpi-eficiencia').innerText = `${ultimaEficiencia}%`;
-          document.getElementById('kpi-tempo-colheita').innerText = textoTempoColheita;
-          document.getElementById('kpi-perda').innerText = `R$ ${custoMinimoDam.toFixed(0)}`;
+                });
+              } else {
+                console.error('Nenhum dado encontrado ou erro na API');
+              }
+            })
+              .catch(function (error) {
+                console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+              });
+          }
 
-          document.getElementById('kpi-altura-rel').innerText = `${ultimaAltura} cm`;
-          document.getElementById('kpi-eficiencia-rel').innerText = `${ultimaEficiencia}%`;
-          document.getElementById('kpi-tempo-colheita-rel').innerText = textoTempoColheita;
-          document.getElementById('kpi-perda-rel').innerText = `R$ ${custoMinimoDam.toFixed(0)}`;
+          // Esta função *plotarGrafico* usa os dados capturados na função anterior para criar o gráfico
+          // Configura o gráfico (cores, tipo, etc), materializa-o na página e, 
+          // A função *plotarGrafico* também invoca a função *atualizarGrafico*
+          function plotarGrafico(resposta, idSensor) {
+            console.log('iniciando plotagem do gráfico...', resposta);
+            if (!Array.isArray(resposta) || resposta.length === 0) {
+              console.warn('plotarGrafico: resposta vazia', resposta);
+              return;
+            }
+            let labels = [];
+            let dados = { labels, datasets: [{ label: 'Altura (cm)', data: [], borderColor: 'rgb(75,192,192)', fill: false }] };
+            for (let i = 0; i < resposta.length; i++) {
+              const r = resposta[i];
+              const altura_att = Number(r.altura_instalacao) - Number(r.distancia);
+              labels.push(r.momento_grafico || (`p${i}`));
+              dados.datasets[0].data.push(altura_att);
+            }
+            const config = { type: 'line', data: dados };
+            const canvas = document.getElementById(`myChartCanvas${idSensor}`) || document.getElementById('SensorUltrassonico') || document.getElementById('myChart');
+            if (!canvas) { console.error('canvas não encontrado'); return; }
+            const myChart = new Chart(canvas, config);
+            setTimeout(() => atualizarGrafico(idSensor, dados, myChart), 2000);
+          }
+          function atualizarGrafico(idSensor, dados, myChart) {
+  fetch(`/medidas/tempo-real/${idSensor}`, { cache: 'no-store' })
+    .then(function (response) {
+      if (response.ok) {
+        response.json().then(function (novoRegistro) {
+          console.log(`Dados recebidos: ${JSON.stringify(novoRegistro)}`);
 
+          const r = novoRegistro[0];
+          const altura_att = Number(r.altura_instalacao) - Number(r.distancia);
+          const ultimoLabel = dados.labels[dados.labels.length - 1];
+
+          if (r.momento_grafico === ultimoLabel) {
+            console.log("Sem dados novos, gráfico não atualizará.");
+          } else {
+            dados.labels.shift();
+            dados.labels.push(r.momento_grafico);
+
+            dados.datasets[0].data.shift();
+            dados.datasets[0].data.push(altura_att);
+
+            myChart.update();
+          }
+        });
+      } else {
+        console.error('Erro na API');
+      }
+    })
+    .catch(function (error) {
+      console.error(`Erro: ${error.message}`);
+    })
+    .finally(function () {
+      proximaAtualizacao = setTimeout(() => atualizarGrafico(idSensor, dados, myChart), 2000);
+    });
+}
           /* alertas kpi */
           const kpi1 = document.getElementById('kpi1');
           const kpi2 = document.getElementById('kpi2');

@@ -189,3 +189,16 @@ SELECT
     senha,
     (SELECT COUNT(*) FROM link WHERE id_usuario = usuario.id_usuario AND cargo = 'Administrador') AS isAdmin
 FROM usuario;
+
+CREATE VIEW vwBuscarDadosGrafico AS
+SELECT 
+        id_leitura_sensor as id, 
+        distancia_lida_cm as distancia,
+        altura_instalacao,
+        id_sensor,
+                        DATE_FORMAT(data_hora,'%H:%i:%s') as momento_grafico, 
+                        fkSensor
+                        FROM leitura_sensor JOIN sensor on fkSensor = id_sensor
+                    ORDER BY id DESC;
+                    
+                    SELECT * FROM vwBuscarDadosGrafico;

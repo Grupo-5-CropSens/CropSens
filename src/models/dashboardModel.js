@@ -47,10 +47,21 @@ function obterGraficosAdmin() {
     });
 }
 
+function buscarDadosGrafico(idSensor) {
+
+    var instrucaoSql = `  SELECT * FROM vwBuscarDadosGrafico WHERE id_sensor = ${idSensor};
+    
+    `;
+
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
 module.exports = {
     buscarParametrosLavoura,
     buscarDadosColheita,
     buscarLeituras,
     obterKpisAdmin,
-    obterGraficosAdmin
+    obterGraficosAdmin,
+    buscarDadosGrafico
 };

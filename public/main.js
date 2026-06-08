@@ -5,7 +5,7 @@ const mysql = require('mysql2');
 
 // constantes para configurações
 const SERIAL_BAUD_RATE = 9600;
-const SERVIDOR_PORTA = 3300;
+const SERVIDOR_PORTA = 3333;
     
 // habilita ou desabilita a inserção de dados no banco de dados
 const HABILITAR_OPERACAO_INSERIR = true;
@@ -20,10 +20,10 @@ const serial = async (
     let poolBancoDados = mysql.createPool(
         {
             host: 'localhost',
-            user: 'aluno',
-            password: 'Sptech#2024',
+            user: 'root',
+            password: 'Seg2805/rocha',
             database: 'CropSens',
-            port: 3307
+            port: 3306
         }
     ).promise();
 
