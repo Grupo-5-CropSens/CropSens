@@ -39,7 +39,7 @@
 		id_fazenda INT PRIMARY KEY AUTO_INCREMENT,
 		nome VARCHAR(45),
 		municipio VARCHAR(45),
-		cep VARCHAR(45)
+		cep CHAR(8)
 	);
 
 	INSERT INTO fazenda (nome, municipio, cep) VALUES
