@@ -38,7 +38,8 @@ function buscarDados(req, res) {
                 custoTotalDam:    [],
                 altura:           [],
                 crescimento:      [],
-                eficiencia:       []
+                eficiencia:       [],
+                leituras:         respostaApi.leituras
             };
 
             for (let row of respostaApi.dadosColheita) {

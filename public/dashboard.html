@@ -153,48 +153,12 @@
             <p style="color: white;" id="kpi-perda-rel">R$ 225</p>
           </div>
         </div>
-        <div class="relatorio">
+        <div class="relatorio" id="tabela-relatorios">
           <span>Histórico de registro da altura por sensores</span>
           <div class="registro cabecalho">
             <div>Data / Hora</div>
             <div>Altura (cm)</div>
             <div>Sensor</div>
-          </div>
-
-          <div class="registro preto">
-            <div>10/04/2025 10:00:00</div>
-            <div>38</div>
-            <div>1A</div>
-          </div>
-          <div class="registro preto">
-            <div>10/04/2025 10:00:00</div>
-            <div>38</div>
-            <div>1A</div>
-          </div>
-          <div class="registro preto">
-            <div>17/04/2026 14:00:00</div>
-            <div>64</div>
-            <div>1A</div>
-          </div>
-          <div class="registro preto">
-            <div>24/04/2026 10:00:00</div>
-            <div>92</div>
-            <div>1A</div>
-          </div>
-          <div class="registro preto">
-            <div>31/04/2026 14:00:00</div>
-            <div>150</div>
-            <div>1A</div>
-          </div>
-          <div class="registro preto">
-            <div>07/04/2026 10:00:00</div>
-            <div>200</div>
-            <div>1A</div>
-          </div>
-          <div class="registro preto">
-            <div>14/04/2026 14:00:00</div>
-            <div>224.6</div>
-            <div>1A</div>
           </div>
         </div>
       </div>
@@ -309,6 +273,7 @@
     let faseAtualIndex = 0;
     let custoMinimoDam = 0;
     let damPontoOtimo = 0;
+    let indicePontoOtimo = 0;
     let semanas = 6;
     let globalProdutividadeReal = [];
     let globalPerdaAcumulada = [];
@@ -415,9 +380,15 @@
           document.getElementById('kpi-admin-sensores').innerText = sensoresAtivos + ' / ' + totalSensores;
 
           var ctxSensores = document.getElementById('graficoSensoresFazenda').getContext('2d');
-          var labelsFazendas = dados.graficos.sensoresPorFazenda.map(function (f) { return f.fazenda; });
-          var ativos = dados.graficos.sensoresPorFazenda.map(function (f) { return f.ativos || 0; });
-          var inativos = dados.graficos.sensoresPorFazenda.map(function (f) { return f.inativos || 0; });
+          var labelsFazendas = [];
+          var ativos = [];
+          var inativos = [];
+          for (var i = 0; i < dados.graficos.sensoresPorFazenda.length; i++) {
+            var f = dados.graficos.sensoresPorFazenda[i];
+            labelsFazendas.push(f.fazenda);
+            ativos.push(f.ativos || 0);
+            inativos.push(f.inativos || 0);
+          }
 
           new Chart(ctxSensores, {
             type: 'bar',
@@ -457,8 +428,13 @@
           });
 
           var ctxUsuarios = document.getElementById('graficoUsuariosEmpresa').getContext('2d');
-          var labelsEmpresas = dados.graficos.usuariosPorEmpresa.map(function (e) { return e.empresa; });
-          var totaisUsuarios = dados.graficos.usuariosPorEmpresa.map(function (e) { return e.total; });
+          var labelsEmpresas = [];
+          var totaisUsuarios = [];
+          for (var i = 0; i < dados.graficos.usuariosPorEmpresa.length; i++) {
+            var e = dados.graficos.usuariosPorEmpresa[i];
+            labelsEmpresas.push(e.empresa);
+            totaisUsuarios.push(e.total);
+          }
 
           new Chart(ctxUsuarios, {
             type: 'doughnut',
@@ -590,7 +566,7 @@
             labelsDam.push(`${diasDAM[i]} DAM`);
           }
 
-          let indicePontoOtimo = diasDAM.indexOf(damPontoOtimo);
+          indicePontoOtimo = diasDAM.indexOf(damPontoOtimo);
           let diasParaColheita = damPontoOtimo - diasDAM[faseAtualIndex];
 
           // Atualiza os textos dos KPI cards com dados reais da API
@@ -609,6 +585,62 @@
           document.getElementById('kpi-altura-rel').innerText        = `${ultimaAltura} cm`;
           document.getElementById('kpi-perda-rel').innerText         = `R$ ${custoMinimoDam.toFixed(0)}/ha`;
           document.getElementById('kpi-tempo-colheita-rel').innerText = textoStatus;
+
+          // Preenche dinamicamente a tabela do histórico (Relatórios)
+          let containerRelatorio = document.getElementById('tabela-relatorios');
+          if (containerRelatorio && dados.leituras) {
+            containerRelatorio.innerHTML = `
+              <span>Histórico de registro da altura por sensores</span>
+              <div class="registro cabecalho">
+                <div>Data / Hora</div>
+                <div>Altura (cm)</div>
+                <div>Sensor</div>
+              </div>
+            `;
+            for (let i = 0; i < dados.leituras.length; i++) {
+              let leitura = dados.leituras[i];
+              let dataObj = new Date(leitura.data_hora);
+              let dia = String(dataObj.getDate()).padStart(2, '0');
+              let mes = String(dataObj.getMonth() + 1).padStart(2, '0');
+              let ano = dataObj.getFullYear();
+              let hora = String(dataObj.getHours()).padStart(2, '0');
+              let minuto = String(dataObj.getMinutes()).padStart(2, '0');
+              let segundo = String(dataObj.getSeconds()).padStart(2, '0');
+              let dataFormatada = `${dia}/${mes}/${ano} ${hora}:${minuto}:${segundo}`;
+
+              containerRelatorio.innerHTML += `
+                <div class="registro preto">
+                  <div>${dataFormatada}</div>
+                  <div>${parseFloat(leitura.altura_planta).toFixed(1)}</div>
+                  <div>${leitura.id_sensor}</div>
+                </div>
+              `;
+            }
+          }
+
+          let dadosProdutividadeFase = [];
+          let raioPontoFase = [];
+          let dadosMelhorMomento = [];
+
+          for (let i = 0; i < produtividadeReal.length; i++) {
+            if (i <= faseAtualIndex) {
+              dadosProdutividadeFase.push(produtividadeReal[i]);
+            } else {
+              dadosProdutividadeFase.push(null);
+            }
+
+            if (i === faseAtualIndex) {
+              raioPontoFase.push(10);
+            } else {
+              raioPontoFase.push(0);
+            }
+
+            if (i === indicePontoOtimo) {
+              dadosMelhorMomento.push(produtividadeReal[i]);
+            } else {
+              dadosMelhorMomento.push(null);
+            }
+          }
 
           new Chart(kgs, {
             type: 'line',
@@ -645,13 +677,13 @@
                 },
                 {
                   label: 'Fase Atual da Sua Lavoura',
-                  data: produtividadeReal.map((v, i) => i <= faseAtualIndex ? v : null),
+                  data: dadosProdutividadeFase,
                   borderColor: '#F59E0B',
                   backgroundColor: 'transparent',
                   borderWidth: 2.5,
                   tension: 0.3,
                   fill: false,
-                  pointRadius: produtividadeReal.map((v, i) => i === faseAtualIndex ? 10 : 0),
+                  pointRadius: raioPontoFase,
                   pointStyle: 'circle',
                   pointBackgroundColor: '#F59E0B',
                   pointBorderColor: '#ffffff',
@@ -662,7 +694,7 @@
                 },
                 {
                   label: 'Melhor Momento de Colheita',
-                  data: produtividadeReal.map((v, i) => i === indicePontoOtimo ? v : null),
+                  data: dadosMelhorMomento,
                   pointBackgroundColor: faseAtualIndex === indicePontoOtimo ? '#10B981' : '#ffffff',
                   pointBorderColor: '#10B981',
                   pointBorderWidth: 3,
@@ -794,7 +826,7 @@
             crescimentoIdeal.push(i * crescimentoIdealPorSemana);
           }
 
-          let crescimentoReal = [38, 64, 92, 150, 200, 224.6];
+          let crescimentoReal = altura;
 
           let ctx3 = document.getElementById('graficoCrescimento');
 
