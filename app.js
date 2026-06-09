@@ -1,25 +1,25 @@
+// var ambiente_processo = 'producao';
+var ambiente_processo = 'desenvolvimento';
 
-var ambiente_processo = 'desenvolvimento'; // Altere para 'producao' se for usar banco remoto
 var caminho_env = ambiente_processo === 'producao' ? '.env' : '.env.dev';
+
 require("dotenv").config({ path: caminho_env });
 
-const express = require("express");
-const cors = require("cors");
-const path = require("path");
-const { GoogleGenAI } = require("@google/genai");
+var express = require("express");
+var cors = require("cors");
+var path = require("path");
+var { GoogleGenAI } = require("@google/genai");
 
-const app = express();
-const PORTA_APP = process.env.APP_PORT || 3333;
-const HOST_APP = process.env.APP_HOST || "localhost";
+var app = express();
+var PORTA_APP = process.env.APP_PORT || 3333;
+var HOST_APP = process.env.APP_HOST || "localhost";
 
-
-const chatIA = new GoogleGenAI({ apiKey: process.env.MINHA_CHAVE });
+var chatIA = new GoogleGenAI({ apiKey: process.env.MINHA_CHAVE });
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cors());
 app.use(express.static(path.join(__dirname, "public")));
-
 
 var indexRouter = require("./src/routes/index");
 var usuarioRouter = require("./src/routes/usuarios");
@@ -28,6 +28,7 @@ var dashboardRouter = require("./src/routes/dashboard");
 app.use("/", indexRouter);
 app.use("/usuarios", usuarioRouter);
 app.use("/dashboard", dashboardRouter);
+app.use("/medidas", dashboardRouter);
 
 app.post("/perguntar", async (req, res) => {
     const pergunta = req.body.pergunta;
@@ -56,7 +57,6 @@ async function gerarResposta(mensagem) {
         throw error;
     }
 }
-
 
 app.listen(PORTA_APP, function () {
     console.log(`

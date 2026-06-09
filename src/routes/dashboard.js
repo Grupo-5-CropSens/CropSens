@@ -15,4 +15,8 @@ router.get("/dadosGrafico/:idSensor", function (req, res) {
     dashboardController.buscarDadosGrafico(req, res);
 });
 
+router.get("/tempo-real/:idSensor", function (req, res) {
+    dashboardController.buscarMedidasTempoReal(req, res);
+});
+
 module.exports = router;

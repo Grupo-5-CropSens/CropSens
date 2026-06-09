@@ -1,40 +1,28 @@
 var database = require("../database/config");
 
 function buscarParametrosLavoura(idPlantacao) {
-    var instrucao = `SELECT fase_atual_dam, potencial_maximo_kgha FROM parametros_lavoura WHERE fkPlantacao = ${idPlantacao};`;
+    var instrucao = `SELECT * FROM vwParametrosLavoura WHERE fkPlantacao = ${idPlantacao};`;
     return database.executar(instrucao);
 }
 
 function buscarDadosColheita(idPlantacao) {
-    var instrucao = `SELECT dam_dias, produtividade_kgha, perda_acumulada_kg, percentual_perda, custo_secagem, custo_total FROM dados_colheita WHERE fkPlantacao = ${idPlantacao} ORDER BY dam_dias ASC;`;
+    var instrucao = `SELECT * FROM vwDadosColheita WHERE fkPlantacao = ${idPlantacao};`;
     return database.executar(instrucao);
 }
 
-//join aqui tava cagado
 function buscarLeituras(idPlantacao) {
-    var instrucao = `
-         SELECT * FROM vwInstalacaoDistancia WHERE fkPlantacao = ${idPlantacao}
-    `;
+    var instrucao = `SELECT * FROM vwInstalacaoDistancia WHERE fkPlantacao = ${idPlantacao};`;
     return database.executar(instrucao);
-    console.log(leituras)
 }
 
 function obterKpisAdmin() {
-    var instrucao = `
-        SELECT * FROM vwKpiAdmin;
-            
-    `;
+    var instrucao = `SELECT * FROM vwKpiAdmin;`;
     return database.executar(instrucao);
 }
 
 function obterGraficosAdmin() {
-    var instrucaoSensoresPorFazenda = `
-        SELECT * FROM vwGraficoAdmin;
-    `;
-    
-    var instrucaoUsuariosPorEmpresa = `
-        select * from vwInstrucaoPorEmpresa;
-    `;
+    var instrucaoSensoresPorFazenda = `SELECT * FROM vwGraficoAdmin;`;
+    var instrucaoUsuariosPorEmpresa = `SELECT * FROM vwInstrucaoPorEmpresa;`;
 
     return Promise.all([
         database.executar(instrucaoSensoresPorFazenda),
@@ -48,13 +36,13 @@ function obterGraficosAdmin() {
 }
 
 function buscarDadosGrafico(idSensor) {
+    var instrucao = `SELECT * FROM vwBuscarDadosGrafico WHERE id_sensor = ${idSensor};`;
+    return database.executar(instrucao);
+}
 
-    var instrucaoSql = `  SELECT * FROM vwBuscarDadosGrafico WHERE id_sensor = ${idSensor};
-    
-    `;
-
-    console.log("Executando a instrução SQL: \n" + instrucaoSql);
-    return database.executar(instrucaoSql);
+function buscarMedidasTempoReal(idSensor) {
+    var instrucao = `SELECT * FROM vwBuscarDadosGrafico WHERE id_sensor = ${idSensor} LIMIT 1;`;
+    return database.executar(instrucao);
 }
 
 module.exports = {
@@ -63,5 +51,6 @@ module.exports = {
     buscarLeituras,
     obterKpisAdmin,
     obterGraficosAdmin,
-    buscarDadosGrafico
+    buscarDadosGrafico,
+    buscarMedidasTempoReal
 };

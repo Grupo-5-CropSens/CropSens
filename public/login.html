@@ -18,7 +18,6 @@
         <div class="card">
             <div class="form">
                 <h1>Acesso ao Site</h1>
-                <!--<p>Use seus dados para continuar</p> -->
 
                 <label>E-mail:<span style="color: red;"> *</span></label>
                 <input id="ipt_email" type="email" class="email" placeholder="Digite seu e-mail">
@@ -78,15 +77,12 @@
         }).then(function (resposta) {
             if (resposta.ok) {
                 resposta.json().then(json => {
-                    // SALVANDO NA SESSÃO
                     sessionStorage.EMAIL_USUARIO = json.email;
                     sessionStorage.NOME_USUARIO = json.nome;
                     sessionStorage.ID_USUARIO = json.id;
                     sessionStorage.TIPO_USUARIO = json.tipo || 'cliente';
+                    sessionStorage.ID_PLANTACAO = json.idPlantacao || 1;
                     login()
-
-                    console.log(resposta)
-
                 });
             } else {
                 console.log("Houve um erro ao tentar realizar o login!");

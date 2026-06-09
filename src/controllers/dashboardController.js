@@ -26,20 +26,19 @@ function buscarDados(req, res) {
         })
         .then(function (resultadoLeituras) {
             respostaApi.leituras = resultadoLeituras;
-            
-            // Format arrays for frontend
+
             let formatado = {
-                faseAtualDam: respostaApi.parametros.fase_atual_dam,
+                faseAtualDam:    respostaApi.parametros.fase_atual_dam,
                 potencialMaximo: parseFloat(respostaApi.parametros.potencial_maximo_kgha),
-                diasDAM: [],
+                diasDAM:          [],
                 produtividadeReal: [],
-                perdaAcumulada: [],
-                percentualPerda: [],
-                custoSecagem: [],
-                custoTotalDam: [],
-                altura: [],
-                crescimento: [],
-                eficiencia: []
+                perdaAcumulada:   [],
+                percentualPerda:  [],
+                custoSecagem:     [],
+                custoTotalDam:    [],
+                altura:           [],
+                crescimento:      [],
+                eficiencia:       []
             };
 
             for (let row of respostaApi.dadosColheita) {
@@ -51,13 +50,13 @@ function buscarDados(req, res) {
                 formatado.custoTotalDam.push(parseFloat(row.custo_total));
             }
 
-            // Calculate height and efficiency based on readings
-            let crescimentoIdeal = [60, 80, 120, 169, 190, 224.6]; // Simulação de modelo de semente
+            // Simulação de modelo de semente (curva de crescimento ideal)
+            let crescimentoIdeal = [60, 80, 120, 169, 190, 224.6];
 
             for (let i = 0; i < respostaApi.leituras.length; i++) {
                 let alturaCm = parseFloat(respostaApi.leituras[i].altura_planta);
                 formatado.altura.push(alturaCm);
-                
+
                 // Crescimento semana a semana (percentual em relação à anterior)
                 if (i === 0) {
                     formatado.crescimento.push(null);
@@ -66,11 +65,22 @@ function buscarDados(req, res) {
                     formatado.crescimento.push(Number(calc.toFixed(1)));
                 }
 
-                // Eficiência em relação à curva ideal
                 let ideal = crescimentoIdeal[i] || crescimentoIdeal[crescimentoIdeal.length - 1];
                 let ef = (alturaCm / ideal) * 100;
                 formatado.eficiencia.push(parseFloat(ef.toFixed(1)));
             }
+
+            // Campos resumo calculados pelo servidor — usados diretamente nos KPI cards do frontend
+            let custoMinimoVal = formatado.custoTotalDam.length > 0 ? Math.min(...formatado.custoTotalDam) : 0;
+            let indicePontoOtimo = formatado.custoTotalDam.indexOf(custoMinimoVal);
+
+            formatado.custoMinimo     = parseFloat(custoMinimoVal.toFixed(2));
+            formatado.damPontoOtimo   = formatado.diasDAM[indicePontoOtimo] || 0;
+            formatado.faseAtualIndex  = formatado.diasDAM.indexOf(formatado.faseAtualDam);
+            if (formatado.faseAtualIndex === -1) formatado.faseAtualIndex = 0;
+
+            formatado.ultimaAltura     = parseFloat((formatado.altura[formatado.altura.length - 1] || 0).toFixed(1));
+            formatado.ultimaEficiencia = parseFloat((formatado.eficiencia[formatado.eficiencia.length - 1] || 0).toFixed(1));
 
             res.json(formatado);
         })
@@ -107,13 +117,11 @@ function buscarDadosAdmin(req, res) {
 function buscarDadosGrafico(req, res) {
     var idSensor = req.params.idSensor;
 
-    console.log(`Recuperando medidas em tempo real`);
-
     dashboardModel.buscarDadosGrafico(idSensor).then(function (resultado) {
         if (resultado.length > 0) {
             res.status(200).json(resultado);
         } else {
-            res.status(204).send("Nenhum resultado encontrado!")
+            res.status(204).send("Nenhum resultado encontrado!");
         }
     }).catch(function (erro) {
         console.log(erro);
@@ -122,8 +130,25 @@ function buscarDadosGrafico(req, res) {
     });
 }
 
+function buscarMedidasTempoReal(req, res) {
+    var idSensor = req.params.idSensor;
+
+    dashboardModel.buscarMedidasTempoReal(idSensor).then(function (resultado) {
+        if (resultado.length > 0) {
+            res.status(200).json(resultado);
+        } else {
+            res.status(204).send("Nenhum resultado encontrado!");
+        }
+    }).catch(function (erro) {
+        console.log(erro);
+        console.log("Houve um erro ao buscar as ultimas medidas em tempo real.", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+    });
+}
+
 module.exports = {
     buscarDados,
     buscarDadosAdmin,
-    buscarDadosGrafico
+    buscarDadosGrafico,
+    buscarMedidasTempoReal
 };

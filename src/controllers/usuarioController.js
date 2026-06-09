@@ -11,23 +11,19 @@ function autenticar(req, res) {
     } else {
         usuarioModel.autenticar(email, senha)
             .then(function (resultado) {
-                console.log(`\nResultados encontrados: ${resultado.length}`);
-
-                if (resultado.length == 1) {
-                    let tipoUsuario = resultado[0].isAdmin > 0 ? 'admin' : 'usuario';
-                        // Determina tipo de usuário (admin se email pertencer ao domínio cropsens)
-                        const emailUser = resultado[0].email || '';
-                        const tipo = emailUser.endsWith('@cropsens.com') ? 'admin' : 'cliente';
-                        res.json({
-                            id: resultado[0].id,
-                            nome: resultado[0].nome,
-                            email: emailUser,
-                            tipo: tipo
-                        });
+                if (resultado.length >= 1) {
+                    const emailUser = resultado[0].email || '';
+                    // Determina perfil de acesso: admin se e-mail for do domínio @cropsens.com
+                    const tipo = emailUser.endsWith('@cropsens.com') ? 'admin' : 'cliente';
+                    res.json({
+                        id: resultado[0].id,
+                        nome: resultado[0].nome,
+                        email: emailUser,
+                        tipo: tipo,
+                        idPlantacao: resultado[0].id_plantacao || 1
+                    });
                 } else if (resultado.length == 0) {
                     res.status(403).send("Email e/ou senha inválido(s)!");
-                } else {
-                    res.status(403).send("Mais de um usuário encontrado!");
                 }
             })
             .catch(function (erro) {

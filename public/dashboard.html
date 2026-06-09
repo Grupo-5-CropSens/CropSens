@@ -298,9 +298,10 @@
   </div>
 
   <script>
+    // ===== VARIÁVEIS GLOBAIS =====
     let proximaAtualizacao;
 
-    // Variáveis globais do Dashboard do Cliente para o Modal
+    // Estado do dashboard do cliente (compartilhado com o modal de KPI)
     let ultimaAltura = 0;
     let ultimaEficiencia = 0;
     let textoTempoColheita = "";
@@ -313,7 +314,7 @@
     let globalPerdaAcumulada = [];
     let globalCustoTotalDam = [];
 
-    // Variáveis globais do Dashboard Admin para o Modal
+    // Estado do dashboard admin (compartilhado com o modal de KPI)
     let totalUsuarios = 0;
     let totalEmpresas = 0;
     let totalFazendas = 0;
@@ -321,7 +322,7 @@
     let sensoresAtivos = 0;
     let sensoresInativos = 0;
 
-    // Inicialização
+    // ===== INICIALIZAÇÃO =====
     window.onload = function () {
       mostrarnome(sessionStorage.NOME_USUARIO);
       configurarMenu();
@@ -331,19 +332,16 @@
       if (tipo === 'admin') {
         if (bobia) bobia.style.display = 'flex';
 
-        // Oculta relatórios do menu do admin, exibe cadastro
         const itemRel = document.querySelector('[data-section="relatorios"]');
         if (itemRel) itemRel.style.display = 'none';
 
         const itemCad = document.getElementById('menu-item-cadastro');
         if (itemCad) itemCad.style.display = 'flex';
 
-        // Atualiza avatar com inicial do admin
         const avatar = document.querySelector('.menu-avatar');
         const nome = sessionStorage.NOME_USUARIO || 'A';
         if (avatar) avatar.innerText = nome.charAt(0).toUpperCase();
 
-        // Alterna visibilidade das divs do dashboard
         document.getElementById('dashboard-cliente').style.display = 'none';
         document.getElementById('dashboard-admin').style.display = 'block';
 
@@ -351,7 +349,6 @@
       } else {
         if (bobia) bobia.style.display = 'none';
 
-        // Atualiza avatar com inicial do cliente
         const avatar = document.querySelector('.menu-avatar');
         const nome = sessionStorage.NOME_USUARIO || 'C';
         if (avatar) avatar.innerText = nome.charAt(0).toUpperCase();
@@ -370,6 +367,7 @@
       }
     }
 
+    // ===== MENU DE NAVEGAÇÃO =====
     function configurarMenu() {
       let menuItems = document.querySelectorAll('.menu-item');
       let sections = document.querySelectorAll('.section');
@@ -394,11 +392,11 @@
         item.addEventListener('click', handleMenuClick);
       });
 
-      // Marcar o item de menu ativo ao carregar (sempre começa no Dashboard)
       const itemDashboard = document.querySelector('[data-section="dashboard"]');
       if (itemDashboard) itemDashboard.classList.add('active');
     }
 
+    // ===== DASHBOARD ADMIN =====
     function carregarDashboardAdmin() {
       fetch('/dashboard/dadosAdmin')
         .then(function (res) { return res.json(); })
@@ -416,7 +414,6 @@
           document.getElementById('kpi-admin-fazendas').innerText = totalFazendas;
           document.getElementById('kpi-admin-sensores').innerText = sensoresAtivos + ' / ' + totalSensores;
 
-          // Chart 1: Sensores por Fazenda (Ativos vs Inativos)
           var ctxSensores = document.getElementById('graficoSensoresFazenda').getContext('2d');
           var labelsFazendas = dados.graficos.sensoresPorFazenda.map(function (f) { return f.fazenda; });
           var ativos = dados.graficos.sensoresPorFazenda.map(function (f) { return f.ativos || 0; });
@@ -459,7 +456,6 @@
             }
           });
 
-          // Chart 2: Usuários por Empresa
           var ctxUsuarios = document.getElementById('graficoUsuariosEmpresa').getContext('2d');
           var labelsEmpresas = dados.graficos.usuariosPorEmpresa.map(function (e) { return e.empresa; });
           var totaisUsuarios = dados.graficos.usuariosPorEmpresa.map(function (e) { return e.total; });
@@ -500,21 +496,30 @@
       }
     }
 
+    // ===== DASHBOARD CLIENTE =====
     function carregarDashboardCliente() {
       var ctx = document.getElementById('myChart');
 
-      fetch('/dashboard/dados/1')
+      var idPlantacao = sessionStorage.ID_PLANTACAO || 1;
+
+      fetch(`/dashboard/dados/${idPlantacao}`)
         .then(function (res) { return res.json(); })
         .then(function (dados) {
 
-          console.log(dados);
           let altura = dados.altura;
           let crescimento = dados.crescimento;
           let eficiencia = dados.eficiencia;
 
-          console.log(altura);
-          console.log(eficiencia);
+          // Sincroniza variáveis globais com os dados calculados pelo servidor
+          ultimaAltura     = dados.ultimaAltura;
+          ultimaEficiencia = dados.ultimaEficiencia;
+          custoMinimoDam   = dados.custoMinimo;
+          damPontoOtimo    = dados.damPontoOtimo;
+          faseAtualIndex   = dados.faseAtualIndex;
+          diasDAM          = dados.diasDAM;
 
+
+          // --- Gráfico 1: Índice de Eficiência Temporal ---
           new Chart(ctx, {
             data: {
               labels: ['Ponto base', 'Semana 2', 'Semana 3', 'Semana 4', 'Semana 5', 'Semana 6'],
@@ -569,44 +574,47 @@
             }
           });
 
-          /*GRAFICO DE PERDA DE PRODUÇÃO PÓS-MATURAÇÃO*/
+          // --- Gráfico 2: Impacto do Tempo de Colheita ---
           const kgs = document.getElementById('graficoBarras');
 
-          // Dados de dias pós-maturação (DAM) puxados do banco
-          let potencialMaximo = dados.potencialMaximo;
-          diasDAM = dados.diasDAM;
           let produtividadeReal = dados.produtividadeReal;
-          let perdaAcumulada = dados.perdaAcumulada;
-          let percentualPerda = dados.percentualPerda;
-          let custoSecagem = dados.custoSecagem;
-          let custoTotalDam = dados.custoTotalDam;
+          let perdaAcumulada    = dados.perdaAcumulada;
+          let custoTotalDam     = dados.custoTotalDam;
 
           globalProdutividadeReal = produtividadeReal;
-          globalPerdaAcumulada = perdaAcumulada;
-          globalCustoTotalDam = custoTotalDam;
+          globalPerdaAcumulada    = perdaAcumulada;
+          globalCustoTotalDam     = custoTotalDam;
 
           let labelsDam = [];
-          let custoPerdaFinanceira = [];
-          let custoPorKg = 0.50; // Constante financeira da fazenda
-
           for (let i = 0; i < diasDAM.length; i++) {
             labelsDam.push(`${diasDAM[i]} DAM`);
           }
 
-          // Calcula ponto ótimo (menor custo total)
-          let custoMinimo = Math.min(...custoTotalDam);
-          let indicePontoOtimo = custoTotalDam.indexOf(custoMinimo);
-          damPontoOtimo = diasDAM[indicePontoOtimo];
+          let indicePontoOtimo = diasDAM.indexOf(damPontoOtimo);
+          let diasParaColheita = damPontoOtimo - diasDAM[faseAtualIndex];
 
-          faseAtualIndex = dados.diasDAM.indexOf(dados.faseAtualDam);
-          if (faseAtualIndex === -1) faseAtualIndex = 2; // Fallback se não encontrar
+          // Atualiza os textos dos KPI cards com dados reais da API
+          let textoStatus = diasParaColheita === 0
+            ? '🌟 COLHER AGORA'
+            : diasParaColheita > 0
+              ? `Faltam ${diasParaColheita} dias`
+              : `Atraso ${Math.abs(diasParaColheita)} dias`;
+          textoTempoColheita = textoStatus;
+
+          document.getElementById('kpi-eficiencia').innerText        = `${ultimaEficiencia}%`;
+          document.getElementById('kpi-altura').innerText            = `${ultimaAltura} cm`;
+          document.getElementById('kpi-perda').innerText             = `R$ ${custoMinimoDam.toFixed(0)}/ha`;
+          document.getElementById('kpi-tempo-colheita').innerText    = textoStatus;
+          document.getElementById('kpi-eficiencia-rel').innerText    = `${ultimaEficiencia}%`;
+          document.getElementById('kpi-altura-rel').innerText        = `${ultimaAltura} cm`;
+          document.getElementById('kpi-perda-rel').innerText         = `R$ ${custoMinimoDam.toFixed(0)}/ha`;
+          document.getElementById('kpi-tempo-colheita-rel').innerText = textoStatus;
 
           new Chart(kgs, {
             type: 'line',
             data: {
               labels: labelsDam,
               datasets: [
-                // ── Linha 1: Produtividade total (cinza/verde) ──
                 {
                   label: 'Produtividade (kg/ha)',
                   data: produtividadeReal,
@@ -621,7 +629,6 @@
                   yAxisID: 'y',
                   order: 3
                 },
-                // ── Linha 2: Custo Total (vermelho) ──
                 {
                   label: 'Custo Total (R$)',
                   data: custoTotalDam,
@@ -636,7 +643,6 @@
                   yAxisID: 'y1',
                   order: 3
                 },
-                // ── Linha 3: Fase atual da lavoura (linha laranja simples) ──
                 {
                   label: 'Fase Atual da Sua Lavoura',
                   data: produtividadeReal.map((v, i) => i <= faseAtualIndex ? v : null),
@@ -646,7 +652,7 @@
                   tension: 0.3,
                   fill: false,
                   pointRadius: produtividadeReal.map((v, i) => i === faseAtualIndex ? 10 : 0),
-                  pointStyle: produtividadeReal.map((v, i) => i === faseAtualIndex ? 'circle' : 'circle'),
+                  pointStyle: 'circle',
                   pointBackgroundColor: '#F59E0B',
                   pointBorderColor: '#ffffff',
                   pointBorderWidth: 2,
@@ -654,7 +660,6 @@
                   yAxisID: 'y',
                   order: 1
                 },
-                // ── Ponto: Melhor Momento de Colheita (estrela verde) ──
                 {
                   label: 'Melhor Momento de Colheita',
                   data: produtividadeReal.map((v, i) => i === indicePontoOtimo ? v : null),
@@ -693,7 +698,6 @@
                     usePointStyle: true,
                     pointStyleWidth: 14,
                     filter: function (item) {
-                      // Oculta as duas linhas base da legenda para não poluir
                       return item.datasetIndex >= 2;
                     }
                   }
@@ -774,7 +778,7 @@
             }
           });
 
-          // GRÁFICO CRESCIMENTO IDEAL X REAL
+          // --- Gráfico 3: Crescimento Ideal x Real ---
           let crescimentoTotal = 224.6;
           semanas = 6;
 
@@ -848,13 +852,12 @@
             }
           });
 
+          // --- Gráfico 4: Sensor Ultrassônico em Tempo Real ---
           if (sessionStorage.TIPO_USUARIO !== 'admin') {
             obterDadosGrafico(1);
           }
 
           function obterDadosGrafico(idSensor) {
-
-
             if (proximaAtualizacao != undefined) {
               clearTimeout(proximaAtualizacao);
             }
@@ -862,11 +865,8 @@
             fetch(`/dashboard/dadosGrafico/${idSensor}`, { cache: 'no-store' }).then(function (response) {
               if (response.ok) {
                 response.json().then(function (resposta) {
-                  console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
                   resposta.reverse();
-
                   plotarGrafico(resposta, idSensor);
-
                 });
               } else {
                 console.error('Nenhum dado encontrado ou erro na API');
@@ -877,11 +877,7 @@
               });
           }
 
-          // Esta função *plotarGrafico* usa os dados capturados na função anterior para criar o gráfico
-          // Configura o gráfico (cores, tipo, etc), materializa-o na página e, 
-          // A função *plotarGrafico* também invoca a função *atualizarGrafico*
           function plotarGrafico(resposta, idSensor) {
-            console.log('iniciando plotagem do gráfico...', resposta);
             if (!Array.isArray(resposta) || resposta.length === 0) {
               console.warn('plotarGrafico: resposta vazia', resposta);
               return;
@@ -900,41 +896,39 @@
             const myChart = new Chart(canvas, config);
             setTimeout(() => atualizarGrafico(idSensor, dados, myChart), 2000);
           }
+
           function atualizarGrafico(idSensor, dados, myChart) {
-  fetch(`/medidas/tempo-real/${idSensor}`, { cache: 'no-store' })
-    .then(function (response) {
-      if (response.ok) {
-        response.json().then(function (novoRegistro) {
-          console.log(`Dados recebidos: ${JSON.stringify(novoRegistro)}`);
+            fetch(`/medidas/tempo-real/${idSensor}`, { cache: 'no-store' })
+              .then(function (response) {
+                if (response.ok) {
+                  response.json().then(function (novoRegistro) {
+                    const r = novoRegistro[0];
+                    const altura_att = Number(r.altura_instalacao) - Number(r.distancia);
+                    const ultimoLabel = dados.labels[dados.labels.length - 1];
 
-          const r = novoRegistro[0];
-          const altura_att = Number(r.altura_instalacao) - Number(r.distancia);
-          const ultimoLabel = dados.labels[dados.labels.length - 1];
+                    if (r.momento_grafico !== ultimoLabel) {
+                      dados.labels.shift();
+                      dados.labels.push(r.momento_grafico);
 
-          if (r.momento_grafico === ultimoLabel) {
-            console.log("Sem dados novos, gráfico não atualizará.");
-          } else {
-            dados.labels.shift();
-            dados.labels.push(r.momento_grafico);
+                      dados.datasets[0].data.shift();
+                      dados.datasets[0].data.push(altura_att);
 
-            dados.datasets[0].data.shift();
-            dados.datasets[0].data.push(altura_att);
-
-            myChart.update();
+                      myChart.update();
+                    }
+                  });
+                } else {
+                  console.error('Erro na API');
+                }
+              })
+              .catch(function (error) {
+                console.error(`Erro: ${error.message}`);
+              })
+              .finally(function () {
+                proximaAtualizacao = setTimeout(() => atualizarGrafico(idSensor, dados, myChart), 2000);
+              });
           }
-        });
-      } else {
-        console.error('Erro na API');
-      }
-    })
-    .catch(function (error) {
-      console.error(`Erro: ${error.message}`);
-    })
-    .finally(function () {
-      proximaAtualizacao = setTimeout(() => atualizarGrafico(idSensor, dados, myChart), 2000);
-    });
-}
-          /* alertas kpi */
+
+          // --- Indicadores de Cor dos KPIs (Relatórios) ---
           const kpi1 = document.getElementById('kpi1');
           const kpi2 = document.getElementById('kpi2');
           const kpi3 = document.getElementById('kpi3');
@@ -987,12 +981,13 @@
           let colorTempoColheita = diasParaColheita === 0 ? '#10B981' : (diasParaColheita > 0 ? '#FBBF24' : '#EF4444');
           setDashKpiStatus('dash-kpi-tempo-colheita', colorTempoColheita);
 
-          // Se chegou ao ponto ideal, destacar o card de Status da Colheita no dashboard
+          let colorCusto = custoMinimoDam < 230 ? '#059669' : '#FBBF24';
+          setDashKpiStatus('dash-kpi-custo', colorCusto);
+
           if (faseAtualIndex === indicePontoOtimo) {
             const statusCard = document.getElementById('dash-kpi-tempo-colheita');
             if (statusCard) {
               statusCard.classList.add('kpi-ready');
-              // Força o texto a mostrar claramente a ação
               const p = statusCard.querySelector('p');
               if (p) {
                 p.innerHTML = '🌟 COLHER AGORA';
@@ -1009,7 +1004,7 @@
         });
     }
 
-    /* Logica do Modal de KPI */
+    // ===== MODAL DE KPI =====
     function openKpiModal(type) {
       const overlay = document.getElementById('kpiModalOverlay');
       const mTitle = document.getElementById('modalTitle');
@@ -1031,7 +1026,6 @@
 
       let status = 0;
 
-      // ============ EFICIÊNCIA ============
       if (type === 'eficiencia') {
         mTitle.innerText = '🌿 Eficiência da Lavoura';
         mValue.innerText = `${ultimaEficiencia}%`;
@@ -1056,7 +1050,6 @@
           mStatusText.innerText = 'O desenvolvimento vegetativo está abaixo do planejado. Acompanhe a irrigação.';
         }
       }
-      // ============ ALTURA ============
       else if (type === 'altura') {
         mTitle.innerText = '📏 Altura da Planta';
         mValue.innerText = `${ultimaAltura} cm`;
@@ -1081,7 +1074,6 @@
           mStatusText.innerText = 'A altura está abaixo do histórico ideal. Verifique condições de solo e nutrição.';
         }
       }
-      // ============ TEMPO DE COLHEITA ============
       else if (type === 'tempo-colheita') {
         mTitle.innerText = '🌾 Status da Colheita';
         let currentDam = diasDAM[faseAtualIndex] !== undefined ? diasDAM[faseAtualIndex] : 0;
@@ -1122,7 +1114,6 @@
           mStatusText.innerText = 'A umidade está caindo e as perdas no campo estão aumentando. Colha já.';
         }
       }
-      // ============ CUSTO ============
       else if (type === 'custo') {
         mTitle.innerText = '💰 Custo Mínimo de Colheita';
         mValue.innerText = `R$ ${custoMinimoDam.toFixed ? custoMinimoDam.toFixed(0) : custoMinimoDam}/ha`;
@@ -1136,7 +1127,6 @@
         mAlerts.innerHTML = '<span style="color:#059669;">✔ Colher em DAM ' + damPontoOtimo + ' garante o maior lucro líquido por hectare.</span>';
         mStatusText.innerText = 'Representa o menor ponto de custo total da colheita (secagem + perdas no campo).';
       }
-      // ============ ADMIN KPIs ============
       else if (type === 'usuarios') {
         mTitle.innerText = '👥 Total de Usuários';
         mValue.innerText = totalUsuarios;
@@ -1200,7 +1190,6 @@
         }
       }
 
-      // ---- Atualizar indicador de status ----
       mStatusNum.innerHTML = status === 1 ? '<span style="font-size:36px;">✓</span>' : '<span style="font-size:36px;">✕</span>';
       if (status === 1) {
         mStatusInd.classList.add('status-one');
@@ -1212,11 +1201,12 @@
 
       overlay.classList.add('show');
     }
+
     function closeKpiModal() {
       document.getElementById('kpiModalOverlay')?.classList.remove('show');
     }
 
-    // ============ CADASTRO DE CLIENTE (ADMIN) ============
+    // ===== CADASTRO DE CLIENTE (SOMENTE ADMIN) =====
     function cadastrarCliente() {
       const nome = document.getElementById('cad-nome').value.trim();
       const email = document.getElementById('cad-email').value.trim();
@@ -1263,7 +1253,7 @@
     }
   </script>
 
-  <!-- Estrutura do Modal de KPI (Redesenhado) -->
+  <!-- Estrutura do Modal de KPI -->
   <div id="kpiModalOverlay" class="modal-overlay" onclick="if(event.target===this) closeKpiModal()">
     <div class="modal-content">
       <button class="modal-close" onclick="closeKpiModal()">×</button>
