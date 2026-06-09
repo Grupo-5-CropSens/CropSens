@@ -89,8 +89,7 @@ INSERT INTO empresa (nome) VALUES
 INSERT INTO usuario (nome, email, senha, empresa_id_empresa) VALUES
 ('Danilo Silva', 'danilo@cropsens.com', '123456', 1),
 ('Carla Mendes', 'carla@cropsens.com', '123456', 1),
-('Pedro Santos', 'pedro@greenfarm.com', '123456', 2),
-('Fernanda Caramico', 'fernanda@gmail.com', '123456', 1);
+('Pedro Santos', 'pedro@greenfarm.com', '123456', 2);
 
 INSERT INTO fazenda (nome, municipio, cep) VALUES
 ('Fazenda Boa Esperanca', 'Ribeirao Preto', '14000-000'),
@@ -99,8 +98,7 @@ INSERT INTO fazenda (nome, municipio, cep) VALUES
 INSERT INTO link (id_usuario, id_fazenda, cargo) VALUES
 (1, 1, 'Administrador'),
 (2, 1, 'Operador'),
-(3, 2, 'Gerente'),
-(4, 1, 'Operador');
+(3, 2, 'Gerente');
 
 INSERT INTO plantacao (data_plantio, id_fazenda) VALUES
 ('2025-01-15', 1),
@@ -110,28 +108,49 @@ INSERT INTO plantacao (data_plantio, id_fazenda) VALUES
 INSERT INTO sensor (status, altura_instalacao, fkPlantacao) VALUES
 (1, 120.00, 1),
 (1, 150.00, 1),
-(0, 140.00, 2);
+(1, 130.00, 2),
+(0, 140.00, 2),
+(1, 125.00, 3),
+(1, 135.00, 3);
 
-INSERT INTO leitura_sensor (distancia_lida_cm, data_hora, fkSensor) VALUES
-(60, '2026-06-01 08:00:00', 1),
-(46, '2026-06-08 08:00:00', 1),
-(30, '2026-06-15 08:00:00', 1),
+INSERT INTO leitura_sensor
+(distancia_lida_cm, data_hora, fkSensor)
+VALUES
 
-(75, '2026-06-01 08:00:00', 2),
-(57, '2026-06-08 08:00:00', 2),
-(38, '2026-06-15 08:00:00', 2);
+-- Semana 1
+(60,'2026-06-01 08:00:00',1),
 
-INSERT INTO parametros_lavoura (fase_atual_dam, potencial_maximo_kgha, fkPlantacao) VALUES
-(30, 9500.00, 1),
-(20, 9000.00, 2);
+-- Semana 2
+(45,'2026-06-08 08:00:00',1),
 
-INSERT INTO dados_colheita (dam_dias, produtividade_kgha, perda_acumulada_kg, percentual_perda, custo_secagem, custo_total, fkPlantacao) VALUES
-(10, 9500.00, 0.00, 0.00, 1200.00, 1200.00, 1),
-(20, 9500.00, 50.00, 0.53, 800.00, 850.00, 1),
-(30, 9500.00, 100.00, 1.05, 0.00, 225.00, 1),
+-- Semana 3
+(30,'2026-06-15 08:00:00',1),
 
-(10, 9000.00, 0.00, 0.00, 1100.00, 1100.00, 2),
-(20, 9000.00, 40.00, 0.44, 750.00, 790.00, 2);
+-- Semana 4
+(20,'2026-06-22 08:00:00',1),
+
+-- Semana 5
+(12,'2026-06-29 08:00:00',1),
+
+-- Semana 6
+(5,'2026-07-06 08:00:00',1);
+
+SELECT id_sensor, fkPlantacao
+FROM sensor;
+	INSERT INTO parametros_lavoura 
+(fase_atual_dam, potencial_maximo_kgha, fkPlantacao)
+VALUES
+(30, 10000.00, 1);
+
+INSERT INTO dados_colheita
+(dam_dias, produtividade_kgha, perda_acumulada_kg, percentual_perda, custo_secagem, custo_total, fkPlantacao)
+VALUES
+(0, 10000.00,    0.00,  0.00, 1200.00, 1200.00, 1),
+(10, 9950.00,   50.00,  0.50,  700.00,  725.00, 1),
+(20, 9850.00,  150.00,  1.50,  300.00,  375.00, 1),
+(30, 9700.00,  300.00,  3.00,    0.00,  150.00, 1), 
+(40, 9300.00,  700.00,  7.00,    0.00,  350.00, 1),
+(50, 8700.00, 1300.00, 13.00,    0.00,  650.00, 1);
 
 -- VIEWS MANTIDAS INTEGRALMENTE --
 
@@ -147,6 +166,8 @@ FROM leitura_sensor ls
 JOIN sensor s ON ls.fkSensor = s.id_sensor
 ORDER BY ls.data_hora ASC;
 
+SELECT * FROM vwInstalacaoDistancia WHERE fkPlantacao = 1;
+
 CREATE VIEW vwGraficoAdmin AS
 SELECT
     f.nome AS fazenda,
@@ -158,6 +179,8 @@ LEFT JOIN plantacao p ON f.id_fazenda = p.id_fazenda
 LEFT JOIN sensor s ON p.id_plantacao = s.fkPlantacao
 GROUP BY f.id_fazenda, f.nome;
 
+SELECT * FROM vwGraficoAdmin;
+
 CREATE VIEW vwInstrucaoPorEmpresa AS
 SELECT
     e.nome AS empresa,
@@ -165,6 +188,8 @@ SELECT
 FROM empresa e
 LEFT JOIN usuario u ON e.id_empresa = u.empresa_id_empresa
 GROUP BY e.id_empresa, e.nome;
+
+SELECT * FROM vwInstrucaoPorEmpresa;
 
 CREATE VIEW vwUsuario AS
 SELECT
@@ -215,4 +240,9 @@ SELECT
     (SELECT COUNT(*) FROM sensor WHERE status = 1) AS sensoresAtivos,
     (SELECT COUNT(*) FROM sensor WHERE status = 0) AS sensoresInativos;
     
+    SELECT * FROM sensor;
     
+    SELECT * FROM leitura_sensor;
+    
+    
+  -- DROP DATABASE IF EXISTS CropSens;

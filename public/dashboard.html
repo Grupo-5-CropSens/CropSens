@@ -1295,9 +1295,15 @@
 
       if (nome.length < 2) { document.getElementById('cad-erro-nome').innerText = 'Nome obrigatório (mín. 2 caracteres)'; erros++; }
       if (!email.includes('@')) { document.getElementById('cad-erro-email').innerText = 'E-mail inválido'; erros++; }
-      if (senha.length < 8) { document.getElementById('cad-erro-senha').innerText = 'Senha mínima: 8 caracteres'; erros++; }
-      if (!senha.includes('@') || !senha.includes('!') || !senha.includes('!') || !senha.includes('$')) { document.getElementById('cad-erro-senha2').innerText += `A senha deve conter um caractere especial`; erros++; }
 
+      // senha: limpar erros anteriores
+      if (document.getElementById('cad-erro-senha')) document.getElementById('cad-erro-senha').innerText = '';
+      if (document.getElementById('cad-erro-senha2')) document.getElementById('cad-erro-senha2').innerText = '';
+
+      if (senha.length < 8) { document.getElementById('cad-erro-senha').innerText = 'Senha mínima: 8 caracteres'; erros++; }
+      if (!/\d/.test(senha)) { if (document.getElementById('cad-erro-senha2')) document.getElementById('cad-erro-senha2').innerText += 'A senha deve conter ao menos um número. '; erros++; }
+      if (!/[^A-Za-z0-9]/.test(senha)) { if (document.getElementById('cad-erro-senha2')) document.getElementById('cad-erro-senha2').innerText += 'A senha deve conter ao menos um caractere especial.'; erros++; }
+      
       if (erros > 0) return;
 
       fetch('/usuarios/cadastrar', {
