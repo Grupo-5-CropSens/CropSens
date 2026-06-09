@@ -165,7 +165,7 @@
 
     </div>
 
-    <!-- ===== SEÇÃO CADASTRO (SOMENTE ADMIN) ===== -->
+    <!--  SEÇÃO CADASTRO (SOMENTE ADMIN)  -->
     <div id="cadastro" class="section">
       <div class="relatorios-content">
         <h2>Cadastrar Novo Cliente</h2>
@@ -252,7 +252,7 @@
           </p>
         </div>
       </div>
-    </div> <!-- Fim da section ajuda -->
+    </div> 
   </div> <!-- Fim do container -->
 
   <div id="bobia" style="display:none;">
@@ -261,8 +261,66 @@
     </button>
   </div>
 
+  <!-- Estrutura do Modal de KPI -->
+  <div id="kpiModalOverlay" class="modal-overlay" onclick="if(event.target===this) closeKpiModal()">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeKpiModal()">×</button>
+      <div class="modal-header">
+        <h3 id="modalTitle">Detalhes da KPI</h3>
+      </div>
+      <div class="modal-body">
+
+        <!-- BANNER DE AÇÃO -->
+        <div id="modalBanner" class="modal-action-banner">
+          <div class="modal-banner-left">
+            <span id="modalBannerIcon" class="modal-banner-icon">⭐</span>
+          </div>
+          <div class="modal-banner-right">
+            <div id="modalBannerText" class="modal-banner-title">AÇÃO RECOMENDADA</div>
+            <div id="modalBannerSub" class="modal-banner-sub">Carregando...</div>
+          </div>
+        </div>
+
+        <!-- LINHA: Dado Atual + Período -->
+        <div class="modal-row">
+          <div class="modal-stat">
+            <span class="modal-stat-label">Dado Atual</span>
+            <span class="modal-stat-value" id="modalValue">--</span>
+          </div>
+          <div class="modal-stat">
+            <span class="modal-stat-label">Período</span>
+            <span class="modal-stat-value" id="modalPeriod">--</span>
+          </div>
+        </div>
+
+        <!-- POR QUÊ? -->
+        <div class="modal-why">
+          <span class="modal-why-label">Por que isso importa?</span>
+          <p id="modalWhy" class="modal-why-text">--</p>
+        </div>
+
+        <!-- ALERTAS -->
+        <div class="modal-alerts-box">
+          <p id="modalAlerts">--</p>
+        </div>
+
+        <!-- INDICADOR DE STATUS -->
+        <div class="status-indicator-container">
+          <div id="statusIndicator" class="status-indicator status-one">
+            <span id="modalStatusNum">1</span>
+          </div>
+          <div class="status-text">
+            <h4 id="modalStatusTitle">Indicador de Status</h4>
+            <p id="modalStatusText">Mensagem explicativa.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
   <script>
-    // ===== VARIÁVEIS GLOBAIS =====
+    //  VARIÁVEIS GLOBAIS 
     let proximaAtualizacao;
 
     // Estado do dashboard do cliente (compartilhado com o modal de KPI)
@@ -278,6 +336,7 @@
     let globalProdutividadeReal = [];
     let globalPerdaAcumulada = [];
     let globalCustoTotalDam = [];
+    let globalCustoSecagem = [];
 
     // Estado do dashboard admin (compartilhado com o modal de KPI)
     let totalUsuarios = 0;
@@ -287,7 +346,7 @@
     let sensoresAtivos = 0;
     let sensoresInativos = 0;
 
-    // ===== INICIALIZAÇÃO =====
+    //  INICIALIZAÇÃO 
     window.onload = function () {
       mostrarnome(sessionStorage.NOME_USUARIO);
       configurarMenu();
@@ -332,7 +391,7 @@
       }
     }
 
-    // ===== MENU DE NAVEGAÇÃO =====
+    //  MENU DE NAVEGAÇÃO 
     function configurarMenu() {
       let menuItems = document.querySelectorAll('.menu-item');
       let sections = document.querySelectorAll('.section');
@@ -361,7 +420,7 @@
       if (itemDashboard) itemDashboard.classList.add('active');
     }
 
-    // ===== DASHBOARD ADMIN =====
+    //  DASHBOARD ADMIN 
     function carregarDashboardAdmin() {
       fetch('/dashboard/dadosAdmin')
         .then(function (res) { return res.json(); })
@@ -472,7 +531,7 @@
       }
     }
 
-    // ===== DASHBOARD CLIENTE =====
+    //  DASHBOARD CLIENTE 
     function carregarDashboardCliente() {
       var ctx = document.getElementById('myChart');
 
@@ -495,7 +554,7 @@
           diasDAM          = dados.diasDAM;
 
 
-          // --- Gráfico 1: Índice de Eficiência Temporal ---
+          //  Gráfico 1: Índice de Eficiência Temporal 
           new Chart(ctx, {
             data: {
               labels: ['Ponto base', 'Semana 2', 'Semana 3', 'Semana 4', 'Semana 5', 'Semana 6'],
@@ -550,16 +609,18 @@
             }
           });
 
-          // --- Gráfico 2: Impacto do Tempo de Colheita ---
+          //  Gráfico 2: Impacto do Tempo de Colheita 
           const kgs = document.getElementById('graficoBarras');
 
           let produtividadeReal = dados.produtividadeReal;
           let perdaAcumulada    = dados.perdaAcumulada;
           let custoTotalDam     = dados.custoTotalDam;
+          let custoSecagem      = dados.custoSecagem;
 
           globalProdutividadeReal = produtividadeReal;
           globalPerdaAcumulada    = perdaAcumulada;
           globalCustoTotalDam     = custoTotalDam;
+          globalCustoSecagem      = custoSecagem;
 
           let labelsDam = [];
           for (let i = 0; i < diasDAM.length; i++) {
@@ -618,27 +679,21 @@
             }
           }
 
-          let dadosProdutividadeFase = [];
+          let dadosFaseAtual = [];
           let raioPontoFase = [];
-          let dadosMelhorMomento = [];
-
           for (let i = 0; i < produtividadeReal.length; i++) {
             if (i <= faseAtualIndex) {
-              dadosProdutividadeFase.push(produtividadeReal[i]);
+              dadosFaseAtual.push(produtividadeReal[i]);
             } else {
-              dadosProdutividadeFase.push(null);
+              dadosFaseAtual.push(null);
             }
 
             if (i === faseAtualIndex) {
               raioPontoFase.push(10);
+            } else if (i < faseAtualIndex) {
+              raioPontoFase.push(5);
             } else {
               raioPontoFase.push(0);
-            }
-
-            if (i === indicePontoOtimo) {
-              dadosMelhorMomento.push(produtividadeReal[i]);
-            } else {
-              dadosMelhorMomento.push(null);
             }
           }
 
@@ -650,6 +705,20 @@
                 {
                   label: 'Produtividade (kg/ha)',
                   data: produtividadeReal,
+                  borderColor: 'rgba(239,68,68,0.35)',
+                  backgroundColor: 'transparent',
+                  borderWidth: 2,
+                  tension: 0.3,
+                  fill: false,
+                  pointRadius: 3,
+                  pointBackgroundColor: 'rgba(239,68,68,0.4)',
+                  pointBorderColor: 'transparent',
+                  yAxisID: 'y',
+                  order: 3
+                },
+                {
+                  label: 'Custo Total (R$)',
+                  data: custoTotalDam,
                   borderColor: 'rgba(5,150,105,0.35)',
                   backgroundColor: 'transparent',
                   borderWidth: 2,
@@ -658,29 +727,15 @@
                   pointRadius: 3,
                   pointBackgroundColor: 'rgba(5,150,105,0.4)',
                   pointBorderColor: 'transparent',
-                  yAxisID: 'y',
-                  order: 3
-                },
-                {
-                  label: 'Custo Total (R$)',
-                  data: custoTotalDam,
-                  borderColor: 'rgba(239,68,68,0.4)',
-                  backgroundColor: 'transparent',
-                  borderWidth: 2,
-                  tension: 0.3,
-                  fill: false,
-                  pointRadius: 3,
-                  pointBackgroundColor: 'rgba(239,68,68,0.4)',
-                  pointBorderColor: 'transparent',
                   yAxisID: 'y1',
                   order: 3
                 },
                 {
                   label: 'Fase Atual da Sua Lavoura',
-                  data: dadosProdutividadeFase,
+                  data: dadosFaseAtual,
                   borderColor: '#F59E0B',
                   backgroundColor: 'transparent',
-                  borderWidth: 2.5,
+                  borderWidth: 4.5,
                   tension: 0.3,
                   fill: false,
                   pointRadius: raioPontoFase,
@@ -691,19 +746,6 @@
                   pointHoverRadius: 13,
                   yAxisID: 'y',
                   order: 1
-                },
-                {
-                  label: 'Melhor Momento de Colheita',
-                  data: dadosMelhorMomento,
-                  pointBackgroundColor: faseAtualIndex === indicePontoOtimo ? '#10B981' : '#ffffff',
-                  pointBorderColor: '#10B981',
-                  pointBorderWidth: 3,
-                  pointRadius: 14,
-                  pointHoverRadius: 18,
-                  pointStyle: 'star',
-                  showLine: false,
-                  yAxisID: 'y',
-                  order: 0
                 }
               ]
             },
@@ -728,10 +770,7 @@
                     font: { size: 12 },
                     padding: 16,
                     usePointStyle: true,
-                    pointStyleWidth: 14,
-                    filter: function (item) {
-                      return item.datasetIndex >= 2;
-                    }
+                    pointStyleWidth: 14
                   }
                 },
                 tooltip: {
@@ -749,8 +788,11 @@
                       const idx = context.dataIndex;
                       if (ds === 0) return `  Produtividade: ${context.parsed.y?.toFixed(0)} kg/ha`;
                       if (ds === 1) return `  Custo Total: R$ ${context.parsed.y?.toFixed(0)}/ha`;
-                      if (ds === 2 && idx === faseAtualIndex) return `  📍 Sua Lavoura Hoje: ${context.parsed.y?.toFixed(0)} kg/ha`;
-                      if (ds === 3) return `  ⭐ Melhor Momento: ${context.parsed.y?.toFixed(0)} kg/ha`;
+                      if (ds === 2 && idx <= faseAtualIndex) {
+                        return idx === faseAtualIndex
+                          ? `  📍 Sua Lavoura Hoje: ${context.parsed.y?.toFixed(0)} kg/ha`
+                          : `  📍 Fase da Lavoura: ${context.parsed.y?.toFixed(0)} kg/ha`;
+                      }
                       return null;
                     },
                     afterBody: function (items) {
@@ -788,10 +830,10 @@
                     display: true,
                     text: 'kg/ha',
                     font: { size: 12 },
-                    color: '#059669'
+                    color: '#EF4444'
                   },
-                  ticks: { color: '#059669', font: { size: 11 } },
-                  grid: { color: 'rgba(5,150,105,0.08)' }
+                  ticks: { color: '#EF4444', font: { size: 11 } },
+                  grid: { color: 'rgba(239,68,68,0.08)' }
                 },
                 y1: {
                   type: 'linear',
@@ -801,16 +843,16 @@
                     display: true,
                     text: 'R$',
                     font: { size: 12 },
-                    color: '#EF4444'
+                    color: '#059669'
                   },
-                  ticks: { color: '#EF4444', font: { size: 11 } },
+                  ticks: { color: '#059669', font: { size: 11 } },
                   grid: { drawOnChartArea: false }
                 }
               }
             }
           });
 
-          // --- Gráfico 3: Crescimento Ideal x Real ---
+          //  Gráfico 3: Crescimento Ideal x Real 
           let crescimentoTotal = 224.6;
           semanas = 6;
 
@@ -884,7 +926,7 @@
             }
           });
 
-          // --- Gráfico 4: Sensor Ultrassônico em Tempo Real ---
+          //  Gráfico 4: Sensor Ultrassônico em Tempo Real 
           if (sessionStorage.TIPO_USUARIO !== 'admin') {
             obterDadosGrafico(1);
           }
@@ -960,7 +1002,7 @@
               });
           }
 
-          // --- Indicadores de Cor dos KPIs (Relatórios) ---
+          //  Indicadores de Cor dos KPIs (Relatórios) 
           const kpi1 = document.getElementById('kpi1');
           const kpi2 = document.getElementById('kpi2');
           const kpi3 = document.getElementById('kpi3');
@@ -1036,7 +1078,7 @@
         });
     }
 
-    // ===== MODAL DE KPI =====
+    //  MODAL DE KPI 
     function openKpiModal(type) {
       const overlay = document.getElementById('kpiModalOverlay');
       const mTitle = document.getElementById('modalTitle');
@@ -1238,7 +1280,7 @@
       document.getElementById('kpiModalOverlay')?.classList.remove('show');
     }
 
-    // ===== CADASTRO DE CLIENTE (SOMENTE ADMIN) =====
+    //  CADASTRO DE CLIENTE (SOMENTE ADMIN) 
     function cadastrarCliente() {
       const nome = document.getElementById('cad-nome').value.trim();
       const email = document.getElementById('cad-email').value.trim();
@@ -1283,65 +1325,25 @@
         fb.innerText = '❌ Erro de conexão.';
       });
     }
+
+    // Função para simular e testar estados dos KPIs diretamente no console do navegador
+    function testarKpi(tipo, valorSimulado) {
+      if (tipo === 'eficiencia') {
+        ultimaEficiencia = valorSimulado;
+      } else if (tipo === 'altura') {
+        ultimaAltura = valorSimulado;
+      } else if (tipo === 'tempo-colheita') {
+        damPontoOtimo = 30;
+        diasDAM = [30 - valorSimulado, 30]; 
+        faseAtualIndex = 0;
+      } else if (tipo === 'custo') {
+        custoMinimoDam = valorSimulado;
+      }
+      console.log(`[Teste KPI] Simulado "${tipo}" com valor:`, valorSimulado);
+      openKpiModal(tipo);
+    }
+    window.testarKpi = testarKpi;
   </script>
-
-  <!-- Estrutura do Modal de KPI -->
-  <div id="kpiModalOverlay" class="modal-overlay" onclick="if(event.target===this) closeKpiModal()">
-    <div class="modal-content">
-      <button class="modal-close" onclick="closeKpiModal()">×</button>
-      <div class="modal-header">
-        <h3 id="modalTitle">Detalhes da KPI</h3>
-      </div>
-      <div class="modal-body">
-
-        <!-- BANNER DE AÇÃO -->
-        <div id="modalBanner" class="modal-action-banner">
-          <div class="modal-banner-left">
-            <span id="modalBannerIcon" class="modal-banner-icon">⭐</span>
-          </div>
-          <div class="modal-banner-right">
-            <div id="modalBannerText" class="modal-banner-title">AÇÃO RECOMENDADA</div>
-            <div id="modalBannerSub" class="modal-banner-sub">Carregando...</div>
-          </div>
-        </div>
-
-        <!-- LINHA: Dado Atual + Período -->
-        <div class="modal-row">
-          <div class="modal-stat">
-            <span class="modal-stat-label">Dado Atual</span>
-            <span class="modal-stat-value" id="modalValue">--</span>
-          </div>
-          <div class="modal-stat">
-            <span class="modal-stat-label">Período</span>
-            <span class="modal-stat-value" id="modalPeriod">--</span>
-          </div>
-        </div>
-
-        <!-- POR QUÊ? -->
-        <div class="modal-why">
-          <span class="modal-why-label">Por que isso importa?</span>
-          <p id="modalWhy" class="modal-why-text">--</p>
-        </div>
-
-        <!-- ALERTAS -->
-        <div class="modal-alerts-box">
-          <p id="modalAlerts">--</p>
-        </div>
-
-        <!-- INDICADOR DE STATUS -->
-        <div class="status-indicator-container">
-          <div id="statusIndicator" class="status-indicator status-one">
-            <span id="modalStatusNum">1</span>
-          </div>
-          <div class="status-text">
-            <h4 id="modalStatusTitle">Indicador de Status</h4>
-            <p id="modalStatusText">Mensagem explicativa.</p>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </div>
 </body>
 
 </html>

@@ -89,7 +89,8 @@ INSERT INTO empresa (nome) VALUES
 INSERT INTO usuario (nome, email, senha, empresa_id_empresa) VALUES
 ('Danilo Silva', 'danilo@cropsens.com', '123456', 1),
 ('Carla Mendes', 'carla@cropsens.com', '123456', 1),
-('Pedro Santos', 'pedro@greenfarm.com', '123456', 2);
+('Pedro Santos', 'pedro@greenfarm.com', '123456', 2),
+('Fernanda Caramico', 'fernanda@gmail.com', '123456', 1);
 
 INSERT INTO fazenda (nome, municipio, cep) VALUES
 ('Fazenda Boa Esperanca', 'Ribeirao Preto', '14000-000'),
@@ -98,7 +99,8 @@ INSERT INTO fazenda (nome, municipio, cep) VALUES
 INSERT INTO link (id_usuario, id_fazenda, cargo) VALUES
 (1, 1, 'Administrador'),
 (2, 1, 'Operador'),
-(3, 2, 'Gerente');
+(3, 2, 'Gerente'),
+(4, 1, 'Operador');
 
 INSERT INTO plantacao (data_plantio, id_fazenda) VALUES
 ('2025-01-15', 1),
@@ -126,6 +128,7 @@ INSERT INTO parametros_lavoura (fase_atual_dam, potencial_maximo_kgha, fkPlantac
 INSERT INTO dados_colheita (dam_dias, produtividade_kgha, perda_acumulada_kg, percentual_perda, custo_secagem, custo_total, fkPlantacao) VALUES
 (10, 9500.00, 0.00, 0.00, 1200.00, 1200.00, 1),
 (20, 9500.00, 50.00, 0.53, 800.00, 850.00, 1),
+(30, 9500.00, 100.00, 1.05, 0.00, 225.00, 1),
 
 (10, 9000.00, 0.00, 0.00, 1100.00, 1100.00, 2),
 (20, 9000.00, 40.00, 0.44, 750.00, 790.00, 2);
@@ -211,3 +214,5 @@ SELECT
     (SELECT COUNT(*) FROM sensor)                  AS totalSensores,
     (SELECT COUNT(*) FROM sensor WHERE status = 1) AS sensoresAtivos,
     (SELECT COUNT(*) FROM sensor WHERE status = 0) AS sensoresInativos;
+    
+    
